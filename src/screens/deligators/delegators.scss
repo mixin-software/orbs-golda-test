@@ -1,0 +1,15 @@
+@import '../../scss/colors/colors.scss';
+
+.delegators  {
+    position: relative;
+    .screen-section-container {
+        height: calc(100vh - 300px);
+    }
+    .delegator-not-found {
+        position: absolute;
+        top: 160px;
+    }
+    .search-input-box{
+        width: 500px;
+    }
+}

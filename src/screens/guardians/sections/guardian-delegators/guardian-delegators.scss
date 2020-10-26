@@ -1,0 +1,49 @@
+.guardian-delegators {
+
+    &-list {
+        height: 560px;
+
+        a {
+            &:hover {
+                text-decoration: underline !important;
+                color: black;
+            }
+        }
+
+        .list-item {
+            width: 200px;
+
+            &:nth-child(1) {
+                width: 450px;
+                padding-right: 40px;
+            }
+
+            img {
+                margin-left: auto;
+            }
+        }
+
+        .loader-list {
+            &-element {
+                div {
+                    width: 200px;
+                    padding-right: 40px;
+
+                    &:nth-child(1) {
+                        width: 450px;
+
+                        .loader {
+                            width: 70%;
+                        }
+                    }
+
+                    .loader {
+                        height: 20px;
+                        width: 100px;
+                    }
+                }
+            }
+        }
+
+    }
+}

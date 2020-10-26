@@ -1,0 +1,30 @@
+{
+    "main": {
+        "address": "address",
+        "stake": "stake",
+        "rewards": "rewards",
+        "actions": "actions",
+        "delegetors":"delegetors",
+        "noData":"no data"
+    },
+    "navigation": {
+        "orbsUniverse": "orbs universe",
+        "analytics": "analytics",
+        "overview": "overview",
+        "guardians": "guardians",
+        "delegators": "delegators"
+       
+    },
+    "guardians": {
+       "selectGuardian":"select a guardian"
+     
+    },
+    "delegators": {
+        "nonStakedBalance": "Non-staked balance",
+        "delegatedTo": "Delegated to",
+        "whaleCoreStake": "Whale Core Stake",
+        "stakeChangeOverTime": "stake change over time",
+        "cooldown":"cooldown"
+    }
+
+}
