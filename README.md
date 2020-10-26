@@ -1,15 +1,15 @@
 ## Getting started
 
-`yarn install`
-`yarn start`
+`$ yarn install` <br />
+`$ yarn start`
 
 ## The stack
 
 Routing - https://reactrouter.com/ <br />
-https://reactrouter.com/web/api/Hooks <br />
+https://reactrouter.com/web/api/Hooks <br /><br />
 Style - https://react-bootstrap.netlify.app/ <br />
-https://getbootstrap.com/docs/4.0/utilities/spacing/ <br />
-State - redux, redux-persist, redux-saga <br />
+https://getbootstrap.com/docs/4.0/utilities/spacing/ <br /><br />
+State - redux, redux-thunk <br />
 
 ## Available Scripts
 
