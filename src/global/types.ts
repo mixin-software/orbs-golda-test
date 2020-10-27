@@ -1,4 +1,4 @@
-import { DelegatorsSections, GuardiansSections } from './enums';
+import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, GuardiansSections } from './enums';
 
 export interface MenuOption {
     name: string;
@@ -22,4 +22,20 @@ export interface GuardianDataset {
     delegators: number;
     ownDelegation: number;
     totalDelegation: number;
+}
+
+export interface ChartData {
+    datasets: ChartDataset[];
+    unit: ChartUnit;
+}
+
+export interface ChartDataset {
+    data: ChartDatasetObject[];
+    color: ChartColors;
+    yAxis: ChartYaxis;
+}
+
+export interface ChartDatasetObject {
+    x: string;
+    y: number;
 }

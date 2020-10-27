@@ -5,30 +5,44 @@ const initialState: GuardiansState = {
     selectedGuardian: undefined,
     guardians: undefined,
     guardianNotFound: false,
-    guardianIsLoading: false
+    guardianIsLoading: false,
+    guardianChartData: undefined
 };
 
 export const guardiansReducer = (state = initialState, { payload, type }: any): GuardiansState => {
     switch (type) {
-        case types.SET_GUARDIAN:
+        case types.GUARDIAN.SET_GUARDIAN:
             return {
                 ...state,
                 selectedGuardian: payload
             };
-        case types.SET_GUARDIANS:
+        case types.GUARDIAN.SET_GUARDIANS:
             return {
                 ...state,
-                selectedGuardian: payload
+                guardians: payload
             };
-        case types.GUARDIAN_NOT_FOUND:
+        case types.GUARDIAN.GUARDIAN_NOT_FOUND:
             return {
                 ...state,
                 guardianNotFound: payload
             };
-        case types.GUARDIAN_LOADING:
+        case types.GUARDIAN.GUARDIAN_LOADING:
             return {
                 ...state,
                 guardianIsLoading: payload
+            };
+        case types.GUARDIAN.SET_GUARDIAN_CHART_DATA:
+            return {
+                ...state,
+                guardianChartData: payload
+            };
+        case types.GUARDIAN.RESET_GUARDIAN:
+            return {
+                ...state,
+                guardianChartData: undefined,
+                selectedGuardian: undefined,
+                guardianNotFound: false,
+                guardianIsLoading: true
             };
         default:
             return state;

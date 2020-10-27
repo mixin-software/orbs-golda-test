@@ -1,9 +1,16 @@
 import { TFunction } from 'i18next';
-import { GuardianDataset, MenuOption } from '../global/types';
+import { ChartData, GuardianDataset, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
-import { GuardiansSections } from '../global/enums';
-import { Guardian, GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
-import { generateMonths } from './dates';
+import { ChartColors, ChartUnit, ChartYaxis, GuardiansSections } from '../global/enums';
+import { GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
+import {
+    generateMonths,
+    generateWeeks,
+    getDayNumberFromUnixDate,
+    getMonthNumberFromUnixDate,
+    getWeekNumberFromUnixDate,
+    returnDateNumber
+} from './dates';
 import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 import moment from 'moment';
 export const generateGuardiansRoutes = (t: TFunction, guardian?: GuardianInfo): MenuOption[] => {
@@ -34,57 +41,67 @@ export const checkIfLoadDelegator = (address?: string, guardian?: GuardianInfo):
     return true;
 };
 
-export const sortGuardianStakeDataMonths = (guardian?: GuardianInfo) => {
-    if (!guardian) return;
+const generateObject = () => {
+    return {
+        selfStake: {
+            data: [],
+            color: ChartColors.GRAY,
+            yAxis: ChartYaxis.Y2
+        },
+        delegatedStake: {
+            data: [],
+            color: ChartColors.YELLOW,
+            yAxis: ChartYaxis.Y2
+        },
+        delegators: {
+            data: [],
+            color: ChartColors.GREEN,
+            yAxis: ChartYaxis.Y1
+        }
+    };
+};
+export const getGuardianChartData = (months: any, unit: ChartUnit, guardian: GuardianInfo): ChartData => {
+    let dataObject: any = generateObject();
     const { stake_slices } = guardian;
-    if (!stake_slices) return;
-    console.log(stake_slices);
-    const dates = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
     stake_slices.map((slice: GuardianStake) => {
-        const { self_stake, n_delegates, delegated_stake, block_time } = slice;
-        const month = moment.unix(block_time).format('MMM');
-        if (!dates.hasOwnProperty(month)) return;
-
-        let delegators = dates[month].delegators || 0 + n_delegates;
-        let ownDelegation = dates[month].ownDelegation || 0 + self_stake;
-        let totalDelegation = dates[month].totalDelegation || 0 + delegated_stake;
-        dates[month].delegators = delegators;
-        dates[month].ownDelegation = ownDelegation;
-        dates[month].totalDelegation = totalDelegation;
+        const { block_time } = slice;
+        const date = returnDateNumber(block_time, unit);
+        if (!months.hasOwnProperty(date)) return;
+        dataObject = insertChartDataByType(dataObject, slice);
     });
-    return Object.keys(dates)
-        .reverse()
-        .map((key) => {
-            return {
-                month: moment().month(key).format('MMM'),
-                data: dates[key] || null
-            };
-        });
+    return formatGuardianChartData(dataObject, unit);
 };
 
-export const createDatasets = (datasets: GuardianDataset[]) => {
-    const arr = datasets.map((dataset: GuardianDataset) => {
-        console.log(dataset);
-        return {
-            label: '',
-            fill: false,
-            lineTension: 0,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: '#74DABF',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: '#74DABF',
-            pointBackgroundColor: '#74DABF',
-            pointBorderWidth: 6,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: 0
-        };
+export const formatGuardianChartData = (data: any, unit: ChartUnit) => {
+    let datasetsArr: any = [];
+    Object.keys(data).map(function (key) {
+        const dataset = data[key];
+        datasetsArr.push(dataset);
     });
+    const obj = {
+        datasets: datasetsArr,
+        unit
+    };
+    return obj;
+};
+
+const insertChartDataByType = (data: any, slice: GuardianStake): any => {
+    const { self_stake, n_delegates, block_time, delegated_stake } = slice;
+    const x = moment.unix(block_time).format('DD/MM/YYYY');
+    const selftStake = {
+        x,
+        y: self_stake
+    };
+    const delegators = {
+        x,
+        y: n_delegates
+    };
+    const delegatedStake = {
+        x,
+        y: delegated_stake
+    };
+    data.selfStake.data.push(selftStake);
+    data.delegators.data.push(delegators);
+    data.delegatedStake.data.push(delegatedStake);
+    return data;
 };

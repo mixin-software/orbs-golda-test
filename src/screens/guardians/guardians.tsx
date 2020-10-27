@@ -11,8 +11,7 @@ import { routes } from '../../routes/routes';
 import { checkIfLoadDelegator, generateGuardiansRoutes } from '../../utils/guardians';
 import { GuardianDelegators } from './sections/guardian-delegators/guardian-delegators';
 import { GuardiansStake } from './sections/guardians-stake/guardians-stake';
-
-
+import { SearchListType } from '../../global/enums';
 import './guardians.scss';
 
 export const Guardians = () => {
@@ -21,14 +20,21 @@ export const Guardians = () => {
     const dispatch = useDispatch();
     const history: any = useHistory();
     const params: RouteParams = useParams();
-
+    console.log(guardians)
     useEffect(() => {
+        getGuardiansOnLoad();
+        findGuardianOnLoad();
+    }, []);
+
+    const getGuardiansOnLoad = () => {
+        dispatch(getGuardiansAction());
+    };
+
+    const findGuardianOnLoad = () => {
         const { address } = params;
-        dispatch(getGuardiansAction())
         if (!address) return;
         findGuardian(address);
-     
-    }, []);
+    };
 
     const findGuardian = (address: string) => {
         const loadGuardian = checkIfLoadDelegator(address, selectedGuardian);
@@ -41,13 +47,12 @@ export const Guardians = () => {
         history.push(routes.guardians.main.replace(':section?', section).replace(':address', address));
         findGuardian(address);
     };
-
     return (
         <div className="guardians screen">
-            <SearchInput
-                title={t('guardians.selectGuardian')}
-                list={[]}
-                returnSearchValue={returnSearchValue}
+            <SearchInput title={t('guardians.selectGuardian')} list={guardians} returnSearchValue={returnSearchValue}
+                filterProperty = {['name', 'address']}
+                viewProperties = {['name', 'address']}
+                listType = {SearchListType.GUARDIAN}
             />
             <div className="screen-section">
                 <SectionMenu options={generateGuardiansRoutes(t, selectedGuardian)} />

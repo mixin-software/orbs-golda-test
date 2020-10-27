@@ -1,9 +1,21 @@
 import React, { FunctionComponent as Component, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { DelegatorsSections, GuardiansSections } from '../../global/enums';
 import { MenuOption, RouteParams } from '../../global/types';
 import './section-menu.scss';
 
 
+const generateClassName = (key:DelegatorsSections | GuardiansSections,  selected: string | null, disabled?: boolean): string => {
+    let className = `flex-center section-menu-element`
+    const isSelected = key.toLocaleLowerCase() === selected
+    if(isSelected){
+        className = `${className} section-menu-element-selected`
+    }
+    if(disabled){
+        className = `${className} section-menu-element-disabled`
+    }
+    return className;
+}
 
 interface StateProps {
     options: MenuOption[];
@@ -20,11 +32,10 @@ interface StateProps {
     return (
         <ul className="section-menu flex-start">
             {options.map((option: MenuOption, index: number) => {
-                const { route, key, name } = option;
-                const isSelected = key.toLocaleLowerCase() === selected
-                const className = `flex-center ${isSelected && 'section-menu-element-selected'} section-menu-element`
+                const { route, key, name, disabled } = option;
+               
                 return (
-                    <li  key={index} className={className}>
+                    <li  key={index} className={generateClassName(key,selected,disabled  )}>
                       <Link to ={route} className='flex-center'>
                        <p className='capitalize'> {name}</p>
                       </Link>

@@ -1,15 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../../redux/types/types';
-import { convertToString } from '../../../../utils/number';
 import moment from 'moment';
 import './deligators-actions.scss';
 import { LoadingComponent } from '../../../../components/loading-component/loading-component';
 import { LoaderType } from '../../../../global/enums';
 import { DelegatorAction } from '@orbs-network/pos-analytics-lib';
-import { ETHERSCAN_BLOCK_ADDRESS } from '../../../../keys/keys';
-import { DelegatorActionGenerator } from './components/delegator-action';
+import { DelegatorActionElement } from './components/delegator-action';
 import { NoData } from '../../../../components/no-data/no-data';
+import { sortByDate } from '../../../../utils/array';
 
 export const DeligatorsActions = () => {
     const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
@@ -27,29 +26,15 @@ export const DeligatorsActions = () => {
                         );
                     })}
                 </header>
-            <LoadingComponent isLoading={delegatorIsLoading} loaderType={LoaderType.LIST} listElementAmount={4}>
+                <LoadingComponent isLoading={delegatorIsLoading} loaderType={LoaderType.LIST} listElementAmount={4}>
                     <ul>
-                        {selectedDelegator ?
-                            selectedDelegator.actions.map((action: DelegatorAction, index: number) => {
-                                const { amount, block_time, block_number, event } = action;
-
-                                return (
-                                    <li className="flex-start-center" key={index}>
-                                        <DelegatorActionGenerator  action = {action}/>
-                                        <p className="list-item">{convertToString(amount)}</p>
-                                        <a
-                                            href={`${ETHERSCAN_BLOCK_ADDRESS}/${block_number}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="list-item">
-                                            <p>{block_number}</p>
-                                        </a>
-                                        <p className="list-item">
-                                            {moment.unix(block_time).format('YYYY-MM-DD HH:mm')}
-                                        </p>
-                                    </li>
-                                );
-                            })  :<NoData />}
+                        {selectedDelegator && selectedDelegator.actions ? (
+                            sortByDate(selectedDelegator.actions).map((action: DelegatorAction, index: number) => {
+                                return <DelegatorActionElement action={action} key={index} />;
+                            })
+                        ) : (
+                            <NoData />
+                        )}
                     </ul>
                 </LoadingComponent>
             </div>

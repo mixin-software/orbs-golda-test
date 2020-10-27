@@ -1,39 +1,52 @@
+import { ChartData } from '../../global/types';
 import { api } from '../../services/api';
 import { types } from '../types/types';
 
 export const getGuardianAction = (address: string) => async (dispatch: any) => {
-    dispatch(setGuardianLoading(true));
+    dispatch(resetguardian());
     const guardian = await api.getGuardianApi(address);
     dispatch(setGuardianLoading(false));
     if (!guardian) {
         return dispatch(setGuardianNotFound(true));
     }
     dispatch({
-        type: types.SET_GUARDIAN,
+        type: types.GUARDIAN.SET_GUARDIAN,
         payload: guardian
     });
 };
 
 export const getGuardiansAction = () => async (dispatch: any) => {
     const guardians = await api.getGuardiansApi();
-    console.log(guardians);
     if (!guardians) return null;
     return dispatch({
-        type: types.SET_GUARDIANS,
+        type: types.GUARDIAN.SET_GUARDIANS,
         payload: guardians
     });
 };
 
 export const setGuardianLoading = (value: boolean) => async (dispatch: any) => {
     return dispatch({
-        type: types.GUARDIAN_LOADING,
+        type: types.GUARDIAN.GUARDIAN_LOADING,
         payload: value
     });
 };
 
 export const setGuardianNotFound = (value: boolean) => async (dispatch: any) => {
     return dispatch({
-        type: types.GUARDIAN_NOT_FOUND,
+        type: types.GUARDIAN.GUARDIAN_NOT_FOUND,
         payload: value
+    });
+};
+
+export const setGuardianChartData = (chartData: ChartData | undefined) => async (dispatch: any) => {
+    return dispatch({
+        type: types.GUARDIAN.SET_GUARDIAN_CHART_DATA,
+        payload: chartData
+    });
+};
+
+export const resetguardian = () => async (dispatch: any) => {
+    return dispatch({
+        type: types.GUARDIAN.RESET_GUARDIAN
     });
 };

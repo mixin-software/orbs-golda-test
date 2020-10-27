@@ -1,11 +1,11 @@
 import { Delegator, DelegatorStake } from '@orbs-network/pos-analytics-lib';
 import { TFunction } from 'i18next';
-import { DelegatorsSections, DeligatorActionsTypes } from '../global/enums';
-import { MenuOption } from '../global/types';
+import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, DeligatorActionsTypes } from '../global/enums';
+import { ChartData, ChartDatasetObject, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import moment from 'moment';
-import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
-import { generateMonths } from './dates';
+import { returnDateNumber } from './dates';
+import { sortByDate } from './array';
 export const generateDelegatorsRoutes = (t: TFunction, delegator?: Delegator): MenuOption[] => {
     const address = delegator ? delegator.address : '';
     return [
@@ -35,25 +35,28 @@ export const checkIfLoadDeligator = (address?: string, delegator?: Delegator): b
     return true;
 };
 
-export const sortDelegatorStakeDataMonths = (delegator?: Delegator) => {
-    if (!delegator) return;
+export const getDelegatorChartData = (dates: any, unit: ChartUnit, delegator: Delegator): ChartData => {
     const { stake_slices } = delegator;
-    let arr: any = [];
-    const dates = generateMonths(STACK_GRAPH_MONTHS_LIMIT, 'MM/YYYY');
+    let arr: ChartDatasetObject[] = [];
     stake_slices.map((slice: DelegatorStake) => {
         const { block_time, stake } = slice;
-        const dateMonth = moment.unix(block_time).format('MM/YYYY');
-        if (!dates.hasOwnProperty(dateMonth)) return;
-        const x = moment.unix(block_time).format('DD/MM/YYYY');
-        const obj = {
-            x,
+        const date = returnDateNumber(block_time, unit);
+        if (!dates.hasOwnProperty(date)) return;
+        const datasetObject = {
+            x: moment.unix(block_time).format('DD/MM/YYYY'),
             y: stake
         };
-        arr.push(obj);
+        arr.push(datasetObject);
     });
-    return arr.sort((a: any, b: any) => {
-        return moment(a.x, 'DD/MM/YYYY').diff(moment(b.x, 'DD/MM/YYYY'));
-    });
+    const dataset = {
+        data: sortByDate(arr),
+        color: ChartColors.GRAY,
+        yAxis: ChartYaxis.Y1
+    };
+    return {
+        datasets: [dataset],
+        unit
+    };
 };
 
 export const generateGuardiansActionColors = (event: DeligatorActionsTypes) => {

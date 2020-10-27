@@ -1,0 +1,28 @@
+@import '../../../../scss/colors/colors.scss';
+
+.guardian-stake {
+    align-items: flex-start;
+    padding-right: 80px;
+    &-legend {
+        margin-left: auto;
+        h4 {
+            color: $light-gray;
+            margin-bottom: 50px;
+            font-weight: 500;
+        }
+
+        div {
+            margin-bottom: 27px;
+            figure {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+            p{
+                color: $light-gray;
+                font-size: 15px;
+            }
+        }
+    }
+}

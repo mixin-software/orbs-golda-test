@@ -12,8 +12,8 @@ export const ListLoader = ({listElementAmount}: StateProps) => {
                 {Array.apply(null, Array(6)).map(() => {
                     return <li className='flex-start-center loader-list-element'>
                         {
-                            Array.apply(null, Array(listElementAmount)).map(() => {
-                                return <div> <TextLoader /></div>
+                            Array.apply(null, Array(listElementAmount)).map((m: any, index: number) => {
+                                return <div key = {index}> <TextLoader /></div>
                             })
                         }
                             

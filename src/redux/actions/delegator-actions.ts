@@ -1,9 +1,10 @@
 import { Delegator } from '@orbs-network/pos-analytics-lib';
+import { ChartData } from '../../global/types';
 import { api } from '../../services/api';
 import { types } from '../types/types';
 
 export const findDelegatorAction = (address: string) => async (dispatch: any) => {
-    dispatch(clearDelegator());
+    dispatch(resetDelegator());
     const delegator = await api.getDelegatorApi(address);
     dispatch(delegatorLoading(false));
     if (!delegator) {
@@ -12,31 +13,36 @@ export const findDelegatorAction = (address: string) => async (dispatch: any) =>
     dispatch(setDelegator(delegator));
 };
 
-const clearDelegator = () => async (dispatch: any) => {
-    dispatch({
-        type: types.CLEAR_DELEGATOR
-    });
-    dispatch(delegatorLoading(true));
-    dispatch(delegatorNotFound(false));
-};
-
 const setDelegator = (delegator: Delegator) => async (dispatch: any) => {
     dispatch({
-        type: types.SET_DELEGATOR,
+        type: types.DELEGATOR.SET_DELEGATOR,
         payload: delegator
     });
 };
 
 export const delegatorLoading = (value: boolean) => async (dispatch: any) => {
     return dispatch({
-        type: types.DELEGATOR_LOADING,
+        type: types.DELEGATOR.DELEGATOR_LOADING,
         payload: value
     });
 };
 
 export const delegatorNotFound = (value: boolean) => async (dispatch: any) => {
     return dispatch({
-        type: types.DELEGATOR_NOT_FOUND,
+        type: types.DELEGATOR.DELEGATOR_NOT_FOUND,
         payload: value
+    });
+};
+
+export const setDelegatorChartData = (chartData: ChartData | undefined) => async (dispatch: any) => {
+    return dispatch({
+        type: types.DELEGATOR.SET_DELEGATOR_CHART_DATA,
+        payload: chartData
+    });
+};
+
+export const resetDelegator = () => async (dispatch: any) => {
+    return dispatch({
+        type: types.DELEGATOR.RESET_DELEGATOR
     });
 };

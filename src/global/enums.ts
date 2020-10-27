@@ -29,3 +29,25 @@ export enum TimeRangeSelectorOptions {
     WEEKS = 'WEEKS',
     MONTHS = 'MONTHS'
 }
+
+export enum SearchListType {
+    GUARDIAN = 'GUARDIAN',
+    DELEGATOR = 'DELEGATOR'
+}
+
+export enum ChartUnit {
+    DAY = 'day',
+    MONTH = 'month',
+    WEEK = 'week'
+}
+
+export enum ChartColors {
+    YELLOW = '#FFEC29',
+    GRAY = '#CF4E81',
+    GREEN = '#74DABF'
+}
+
+export enum ChartYaxis {
+    Y1 = 'y1',
+    Y2 = 'y2'
+}

@@ -1,0 +1,23 @@
+.guardian-stake-chart{
+    min-height: 400px;
+    position: relative;
+    width: calc(100% - 220px);
+    .loader-big{
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+    }
+    header{
+        margin-bottom: 100px;
+        h4{
+            font-weight: 600;
+            font-size: 21px;
+            text-transform: uppercase;
+        }
+    }
+    .line-chart{
+        height: 300px;
+    }
+}

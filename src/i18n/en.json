@@ -5,7 +5,10 @@
         "rewards": "rewards",
         "actions": "actions",
         "delegetors":"delegetors",
-        "noData":"no data"
+        "noData":"no data",
+        "months":"months",
+        "weeks":"weeks",
+        "days":"days"
     },
     "navigation": {
         "orbsUniverse": "orbs universe",
@@ -16,7 +19,11 @@
        
     },
     "guardians": {
-       "selectGuardian":"select a guardian"
+       "selectGuardian":"select a guardian",
+       "legend":"legend",
+       "totalDelegation":"total delegation",
+       "ownDelegation":"own delegation",
+       "delegators":"delegators"
      
     },
     "delegators": {

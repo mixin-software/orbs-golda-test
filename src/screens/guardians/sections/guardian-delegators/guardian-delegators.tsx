@@ -1,17 +1,12 @@
 import React from 'react';
 import { GuardianDelegator } from '@orbs-network/pos-analytics-lib';
-import { convertToString } from '../../../../utils/number';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../../redux/types/types';
-import CopyImg from '../../../../assets/images/copy.svg';
-
-import './guardian-delegators.scss';
-import { Link } from 'react-router-dom';
-import { routes } from '../../../../routes/routes';
-import { ListLoader } from '../../../../components/loaders/list-loader';
 import { LoadingComponent } from '../../../../components/loading-component/loading-component';
 import { LoaderType } from '../../../../global/enums';
 import { NoData } from '../../../../components/no-data/no-data';
+import './guardian-delegators.scss';
+import { GuardianDelegatorElement } from './components/guardian-delegator/guardian-delegator';
 
 export const GuardianDelegators = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
@@ -31,21 +26,8 @@ export const GuardianDelegators = () => {
            <LoadingComponent isLoading = {guardianIsLoading} loaderType = {LoaderType.LIST} listElementAmount={3}>
            <ul>
                 {selectedGuardian ?
-                    selectedGuardian.delegators.map((delegator: GuardianDelegator, index: number) => {
-                        const { address, stake } = delegator;
-                        return (
-                            <li className="flex-start-center" key={index}>
-                                <Link
-                                    className="list-item text-overflow flex-start-center"
-                                    to={routes.delegators.stake.replace(':address', address)}>
-                                    <p>{address}</p>
-                                    <img src={CopyImg} alt="" />
-                                </Link>
-
-                                <p className="list-item">{convertToString(stake)}</p>
-                                <p className="list-item">-</p>
-                            </li>
-                        );
+                    selectedGuardian.delegators.map((delegator: GuardianDelegator) => {
+                        return <GuardianDelegatorElement  key = {delegator.address} delegator = {delegator} />
                     }) : <NoData />}
             </ul>
            </LoadingComponent>

@@ -13,6 +13,7 @@ import { DelegatorsStake } from './sections/delegators-stake/delegators-stake';
 import { DelegatorsReward } from './sections/delegators-reward/delegators-reward';
 import './delegators.scss';
 import { RouteParams } from '../../global/types';
+import { SearchListType } from '../../global/enums';
 
 
 
@@ -48,6 +49,7 @@ export const Delegators = () => {
                 title={t('main.address')}
                 list={[]}
                 returnSearchValue={returnSearchValue}
+                listType = {SearchListType.DELEGATOR}
             />
             {delegatorNotFound && <p className='delegator-not-found'>Delegator not found</p>}
             <div className="screen-section">
