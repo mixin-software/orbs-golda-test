@@ -9,6 +9,7 @@ export const getGuardianAction = (address: string) => async (dispatch: any) => {
     if (!guardian) {
         return dispatch(setGuardianNotFound(true));
     }
+    console.log(guardian);
     dispatch({
         type: types.GUARDIAN.SET_GUARDIAN,
         payload: guardian

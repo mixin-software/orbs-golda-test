@@ -67,7 +67,7 @@ export const LineChart = ({ chartData, yCharts }: StatePorps) => {
             display: false
         },
         animation: {
-            duration: 300
+            duration: 0
         },
         interaction: {
             mode: 'index'
@@ -81,7 +81,6 @@ export const LineChart = ({ chartData, yCharts }: StatePorps) => {
             cornerRadius: 2,
             callbacks: {
                 label: function (tooltipItem: any, data: any) {
-                    console.log(tooltipItem, data);
                     var label = data.datasets[tooltipItem.datasetIndex].label;
                     label += Math.round(tooltipItem.yLabel * 100) / 100;
                     return convertToString(Math.round(tooltipItem.yLabel * 100) / 100);
@@ -120,9 +119,14 @@ export const LineChart = ({ chartData, yCharts }: StatePorps) => {
             ],
             yAxes: [
                 {
+                    
                     id: ChartYaxis.Y1,
                     scaleLabel: {
-                        display: false
+                        display: true,
+                        labelString: '',
+                        fontSize: 12,
+                        fontFamily: 'Montserrat',
+                        fontColor: '#666666',
                     },
                     position: 'left',
                     gridLines: {
@@ -144,32 +148,7 @@ export const LineChart = ({ chartData, yCharts }: StatePorps) => {
                         padding: 15
                     }
                 },
-                {
-                    id: ChartYaxis.Y2,
-                    scaleLabel: {
-                        display: false
-                    },
-                    position: 'right',
-                    display: yCharts.includes(ChartYaxis.Y2),
-                    gridLines: {
-                        display: true,
-                        color: 'rgba(255,99,132,0.2)',
-                        borderDash: [5],
-                        zeroLineBorderDash: [5],
-                        zeroLineColor: 'rgba(255,99,132,0.2)',
-                        drawBorder: false
-                    },
-                    ticks: {
-                        maxTicksLimit: 7,
-                        fontSize: 12,
-                        fontFamily: 'Montserrat',
-                        fontColor: '#666666',
-                        callback: function (value: number) {
-                            return formatNumber(value, '0.0a').toUpperCase();
-                        },
-                        padding: 15
-                    }
-                }
+               
             ]
         }
     };

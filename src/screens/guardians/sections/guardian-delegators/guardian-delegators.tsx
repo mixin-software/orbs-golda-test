@@ -11,7 +11,7 @@ import { GuardianDelegatorElement } from './components/guardian-delegator/guardi
 export const GuardianDelegators = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
 
-    const titles = ['Delegators address', 'Stake', 'Non-staked balance'];
+    const titles = ['Delegator\'s address', 'Stake', 'Non-staked balance'];
     return (
         <div className="list guardian-delegators-list">
             <header className="list-header flex-start-center">

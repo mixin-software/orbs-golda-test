@@ -1,9 +1,9 @@
-import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, GuardiansSections } from './enums';
+import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, GuardiansSections, OverviewSections } from './enums';
 
 export interface MenuOption {
     name: string;
     route: string;
-    key: DelegatorsSections | GuardiansSections;
+    key: DelegatorsSections | GuardiansSections | OverviewSections;
     disabled?: boolean;
 }
 
@@ -38,4 +38,9 @@ export interface ChartDataset {
 export interface ChartDatasetObject {
     x: string;
     y: number;
+}
+
+export interface SearchInputResultElement {
+    name: string;
+    address: string;
 }

@@ -2,8 +2,9 @@ import { TFunction } from 'i18next';
 import { ChartData, GuardianDataset, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import { ChartColors, ChartUnit, ChartYaxis, GuardiansSections } from '../global/enums';
-import { GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
+import { Guardian, GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
 import {
+    generateDays,
     generateMonths,
     generateWeeks,
     getDayNumberFromUnixDate,
@@ -104,4 +105,44 @@ const insertChartDataByType = (data: any, slice: GuardianStake): any => {
     data.delegators.data.push(delegators);
     data.delegatedStake.data.push(delegatedStake);
     return data;
+};
+
+export const generateGuardiansChartData = (type: ChartUnit, selectedGuardian?: GuardianInfo) => {
+    if (!selectedGuardian) return;
+    let data;
+    switch (type) {
+        case ChartUnit.MONTH:
+            const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
+            data = getGuardianChartData(months, ChartUnit.MONTH, selectedGuardian);
+            break;
+        case ChartUnit.WEEK:
+            const weeks = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
+            data = getGuardianChartData(weeks, ChartUnit.WEEK, selectedGuardian);
+            break;
+        case ChartUnit.DAY:
+            const days = generateDays(STACK_GRAPH_MONTHS_LIMIT);
+            data = getGuardianChartData(days, ChartUnit.DAY, selectedGuardian);
+            break;
+        default:
+            break;
+    }
+    return data;
+};
+
+export const getGuardianByAddress = (guardians?: Guardian[], address?: string): Guardian | undefined => {
+    if (!guardians || !address) return;
+    const guardian = guardians.filter((g: Guardian) => {
+        return g.address === address;
+    })[0];
+    return guardian;
+};
+
+export const filterGuardians = (list: Guardian[], value: string) => {
+    if (!value || !list) return list || [];
+    const filtered = list.filter((guardian: Guardian) => {
+        const { name, address } = guardian;
+        const string = `${name} ${address}`;
+        return string.toLowerCase().indexOf(value.toLowerCase()) > -1;
+    });
+    return filtered || [];
 };

@@ -1,4 +1,5 @@
 import { Delegator } from '@orbs-network/pos-analytics-lib';
+import { Dispatch } from 'redux';
 import { ChartData } from '../../global/types';
 import { api } from '../../services/api';
 import { types } from '../types/types';
@@ -34,7 +35,7 @@ export const delegatorNotFound = (value: boolean) => async (dispatch: any) => {
     });
 };
 
-export const setDelegatorChartData = (chartData: ChartData | undefined) => async (dispatch: any) => {
+export const setDelegatorChartData = (chartData: ChartData | undefined) => async (dispatch: Dispatch<any>) => {
     return dispatch({
         type: types.DELEGATOR.SET_DELEGATOR_CHART_DATA,
         payload: chartData

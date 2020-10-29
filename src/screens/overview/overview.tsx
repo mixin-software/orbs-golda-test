@@ -1,24 +1,23 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import { setDataToGlobalReducer } from '../../redux/actions/actions';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { Route } from 'react-router-dom';
+import { getOverviewAction } from '../../redux/actions/actions';
+import { routes } from '../../routes/routes';
+import { OverviewSectionSelector } from './components/overview-section-selector/overview-section-selector';
+import { OverviewTop } from './components/overview-top/overview-top';
+import './overview.scss';
+import { OverviewStake } from './sections/overview-stake/overview-stake';
 
-const Home = () =>  {
+ export const Overview = () =>  {
     return (
-        <div className='home'>
-            
+        <div className='overview screen'>
+                <OverviewTop />
+                <div className="screen-section">
+                <OverviewSectionSelector />
+                <div className="screen-section-container">
+                    <Route path={routes.overview.stake} render={() => <OverviewStake />} />
+                </div>
+            </div>
         </div>
     )
 }
-
-
-const mapStateToProps = (state: any) => ({
-    data: state.data,
- });
- const mapDispatchToProps = {
-    setDataToGlobalReducer
- };
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
- )(Home);

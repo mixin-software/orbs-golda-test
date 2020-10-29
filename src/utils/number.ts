@@ -4,7 +4,7 @@ export const formatNumber = (num: number, format: string): string => {
     return numeral(num).format(format);
 };
 
-export const convertToString = (num?: number): number | string => {
-    if (!num) return '0';
+export const convertToString = (num?: number, defaultString?: string): number | string => {
+    if (!num) return defaultString || '0';
     return Number(num.toFixed(0)).toLocaleString();
 };

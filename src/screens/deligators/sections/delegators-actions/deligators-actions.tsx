@@ -12,7 +12,7 @@ import { sortByDate } from '../../../../utils/array';
 
 export const DeligatorsActions = () => {
     const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
-    const titles = ['Action', 'Amount', 'Block #', `Time (GMT+${moment(moment().utcOffset()).format('H')})`];
+    const titles = ['Action', 'Amount','Current stake','Block #', `Time (GMT+${moment(moment().utcOffset()).format('H')})`];
 
     return (
         <div className="deligators-actions">

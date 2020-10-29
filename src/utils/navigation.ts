@@ -21,7 +21,7 @@ export const generateNavigationLinks = (
     return [
         {
             name: t('navigation.overview'),
-            route: routes.overview,
+            route: routes.overview.stake,
             image: overviewIcon
         },
         {

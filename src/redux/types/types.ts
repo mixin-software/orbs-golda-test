@@ -1,6 +1,7 @@
 import { AuthState } from './auth-types';
 import { DelegatorState } from './delegator-types';
 import { GuardiansState } from './guardians-types';
+import { OverviewState } from './overview-types';
 
 export const types = {
     SET_DATA_TO_GLOBAL_REDUCER: 'SET_DATA_TO_GLOBAL_REDUCER',
@@ -21,6 +22,9 @@ export const types = {
         GUARDIAN_LOADING: 'GUARDIAN_LOADING',
         SET_GUARDIAN_CHART_DATA: 'SET_GUARDIAN_CHART_DATA',
         RESET_GUARDIAN: 'RESET_GUARDIAN'
+    },
+    OVERVIEW: {
+        SET_OVERVIEW: 'SET_OVERVIEW'
     }
 };
 
@@ -28,4 +32,5 @@ export interface AppState {
     auth: AuthState;
     delegator: DelegatorState;
     guardians: GuardiansState;
+    overview: OverviewState;
 }

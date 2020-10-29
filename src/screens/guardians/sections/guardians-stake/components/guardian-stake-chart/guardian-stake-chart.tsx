@@ -1,70 +1,50 @@
-import { GuardianInfo } from '@orbs-network/pos-analytics-lib';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { TimeRangeSelector } from '../../../../../../components/date-format-picker/time-range-selector';
-import { LineChart } from '../../../../../../components/line-chart/line-chart';
 import { LoadingComponent } from '../../../../../../components/loading-component/loading-component';
 import { NoData } from '../../../../../../components/no-data/no-data';
-import { ChartUnit, ChartYaxis, LoaderType } from '../../../../../../global/enums';
-import { STACK_GRAPH_MONTHS_LIMIT } from '../../../../../../global/variables';
+import { ChartUnit, LoaderType } from '../../../../../../global/enums';
 import { setGuardianChartData } from '../../../../../../redux/actions/actions';
 import { AppState } from '../../../../../../redux/types/types';
-import { generateDays, generateMonths, generateWeeks } from '../../../../../../utils/dates';
-import { getGuardianChartData } from '../../../../../../utils/guardians';
-
+import { generateGuardiansChartData } from '../../../../../../utils/guardians';
+import { Chart } from './chart';
 import './guardian-stake-chart.scss';
 
-const generateChartData = (type: ChartUnit, selectedGuardian?: GuardianInfo) => {
-    if (!selectedGuardian) return;
-    let data;
-    switch (type) {
-        case ChartUnit.MONTH:
-            const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
-            data = getGuardianChartData(months, ChartUnit.MONTH, selectedGuardian);
-            break;
-        case ChartUnit.WEEK:
-            const weeks = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
-            data = getGuardianChartData(weeks, ChartUnit.WEEK, selectedGuardian);
-            break;
-        case ChartUnit.DAY:
-            const days = generateDays(STACK_GRAPH_MONTHS_LIMIT);
-            data = getGuardianChartData(days, ChartUnit.DAY, selectedGuardian);
-            break;
-        default:
-            break;
-    }
-    return data;
-};
+
+
 
 export const GuardianStakeChart = () => {
-    const dispatch = useDispatch()
-    const [chartData, setChartData] = useState<any>(undefined);
-    const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
+    const dispatch = useDispatch();
+    const { selectedGuardian, guardianIsLoading, guardianChartData } = useSelector(
+        (state: AppState) => state.guardians
+    );
     const { t } = useTranslation();
     useEffect(() => {
+        if (guardianChartData) return;
         selectChartData(ChartUnit.MONTH);
     }, [selectedGuardian && selectedGuardian.address]);
 
     const selectChartData = (unit: ChartUnit) => {
-        const data = generateChartData(unit, selectedGuardian);
-        setChartData(data)
+        const data = generateGuardiansChartData(unit, selectedGuardian);
+        dispatch(setGuardianChartData(data));
     };
     return (
         <div className="guardian-stake-chart">
-            <LoadingComponent loaderType={LoaderType.BIG} isLoading={guardianIsLoading}>
-                {chartData ? (
+            <LoadingComponent loaderType={LoaderType.BIG} isLoading={guardianIsLoading && !guardianChartData}>
+                {guardianChartData ? (
                     <>
                         <header className="flex-between">
                             <h4>{t('delegators.stakeChangeOverTime')}</h4>
-                            <TimeRangeSelector selected={chartData.unit} selectCallBack={selectChartData} />
+                            <TimeRangeSelector selected={guardianChartData.unit} selectCallBack={selectChartData} />
                         </header>
-                        <LineChart chartData={chartData} yCharts={[ChartYaxis.Y1, ChartYaxis.Y2]} />
+                        <Chart chartData={guardianChartData}  />
                     </>
                 ) : (
-                    <NoData />
+                    null
                 )}
             </LoadingComponent>
+            {!selectedGuardian && !guardianIsLoading && <NoData />}
         </div>
     );
 };

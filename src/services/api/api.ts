@@ -1,4 +1,4 @@
-import { getDelegator, getGuardian, getGuardians } from '@orbs-network/pos-analytics-lib';
+import { getDelegator, getGuardian, getGuardians, getOverview } from '@orbs-network/pos-analytics-lib';
 
 class Api {
     ethereumEndpoint = 'https://mainnet.infura.io/v3/9679dc4f2d724f7997547f05f769d74e';
@@ -24,6 +24,14 @@ class Api {
     async getGuardiansApi() {
         try {
             const res = await getGuardians(this.nodeEndpoints);
+            return res;
+        } catch (error) {
+            return null;
+        }
+    }
+    async getOverviewApi() {
+        try {
+            const res = await getOverview(this.nodeEndpoints, this.ethereumEndpoint);
             return res;
         } catch (error) {
             return null;

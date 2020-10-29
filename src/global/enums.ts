@@ -10,6 +10,11 @@ export enum GuardiansSections {
     DELEGATORS = 'DELEGATORS'
 }
 
+export enum OverviewSections {
+    STAKE = 'STAKE',
+    WEIGHTS = 'WEIGHTS'
+}
+
 export enum LoaderType {
     TEXT = 'TEXT',
     BIG = 'BIG',

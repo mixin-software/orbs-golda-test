@@ -4,11 +4,12 @@
         "stake": "stake",
         "rewards": "rewards",
         "actions": "actions",
-        "delegetors":"delegetors",
+        "delegetors":"delegators",
         "noData":"no data",
         "months":"months",
         "weeks":"weeks",
-        "days":"days"
+        "days":"days",
+        "weights":"weights"
     },
     "navigation": {
         "orbsUniverse": "orbs universe",
@@ -23,7 +24,8 @@
        "legend":"legend",
        "totalDelegation":"total delegation",
        "ownDelegation":"own delegation",
-       "delegators":"delegators"
+       "delegators":"delegators",
+       "totalAndOwn":"total delegation & own delegation"
      
     },
     "delegators": {
@@ -31,7 +33,20 @@
         "delegatedTo": "Delegated to",
         "whaleCoreStake": "Whale Core Stake",
         "stakeChangeOverTime": "stake change over time",
-        "cooldown":"cooldown"
+        "cooldown":"cooldown",
+        "notFound":"Delegator not found"
+    },
+    "overview": {
+        "total":"total",
+        "stake":"stake",
+        "guardians":"guardians &",
+        "candidates":"candidates",
+        "project":"project",
+        "apy":"APY",
+        "stakeYourTokens":"Stake your tokens",
+        "guardianList":"Guardians list",
+        "buttonCta":"Button cta"
+
     }
 
 }

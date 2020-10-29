@@ -4,8 +4,9 @@ import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, DeligatorAction
 import { ChartData, ChartDatasetObject, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import moment from 'moment';
-import { returnDateNumber } from './dates';
+import { generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
 import { sortByDate } from './array';
+import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 export const generateDelegatorsRoutes = (t: TFunction, delegator?: Delegator): MenuOption[] => {
     const address = delegator ? delegator.address : '';
     return [
@@ -72,4 +73,34 @@ export const generateGuardiansActionColors = (event: DeligatorActionsTypes) => {
         default:
             break;
     }
+};
+
+export const generateDelegatorChartData = (type: ChartUnit, selectedDelegator?: Delegator): ChartData | undefined => {
+    if (!selectedDelegator) return;
+    let data;
+    switch (type) {
+        case ChartUnit.MONTH:
+            const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
+            data = getDelegatorChartData(months, ChartUnit.MONTH, selectedDelegator);
+            break;
+        case ChartUnit.WEEK:
+            const weeks = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
+            data = getDelegatorChartData(weeks, ChartUnit.WEEK, selectedDelegator);
+            break;
+        case ChartUnit.DAY:
+            const days = generateDays(20);
+            data = getDelegatorChartData(days, ChartUnit.DAY, selectedDelegator);
+            break;
+        default:
+            break;
+    }
+    return data;
+};
+
+export const generateDelegatorSearcElement = (delegator: Delegator) => {
+    const { address } = delegator;
+    return {
+        name: address,
+        address: address
+    };
 };
