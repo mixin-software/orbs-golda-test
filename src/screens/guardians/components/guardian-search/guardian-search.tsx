@@ -12,9 +12,6 @@ import { checkIfLoadDelegator, filterGuardians, getGuardianByAddress } from '../
 import LoupeImg from '../../../../assets/images/loupe.svg';
 
 
-
-
-
 export const GuardianSearch = () => {
     const { guardians, selectedGuardian } = useSelector((state: AppState) => state.guardians);
     const dispatch = useDispatch();
@@ -103,6 +100,7 @@ export const GuardianSearch = () => {
                     value={inputValue}
                     onFocus={() => setShowResults(true)}
                     onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => handlePaste(e)}
+                    placeholder = {t('guardians.inputPlaceholder')}
                 />
                 {showResults && (
                     <ul className="search-input-box-results">

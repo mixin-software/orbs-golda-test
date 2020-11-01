@@ -1,14 +1,17 @@
 @import '../../scss/colors/colors.scss';
 
 .delegators  {
-    padding-top: 90px;
+    padding-top: 70px;
     position: relative;
     .screen-section{
         margin-top: 60px;
+       
+        &-container {
+            height: 100%;
+            height: calc(100vh - 270px);
+        }   
     }
-    .screen-section-container {
-        height: calc(100vh - 300px);
-    }
+  
     .delegator-not-found {
         position: absolute;
         top: 160px;

@@ -24,8 +24,9 @@
        "legend":"legend",
        "totalDelegation":"total delegation",
        "ownDelegation":"own delegation",
-       "delegators":"delegators",
-       "totalAndOwn":"total delegation & own delegation"
+       "delegators":"Delegators",
+       "totalAndOwn":"Total delegation & Own delegation",
+       "inputPlaceholder":"Name or address"
      
     },
     "delegators": {
@@ -34,7 +35,8 @@
         "whaleCoreStake": "Whale Core Stake",
         "stakeChangeOverTime": "stake change over time",
         "cooldown":"cooldown",
-        "notFound":"Delegator not found"
+        "notFound":"Delegator not found",
+        "inputPlaceholder":"Address"
     },
     "overview": {
         "total":"total",
@@ -45,7 +47,8 @@
         "apy":"APY",
         "stakeYourTokens":"Stake your tokens",
         "guardianList":"Guardians list",
-        "buttonCta":"Button cta"
+        "buttonCta":"Button cta",
+        "graphText":"Overall stats | Total Stake"
 
     }
 

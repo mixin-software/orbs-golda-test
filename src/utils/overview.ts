@@ -4,10 +4,11 @@ import { ChartUnit, OverviewSections } from '../global/enums';
 import { ChartDatasetObject, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import moment from 'moment';
-import { generateDays, returnDateNumber } from './dates';
+import { converFromNumberToDate, generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
 import { sortByDate, sortByNumber } from './array';
 import { overviewguardiansColors } from '../ui/colors';
 import { api } from '../services/api';
+import { DATE_FORMAT, STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 export const getGuardiantsAndCandidates = (guardians: Guardian[]) => {
     console.log(guardians);
 };
@@ -64,24 +65,65 @@ const orderArr = (data: PosOverviewData[], orderObject: any) => {
     });
 };
 
-export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData?: PosOverview) => {
-    if (!overviewData) return;
+export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: PosOverview) => {
     const { slices } = overviewData;
     const order = getSortedGuardiansOrder(slices);
-    let arr: any[] = [];
-    const days = generateDays(20);
-    const daysInUse: any = [];
+    const datesInUse: any = [];
     slices.forEach((slice: PosOverviewSlice) => {
         const { block_time, data } = slice;
-        const date = returnDateNumber(block_time, ChartUnit.DAY);
-        if (!days.hasOwnProperty(date)) return;
-        if (daysInUse.includes(date)) return;
-        daysInUse.push(date);
-        const object = {
-            date,
-            data: orderArr(data, order)
-        };
-        arr.push(object);
+        const date = returnDateNumber(block_time, unit);
+        if (!date) return;
+        if (!dates.hasOwnProperty(date)) return;
+        if (datesInUse.includes(date)) return;
+        datesInUse.push(date);
+        dates[date] = orderArr(data, order);
     });
-    return arr;
+    const filled = checkIfEmptyDate(dates, unit);
+    return {
+        data: filled,
+        unit
+    };
+};
+
+export const checkIfEmptyDate = (dates: any, unit: ChartUnit) => {
+    let previousData: any = [];
+    const data = Object.keys(dates).map(function (key, index) {
+        const data = dates[key];
+        const date = converFromNumberToDate(Number(key), unit, DATE_FORMAT);
+        if (data.length === 0) {
+            return {
+                date,
+                data: previousData
+            };
+        } else {
+            previousData = data;
+            return {
+                date,
+                data: dates[key]
+            };
+        }
+    });
+    return data;
+};
+
+export const generateOverviewChartData = (type: ChartUnit, overviewData?: PosOverview) => {
+    if (!overviewData) return;
+    let data;
+    switch (type) {
+        case ChartUnit.MONTH:
+            const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
+            data = getOverviewChartData(months, ChartUnit.MONTH, overviewData);
+            break;
+        case ChartUnit.WEEK:
+            const weeks = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
+            data = getOverviewChartData(weeks, ChartUnit.WEEK, overviewData);
+            break;
+        case ChartUnit.DAY:
+            const days = generateDays(STACK_GRAPH_MONTHS_LIMIT);
+            data = getOverviewChartData(days, ChartUnit.DAY, overviewData);
+            break;
+        default:
+            break;
+    }
+    return data;
 };

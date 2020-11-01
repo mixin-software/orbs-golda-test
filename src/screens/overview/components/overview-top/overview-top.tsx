@@ -52,10 +52,6 @@ const OverviewTopComponent = () => {
     const { overviewData } = useSelector((state: AppState) => state.overview);
     const { t } = useTranslation();
     const dispatch = useDispatch()
-    useEffect(() => {
-        if(overviewData) return
-        dispatch(getOverviewAction())
-    }, [])
     return (
         <div className="overview-top flex-start-center">
             <OverviewTopSection

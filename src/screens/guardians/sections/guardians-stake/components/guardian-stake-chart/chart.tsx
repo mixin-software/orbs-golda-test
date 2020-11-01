@@ -7,7 +7,6 @@ import { generateDatasets, getGuardiansLineChartSettings } from '../../../../../
 
 interface StateProps {
     chartData: ChartData;
-    
 }
  
 export const Chart = ({ chartData }: StateProps) => {
@@ -16,6 +15,5 @@ export const Chart = ({ chartData }: StateProps) => {
         datasets: generateDatasets(chartData)
     };
     const options = getGuardiansLineChartSettings(chartData.unit, t);
-    
     return (options ? <div className='line-chart'> <Line data={data} options={options} /></div> : null);
 };

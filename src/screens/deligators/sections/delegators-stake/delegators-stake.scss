@@ -6,6 +6,7 @@
             height: 25px;
         }
     &-stake {
+        height: 100%;
         &-balance {
             margin: auto;
             height: 150px;
@@ -30,7 +31,6 @@
             &-to{
                p{
                 color: $light-gray;
-                // font-size: 14px;
              
                }
                .loader-text:nth-child(2){
@@ -60,9 +60,7 @@
 
                 h4 {
                     margin-bottom: 20px;
-                    font-size: 18px;
-                    font-weight: 400;
-                 
+                    font-size: 18px;                 
                 }
 
                 h5 {

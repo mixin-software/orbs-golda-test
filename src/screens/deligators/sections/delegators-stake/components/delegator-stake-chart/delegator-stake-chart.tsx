@@ -8,8 +8,7 @@ import { ChartUnit, LoaderType } from '../../../../../../global/enums';
 import { setDelegatorChartData } from '../../../../../../redux/actions/actions';
 import { AppState } from '../../../../../../redux/types/types';
 import { generateDelegatorChartData } from '../../../../../../utils/delegators';
-import { Chart } from './Chart';
-
+import { Chart } from './chart';
 import './delegator-stake-chart.scss';
 
 

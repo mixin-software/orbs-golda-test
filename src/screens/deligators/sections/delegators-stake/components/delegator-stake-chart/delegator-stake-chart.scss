@@ -1,23 +1,26 @@
-.delegator-stake-chart{
+.delegator-stake-chart {
     width: 100%;
-        min-height: 400px;
-        position: relative;
-        padding-top: 60px;
-        .loader-big{
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 20px;
+    height: calc(100% - 170px);
+    position: relative;
+    margin-top: 20px;
+    .loader-big {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+    }
+
+    .line-chart {
+        height: calc(100% - 60px);
+        width: 100%;
+    }
+
+    header {
+        margin-bottom: 30px;
+        text-transform: uppercase;
+
+        h4 {
+            font-weight: 600;
         }
-      
-        .line-chart{
-            height: 300px;
-        }
-        header{
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            h4{
-                font-weight: 600;
-            }
-        }
+    }
 }

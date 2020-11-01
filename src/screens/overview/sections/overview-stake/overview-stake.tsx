@@ -16,8 +16,6 @@ import { OverviewStakeChart } from './components/overview-stake-chart/overview-s
 export const OverviewStake = () => {
     const { overviewData } = useSelector((state: AppState) => state.overview);
     const { t } = useTranslation();
-    const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
-    const data = getOverviewChartData(months, ChartUnit.MONTH, overviewData);
     return (
         <div className="overview-stake flex-between">
             <OverviewStakeChart />

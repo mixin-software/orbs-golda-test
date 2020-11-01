@@ -17,7 +17,7 @@ export const DeligatorsActions = () => {
     return (
         <div className="deligators-actions">
             <div className="list deligators-actions-list">
-                <header className="list-header flex-start-center">
+               {selectedDelegator &&  <header className="list-header flex-start-center">
                     {titles.map((title: any, index: number) => {
                         return (
                             <h3 key={index} className="list-item">
@@ -25,7 +25,7 @@ export const DeligatorsActions = () => {
                             </h3>
                         );
                     })}
-                </header>
+                </header>}
                 <LoadingComponent isLoading={delegatorIsLoading} loaderType={LoaderType.LIST} listElementAmount={4}>
                     <ul>
                         {selectedDelegator && selectedDelegator.actions ? (

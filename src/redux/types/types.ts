@@ -24,7 +24,8 @@ export const types = {
         RESET_GUARDIAN: 'RESET_GUARDIAN'
     },
     OVERVIEW: {
-        SET_OVERVIEW: 'SET_OVERVIEW'
+        SET_OVERVIEW: 'SET_OVERVIEW',
+        SET_CHART_DATA: 'SET_CHART_DATA'
     }
 };
 

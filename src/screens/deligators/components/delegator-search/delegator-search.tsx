@@ -79,6 +79,7 @@ export const DelegatorSearch = () => {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
                     value={inputValue}
                     onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => handlePaste(e)}
+                    placeholder = {t('delegators.inputPlaceholder')}
                 />
             </section>
             {delegatorNotFound && <p className="search-input-not-found">{t('delegators.notFound')}</p>}

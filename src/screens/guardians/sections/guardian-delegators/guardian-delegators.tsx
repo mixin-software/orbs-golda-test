@@ -14,7 +14,7 @@ export const GuardianDelegators = () => {
     const titles = ['Delegator\'s address', 'Stake', 'Non-staked balance'];
     return (
         <div className="list guardian-delegators-list">
-            <header className="list-header flex-start-center">
+          {selectedGuardian &&   <header className="list-header flex-start-center">
                 {titles.map((title: any, index: number) => {
                     return (
                         <h3 key={index} className="list-item">
@@ -22,7 +22,7 @@ export const GuardianDelegators = () => {
                         </h3>
                     );
                 })}
-            </header>
+            </header>}
            <LoadingComponent isLoading = {guardianIsLoading} loaderType = {LoaderType.LIST} listElementAmount={3}>
            <ul>
                 {selectedGuardian ?

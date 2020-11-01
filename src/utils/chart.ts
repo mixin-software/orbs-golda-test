@@ -11,7 +11,10 @@ export const getGuardiansLineChartSettings = (unit: ChartUnit, t: TFunction) => 
         id: ChartYaxis.Y2,
         scaleLabel: {
             display: true,
-            labelString: t('guardians.totalAndOwn')
+            labelString: t('guardians.totalAndOwn'),
+            fontSize: 12,
+            fontFamily: 'Montserrat',
+            fontColor: '#666666'
         },
         position: 'right',
         display: true,
@@ -42,6 +45,8 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
     return {
         maintainAspectRatio: false,
         responsive: true,
+        margin: 0,
+        type: 'line',
         elements: {
             line: {
                 tension: 0
@@ -52,6 +57,12 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
         },
         title: {
             display: false
+        },
+        layout: {
+            padding: {
+                right: 10,
+                bottom: 3
+            }
         },
         animation: {
             duration: 0
@@ -93,11 +104,14 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
                         labelString: 'Date'
                     },
                     gridLines: {
+                        tickMarkLength: 10,
                         display: false,
-                        drawBorder: false
+                        drawBorder: false,
+                        zeroLineColor: 'rgba(255,99,132,0.2)'
                     },
                     ticks: {
-                        padding: 10,
+                        autoskip: true,
+                        padding: 5,
                         fontSize: 12,
                         fontFamily: 'Montserrat',
                         fontColor: '#666666'
@@ -108,7 +122,7 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
                 {
                     id: ChartYaxis.Y1,
                     scaleLabel: {
-                        display: true,
+                        display: false,
                         labelString: '',
                         fontSize: 12,
                         fontFamily: 'Montserrat',
@@ -123,7 +137,9 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
                         zeroLineColor: 'rgba(255,99,132,0.2)',
                         drawBorder: false
                     },
+
                     ticks: {
+                        autoskip: true,
                         maxTicksLimit: 7,
                         fontSize: 12,
                         fontFamily: 'Montserrat',

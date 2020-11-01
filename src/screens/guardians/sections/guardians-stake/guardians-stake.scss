@@ -3,6 +3,8 @@
 .guardian-stake {
     align-items: flex-start;
     padding-right: 80px;
+    height: calc(100vh  - 420px);
+    min-height: 420px;
     &-legend {
         margin-left: auto;
         h4 {

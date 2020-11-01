@@ -12,8 +12,6 @@ import { Chart } from './chart';
 import './guardian-stake-chart.scss';
 
 
-
-
 export const GuardianStakeChart = () => {
     const dispatch = useDispatch();
     const { selectedGuardian, guardianIsLoading, guardianChartData } = useSelector(
@@ -31,7 +29,7 @@ export const GuardianStakeChart = () => {
     };
     return (
         <div className="guardian-stake-chart">
-            <LoadingComponent loaderType={LoaderType.BIG} isLoading={guardianIsLoading && !guardianChartData}>
+            <LoadingComponent loaderType={LoaderType.BIG} isLoading={guardianIsLoading}>
                 {guardianChartData ? (
                     <>
                         <header className="flex-between">

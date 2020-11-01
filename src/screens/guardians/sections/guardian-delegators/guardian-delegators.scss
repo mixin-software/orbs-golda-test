@@ -1,20 +1,13 @@
+@import '../../../../scss/theme/foundation.scss';
 .guardian-delegators {
 
     &-list {
-        height: 560px;
-
-        a {
-            &:hover {
-                text-decoration: underline !important;
-                color: black;
-            }
-        }
-
+    height: calc(100vh - 330px);
         .list-item {
             width: 200px;
 
             &:nth-child(1) {
-                width: 450px;
+                width: 530px;
                 padding-right: 40px;
             }
 

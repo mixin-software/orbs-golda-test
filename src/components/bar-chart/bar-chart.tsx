@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getGuardianColor } from '../../utils/overview';
-import moment from 'moment';
 import { Guardian } from '@orbs-network/pos-analytics-lib';
 import { formatNumber } from '../../utils/number';
 
@@ -26,7 +25,7 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
                 datasets[address] = createDataset(colors[i], `${index + i}`);
             }
             const obj = {
-                x: moment().dayOfYear(date).format('DD/MM/YYYY'),
+                x: date,
                 y: effectiveStake
             };
             datasets[address].data.push(obj);
@@ -38,12 +37,11 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
         if (!arr) return;
         const colors = getGuardianColor(21);
         let datasets: any = {};
-        arr.forEach((elem: any, index: number) => {
+        arr.data.forEach((elem: any, index: number) => {
             const { data, date } = elem;
             datasets = addToDataset(data, datasets, colors, date, index);
         });
         const result = Object.keys(datasets).map((key) => datasets[key]);
-        console.log(result)
         return result;
     };
 
@@ -68,6 +66,7 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
         animation: {
             duration: 0
         },
+      
         interaction: {
             mode: 'index'
         },
@@ -79,9 +78,10 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
         scales: {
             xAxes: [
                 {
+                    offset: true,
                     type: 'time',
                     time: {
-                        unit: 'day',
+                        unit:chartData.unit,
                         format: 'DD/MM/YYYY'
                     },
                     stacked: true,

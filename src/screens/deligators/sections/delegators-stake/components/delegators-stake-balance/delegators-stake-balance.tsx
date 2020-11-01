@@ -20,7 +20,7 @@ interface StateProps {
 const DelegatorsStakeBalanceSection = ({ isLoading, text, data }: StateProps) => {
     return (
         <div className="flex-column">
-            <h4 className="one-line">{text}</h4>
+            <h4 className="one-line capitalize">{text}</h4>
             <LoadingComponent loaderType={LoaderType.TEXT} isLoading={isLoading}>
                <div className='flex-start-center'>
                <p className="delegators-stake-balance-big">{data}</p>

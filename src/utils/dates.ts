@@ -53,3 +53,16 @@ export const returnDateNumber = (date: number, unit: ChartUnit) => {
             break;
     }
 };
+
+export const converFromNumberToDate = (number: number, unit: ChartUnit, format: string): string | undefined => {
+    switch (unit) {
+        case ChartUnit.MONTH:
+            return moment().month(number).format(format);
+        case ChartUnit.WEEK:
+            return moment().week(number).format(format);
+        case ChartUnit.DAY:
+            return moment().dayOfYear(number).format(format);
+        default:
+            break;
+    }
+};
