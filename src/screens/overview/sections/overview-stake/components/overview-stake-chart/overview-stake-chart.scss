@@ -1,9 +1,11 @@
 .overview-stake-chart {
     height: 100%;
-  
-        width: calc(100% - 330px);
+    position: relative;
+        width: calc(100% - 350px);
         height: 100%;
-        pointer-events: none;
+        header{
+            margin-bottom: 50px;
+        }
         .bar-chart{
             height: 300px;
         }

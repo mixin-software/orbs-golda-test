@@ -3,7 +3,8 @@ import { types } from '../types/types';
 
 const initialState: OverviewState = {
     overviewData: undefined,
-    overviewChartData: undefined
+    overviewChartData: undefined,
+    overviewDataLoding: true
 };
 
 export const overviewReducer = (state = initialState, { payload, type }: any): OverviewState => {
@@ -11,7 +12,8 @@ export const overviewReducer = (state = initialState, { payload, type }: any): O
         case types.OVERVIEW.SET_OVERVIEW:
             return {
                 ...state,
-                overviewData: payload
+                overviewData: payload,
+                overviewDataLoding: false
             };
         case types.OVERVIEW.SET_CHART_DATA:
             return {
