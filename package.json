@@ -2,7 +2,7 @@
     "name": "orbs",
     "version": "0.1.0",
     "private": true,
-    "homepage":"http://denis-mixin.github.io/orbs-golda",
+    "homepage":".",
     "dependencies": {
         "@babel/polyfill": "^7.10.4",
         "@orbs-network/pos-analytics-lib": "^0.2.0",
