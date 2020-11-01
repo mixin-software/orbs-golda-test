@@ -9,7 +9,7 @@ import { Overview } from '../screens/overview/overview';
 
 export const RootRouter: Component = () => {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <NavigationMenu />
             <Switch>
                 <Route exact path="/">
