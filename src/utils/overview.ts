@@ -1,14 +1,12 @@
 import { Guardian, PosOverview, PosOverviewData, PosOverviewSlice } from '@orbs-network/pos-analytics-lib';
 import { TFunction } from 'i18next';
 import { ChartUnit, OverviewSections } from '../global/enums';
-import { ChartDatasetObject, MenuOption } from '../global/types';
+import { MenuOption, OverviewChartData, OverviewChartObject } from '../global/types';
 import { routes } from '../routes/routes';
-import moment from 'moment';
 import { converFromNumberToDate, generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
 import { sortByDate, sortByNumber } from './array';
 import { overviewguardiansColors } from '../ui/colors';
-import { api } from '../services/api';
-import { DATE_FORMAT, STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
+import { DATE_FORMAT, OVERVIEW_CHART_LIMIT } from '../global/variables';
 export const getGuardiantsAndCandidates = (guardians: Guardian[]) => {
     console.log(guardians);
 };
@@ -59,13 +57,13 @@ const getSortedGuardiansOrder = (slices: PosOverviewSlice[]) => {
     return guardiansObject;
 };
 
-const orderArr = (data: PosOverviewData[], orderObject: any) => {
+const reorderGuardians = (data: PosOverviewData[], orderObject: any): PosOverviewData[] => {
     return data.sort((a: PosOverviewData, b: PosOverviewData) => {
         return orderObject[a.address] - orderObject[b.address];
     });
 };
 
-export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: PosOverview) => {
+export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: PosOverview): OverviewChartData => {
     const { slices } = overviewData;
     const order = getSortedGuardiansOrder(slices);
     const datesInUse: any = [];
@@ -76,24 +74,23 @@ export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: 
         if (!dates.hasOwnProperty(date)) return;
         if (datesInUse.includes(date)) return;
         datesInUse.push(date);
-        dates[date] = orderArr(data, order);
+        dates[date] = reorderGuardians(data, order);
     });
-    const filled = checkIfEmptyDate(dates, unit);
     return {
-        data: filled,
+        data: fillEmptyData(dates, unit),
         unit
     };
 };
 
-export const checkIfEmptyDate = (dates: any, unit: ChartUnit) => {
+export const fillEmptyData = (dates: any, unit: ChartUnit): OverviewChartObject[] => {
     let previousData: any = [];
     const data = Object.keys(dates).map(function (key, index) {
         const data = dates[key];
         const date = converFromNumberToDate(Number(key), unit, DATE_FORMAT);
         if (data.length === 0) {
             return {
-                date,
-                data: previousData
+                data: previousData,
+                date
             };
         } else {
             previousData = data;
@@ -111,15 +108,15 @@ export const generateOverviewChartData = (type: ChartUnit, overviewData?: PosOve
     let data;
     switch (type) {
         case ChartUnit.MONTH:
-            const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
+            const months = generateMonths(OVERVIEW_CHART_LIMIT);
             data = getOverviewChartData(months, ChartUnit.MONTH, overviewData);
             break;
         case ChartUnit.WEEK:
-            const weeks = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
+            const weeks = generateWeeks(OVERVIEW_CHART_LIMIT);
             data = getOverviewChartData(weeks, ChartUnit.WEEK, overviewData);
             break;
         case ChartUnit.DAY:
-            const days = generateDays(STACK_GRAPH_MONTHS_LIMIT);
+            const days = generateDays(OVERVIEW_CHART_LIMIT);
             data = getOverviewChartData(days, ChartUnit.DAY, overviewData);
             break;
         default:

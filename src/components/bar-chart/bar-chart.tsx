@@ -10,6 +10,7 @@ interface StateProps {
 
 export const BarChartComponent = ({ chartData }: StateProps) => {
     const createDataset = (backgroundColor: string, label: string) => {
+        console.log(label)
         return {
             backgroundColor,
             label,
@@ -22,11 +23,12 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
         data.forEach((guardian: Guardian, i: number) => {
             const { address, effectiveStake } = guardian;
             if (!datasets[address]) {
-                datasets[address] = createDataset(colors[i], `${index + i}`);
+                datasets[address] = createDataset(colors[i], `dataset ${index + i}`);
             }
             const obj = {
                 x: date,
-                y: effectiveStake
+                y: effectiveStake,
+                ...guardian
             };
             datasets[address].data.push(obj);
         });
@@ -48,6 +50,7 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
     var barChartData = {
         datasets: generateDataset(chartData)
     };
+    console.log(barChartData)
 
     const options = {
         maintainAspectRatio: false,
@@ -71,13 +74,23 @@ export const BarChartComponent = ({ chartData }: StateProps) => {
             mode: 'index'
         },
         tooltips: {
-            mode: 'index',
-            intersect: false,
-            enabled: false
+            callbacks: {
+                label: function(tooltipItem:any, data:any) {
+                    console.log(data.datasets[tooltipItem.datasetIndex])
+                    var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                    if (label) {
+                        label += ': ';
+                    }
+                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                    return label;
+                }
+            }
         },
         scales: {
             xAxes: [
                 {
+                    distribution: 'series',
                     offset: true,
                     type: 'time',
                     time: {

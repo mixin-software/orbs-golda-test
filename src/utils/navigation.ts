@@ -6,6 +6,15 @@ import guardiansIcon from '../assets/images/deligators-icon.svg';
 import { NavigationLink } from '../global/types';
 import { Delegator, GuardianInfo } from '@orbs-network/pos-analytics-lib';
 
+import overviewImg from '../assets/images/navigation/overview.svg';
+import overviewSelectedImg from '../assets/images/navigation/overview-selected.svg';
+
+import guardiansImg from '../assets/images/navigation/guardians.svg';
+import guardiansSelectedImg from '../assets/images/navigation/guardians-selected.svg';
+
+import delegatorsImg from '../assets/images/navigation/delegators.svg';
+import delegatorsSelectedImg from '../assets/images/navigation/delegators-selected.svg';
+
 const getAddress = (obj?: Delegator | GuardianInfo) => {
     if (!obj) return '';
     const { address } = obj;
@@ -22,17 +31,20 @@ export const generateNavigationLinks = (
         {
             name: t('navigation.overview'),
             route: routes.overview.stake,
-            image: overviewIcon
+            image: overviewImg,
+            selectedImage: overviewSelectedImg
         },
         {
             name: t('navigation.guardians'),
             route: routes.guardians.stake.replace(':address', getAddress(guardian)),
-            image: guardiansIcon
+            image: guardiansImg,
+            selectedImage: guardiansSelectedImg
         },
         {
             name: t('navigation.delegators'),
             route: routes.delegators.stake.replace(':address', getAddress(delegator)),
-            image: deligatorsIcon
+            image: delegatorsImg,
+            selectedImage: delegatorsSelectedImg
         }
     ];
 };

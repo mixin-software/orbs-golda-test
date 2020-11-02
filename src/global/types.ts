@@ -1,3 +1,4 @@
+import { Guardian } from '@orbs-network/pos-analytics-lib';
 import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, GuardiansSections, OverviewSections } from './enums';
 
 export interface MenuOption {
@@ -11,6 +12,7 @@ export interface NavigationLink {
     name: string;
     route: string;
     image: string;
+    selectedImage: string;
 }
 
 export interface RouteParams {
@@ -43,4 +45,14 @@ export interface ChartDatasetObject {
 export interface SearchInputResultElement {
     name: string;
     address: string;
+}
+
+export interface OverviewChartObject {
+    date: string;
+    data: Guardian[];
+}
+
+export interface OverviewChartData {
+    data: OverviewChartObject[];
+    unit: ChartUnit;
 }

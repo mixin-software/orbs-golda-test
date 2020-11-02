@@ -5,17 +5,10 @@ import { convertToString, formatNumber } from './number';
 
 export const getGuardiansLineChartSettings = (unit: ChartUnit, t: TFunction) => {
     const settings = getLineChartBaseSettings(unit);
-    settings.scales.yAxes[0].scaleLabel.display = true;
-    settings.scales.yAxes[0].scaleLabel.labelString = t('guardians.delegators');
-    const axis: any = {
+    settings.layout.padding.left = 20;
+    settings.layout.padding.right = 20;
+    const yAxis: any = {
         id: ChartYaxis.Y2,
-        scaleLabel: {
-            display: true,
-            labelString: t('guardians.totalAndOwn'),
-            fontSize: 12,
-            fontFamily: 'Montserrat',
-            fontColor: '#666666'
-        },
         position: 'right',
         display: true,
         gridLines: {
@@ -37,7 +30,7 @@ export const getGuardiansLineChartSettings = (unit: ChartUnit, t: TFunction) => 
             padding: 15
         }
     };
-    settings.scales.yAxes.push(axis);
+    settings.scales.yAxes.push(yAxis);
     return settings;
 };
 
@@ -61,7 +54,8 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
         layout: {
             padding: {
                 right: 10,
-                bottom: 3
+                bottom: 3,
+                left: 0
             }
         },
         animation: {
@@ -94,14 +88,14 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
         scales: {
             xAxes: [
                 {
+                    distribution: 'linear',
                     type: 'time',
                     time: {
-                        format: 'DD/MM/YYYY',
+                        format: 'DD/MM/',
                         unit
                     },
                     scaleLabel: {
-                        display: false,
-                        labelString: 'Date'
+                        display: false
                     },
                     gridLines: {
                         tickMarkLength: 10,

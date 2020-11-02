@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../../../redux/types/types';
 import { convertToString } from '../../../../utils/number';
 import TotalStakeImg from '../../../../assets/images/cpu.svg';
 import GuardiansImg from '../../../../assets/images/encrypted.svg';
-import ApyImg from '../../../../assets/images/stellar.svg';
 import { useTranslation } from 'react-i18next';
 import { LoadingComponent } from '../../../../components/loading-component/loading-component';
-import { ChartUnit, LoaderType } from '../../../../global/enums';
-import { getOverviewAction } from '../../../../redux/actions/actions';
+import {  LoaderType } from '../../../../global/enums';
 import './overview-top.scss';
-import { getOverviewChartData } from '../../../../utils/overview';
-import { generateMonths } from '../../../../utils/dates';
-import { STACK_GRAPH_MONTHS_LIMIT } from '../../../../global/variables';
 
 interface StateProps {
     data: number;

@@ -13,7 +13,7 @@ export const generateMonths = (limit: number) => {
 
 export const generateWeeks = (limit: number) => {
     let dates: any = {};
-    for (let i = 0; i <= limit; i++) {
+    for (let i = 0; i < limit; i++) {
         const week = moment().subtract(i, 'week').week();
         dates[week] = [];
     }
@@ -22,7 +22,7 @@ export const generateWeeks = (limit: number) => {
 
 export const generateDays = (limit: number) => {
     let days: any = {};
-    for (let i = 0; i <= limit; i++) {
+    for (let i = 0; i < limit; i++) {
         const day = moment().subtract(i, 'day').dayOfYear();
         days[day] = [];
     }
@@ -54,7 +54,7 @@ export const returnDateNumber = (date: number, unit: ChartUnit) => {
     }
 };
 
-export const converFromNumberToDate = (number: number, unit: ChartUnit, format: string): string | undefined => {
+export const converFromNumberToDate = (number: number, unit: ChartUnit, format: string): string => {
     switch (unit) {
         case ChartUnit.MONTH:
             return moment().month(number).format(format);
@@ -63,6 +63,6 @@ export const converFromNumberToDate = (number: number, unit: ChartUnit, format: 
         case ChartUnit.DAY:
             return moment().dayOfYear(number).format(format);
         default:
-            break;
+            return moment().format(format);
     }
 };

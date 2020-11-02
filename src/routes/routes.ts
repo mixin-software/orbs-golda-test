@@ -15,5 +15,6 @@ export const routes = {
         stake: '/delegators/stake/:address?',
         rewards: '/delegators/rewards/:address?',
         actions: '/delegators/actions/:address?'
-    }
+    },
+    navigation: '/:section?'
 };

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, useParams } from 'react-router-dom';
 import React, { FunctionComponent as Component } from 'react';
 
 import { routes } from './routes';
@@ -10,7 +10,8 @@ import { Overview } from '../screens/overview/overview';
 export const RootRouter: Component = () => {
     return (
         <Router basename={process.env.PUBLIC_URL}>
-            <NavigationMenu />
+           
+            <Route path={routes.navigation} render={() =>  <NavigationMenu />} />
             <Switch>
                 <Route exact path="/">
                     <Redirect to={routes.overview.stake} />

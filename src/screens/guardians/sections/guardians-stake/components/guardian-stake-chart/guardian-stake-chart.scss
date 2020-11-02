@@ -1,25 +1,53 @@
-.guardian-stake-chart{
-   height: 350px;
+.guardian-stake-chart {
+    height: 350px;
     position: relative;
     width: calc(100% - 220px);
-    .line-chart{
-        height:100%;
+
+    .line-chart {
+        height: 100%;
+        position: relative;
     }
-    header{
+
+    header {
         margin-bottom: 60px;
-        h4{
+
+        h4 {
             font-weight: 600;
             font-size: 21px;
             text-transform: uppercase;
         }
     }
-   
-}
-    .loader-big{
+
+    .loader-big {
         position: absolute;
         left: 0px;
         top: 0px;
         width: 100%;
         height: 100%;
     }
- 
+
+    .line-chart-text {
+        position: absolute;
+        p{
+            font-size: 14px;
+        }
+        small{
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        &-left {
+            left: 0px;
+            top: 50%;
+            writing-mode:vertical-rl;
+            transform: translate(0, -50%);
+        }
+
+        &-right {
+            right: 0px;
+            top: 50%;
+            writing-mode: vertical-rl;
+            transform: translate(0, -50%);
+        }
+    }
+}

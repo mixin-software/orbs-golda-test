@@ -10,13 +10,15 @@ import { LoaderType } from '../../../../../../global/enums';
 
 
 import './overview-stake-guardians.scss';
+import { useTranslation } from 'react-i18next';
 
 export const OverviewStakeGuadians = () =>  {
     const { overviewData } = useSelector((state: AppState) => state.overview);
-
+    const { t } = useTranslation();
+    
     return (
         <div className="overview-stake-guardians">
-        <header className="flex-start">Guardian list</header>
+        <header className="flex-start">{t('overview.guardianList')}</header>
        <LoadingComponent isLoading = {!overviewData} loaderType = {LoaderType.LIST} listElementAmount={6}>
        <ul className="overview-stake-guardians-list">
             {overviewData &&

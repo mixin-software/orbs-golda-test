@@ -5,7 +5,7 @@
     height: calc(100vh - 330px);
         .list-item {
             width: 200px;
-
+           
             &:nth-child(1) {
                 width: 530px;
                 padding-right: 40px;
@@ -13,6 +13,9 @@
 
             img {
                 margin-left: auto;
+            }
+            &:hover{
+                text-decoration: underline;
             }
         }
 

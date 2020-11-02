@@ -1,17 +1,9 @@
 import { TFunction } from 'i18next';
-import { ChartData, GuardianDataset, MenuOption } from '../global/types';
+import { ChartData, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import { ChartColors, ChartUnit, ChartYaxis, GuardiansSections } from '../global/enums';
 import { Guardian, GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
-import {
-    generateDays,
-    generateMonths,
-    generateWeeks,
-    getDayNumberFromUnixDate,
-    getMonthNumberFromUnixDate,
-    getWeekNumberFromUnixDate,
-    returnDateNumber
-} from './dates';
+import { generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
 import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 import moment from 'moment';
 export const generateGuardiansRoutes = (t: TFunction, guardian?: GuardianInfo): MenuOption[] => {

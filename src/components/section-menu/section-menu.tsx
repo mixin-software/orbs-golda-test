@@ -4,17 +4,13 @@ import { DelegatorsSections, GuardiansSections, OverviewSections } from '../../g
 import { MenuOption, RouteParams } from '../../global/types';
 import './section-menu.scss';
 
-interface Key {
-    key: DelegatorsSections | GuardiansSections | OverviewSections;
-}
-
 interface Props {
     selected: string | null;
     disabled?: boolean;
     key: DelegatorsSections | GuardiansSections | OverviewSections;
 }
 
-const generateClassName = ({key, selected, disabled}: Props): string => {
+const generateClassName = ({ key, selected, disabled }: Props): string => {
     let className = `flex-center section-menu-element`;
     const isSelected = key.toLocaleLowerCase() === selected;
     if (isSelected) {
@@ -44,7 +40,7 @@ export const SectionMenu: Component<StateProps> = ({ options }: StateProps) => {
                 const { route, key, name, disabled } = option;
 
                 return (
-                    <li key={index} className={generateClassName({key, selected, disabled})}>
+                    <li key={index} className={generateClassName({ key, selected, disabled })}>
                         <Link to={route} className="flex-center">
                             <p className="capitalize"> {name}</p>
                         </Link>

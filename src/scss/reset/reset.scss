@@ -139,6 +139,10 @@ table {
 	outline: none !important;
 	text-decoration: none;
 }
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
 
 button {
 	border: 0px;

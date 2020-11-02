@@ -22,10 +22,9 @@
     "guardians": {
        "selectGuardian":"select a guardian",
        "legend":"legend",
-       "totalDelegation":"total delegation",
-       "ownDelegation":"own delegation",
+       "totalDelegation":"Total delegation",
+       "ownDelegation":"Own delegation",
        "delegators":"Delegators",
-       "totalAndOwn":"Total delegation & Own delegation",
        "inputPlaceholder":"Name or address"
      
     },
