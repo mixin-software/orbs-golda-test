@@ -143,7 +143,9 @@ a:hover, a:visited, a:link, a:active
 {
     text-decoration: none;
 }
-
+p{
+	line-height: normal;
+}
 button {
 	border: 0px;
 	cursor: pointer;

@@ -1,0 +1,24 @@
+.guardian-actions {
+    height: 100%;
+    .list {
+     
+        &-item {
+            max-width: 280px;
+            width: calc(100% / 4);
+
+        }
+    }
+    .loader-list {
+        &-element {
+            div {
+                max-width: 230px;
+                width: calc(100% / 4);
+                padding-right: 40px;
+                .loader {
+                    height: 20px;
+                    width: 100px;
+                }
+            }
+        }
+    }
+}

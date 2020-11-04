@@ -1,16 +1,18 @@
 .guardian-stake-chart {
-    height: 350px;
+    height:100%;
     position: relative;
     width: calc(100% - 220px);
 
     .line-chart {
-        height: 100%;
+        height: calc(100% - 70px);
         position: relative;
     }
 
     header {
-        margin-bottom: 60px;
-
+        height: 70px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
         h4 {
             font-weight: 600;
             font-size: 21px;
@@ -29,12 +31,12 @@
     .line-chart-text {
         position: absolute;
         p{
-            font-size: 14px;
+            font-size: 12px;
         }
         small{
             margin-top: 5px;
             margin-bottom: 5px;
-            font-size: 14px;
+            font-size: 12px;
         }
         &-left {
             left: 0px;

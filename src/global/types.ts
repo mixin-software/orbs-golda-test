@@ -38,8 +38,8 @@ export interface ChartDataset {
 }
 
 export interface ChartDatasetObject {
-    x: string;
-    y: number;
+    x: number;
+    y: number | null;
 }
 
 export interface SearchInputResultElement {
@@ -55,4 +55,8 @@ export interface OverviewChartObject {
 export interface OverviewChartData {
     data: OverviewChartObject[];
     unit: ChartUnit;
+}
+
+export interface BarChartDataset extends Guardian {
+    color: string;
 }

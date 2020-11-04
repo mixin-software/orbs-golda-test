@@ -7,7 +7,8 @@ export enum DelegatorsSections {
 export enum GuardiansSections {
     STAKE = 'STAKE',
     REWARDS = 'REWARDS',
-    DELEGATORS = 'DELEGATORS'
+    DELEGATORS = 'DELEGATORS',
+    ACTIONS = 'ACTIONS'
 }
 
 export enum OverviewSections {
@@ -18,7 +19,8 @@ export enum OverviewSections {
 export enum LoaderType {
     TEXT = 'TEXT',
     BIG = 'BIG',
-    LIST = 'LIST'
+    LIST = 'LIST',
+    ONE_LINE = 'ONE_LINE'
 }
 
 export enum DeligatorActionsTypes {
@@ -26,7 +28,8 @@ export enum DeligatorActionsTypes {
     RESTAKED = 'Restaked',
     WITHDREW = 'Withdrew',
     DELEGATED = 'Delegated',
-    UNSTAKED = 'Unstaked'
+    UNSTAKED = 'Unstaked',
+    CLAIMED = 'Claimed'
 }
 
 export enum TimeRangeSelectorOptions {
@@ -55,4 +58,10 @@ export enum ChartColors {
 export enum ChartYaxis {
     Y1 = 'y1',
     Y2 = 'y2'
+}
+export enum ListItemType {
+    STRING = 'string',
+    AMOUNT = 'amount',
+    DATE = 'date',
+    LINK = 'link'
 }

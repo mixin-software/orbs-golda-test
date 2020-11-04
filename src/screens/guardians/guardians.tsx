@@ -5,6 +5,8 @@ import { GuardianDelegators } from './sections/guardian-delegators/guardian-dele
 import { GuardiansStake } from './sections/guardians-stake/guardians-stake';
 import { GuardianSearch } from './components/guardian-search/guardian-search';
 import { GuardianSectionSelect } from './components/guardian-section-select/guardian-section-select';
+import { GuardianRewards } from './sections/guardian-rewards/guardian-rewards';
+import { GuardianActions } from './sections/guardian-actions/guardian-actions';
 import './guardians.scss';
 
 const GuardiansComponent = () => {
@@ -16,7 +18,9 @@ const GuardiansComponent = () => {
              <GuardianSectionSelect />
                 <div className="screen-section-container">
                     <Route path={routes.guardians.stake} render={() => <GuardiansStake />} />
+                    <Route path={routes.guardians.rewards} render={() => <GuardianRewards />} />
                     <Route path={routes.guardians.delegators} render={() => <GuardianDelegators />} />
+                    <Route path={routes.guardians.actions} render={() => <GuardianActions />} />
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import React, { Children } from 'react';
 import { LoaderType } from '../../global/enums';
 import { BigLoader } from '../loaders/big-loader';
 import { ListLoader } from '../loaders/list-loader';
+import { OneLineList } from '../loaders/one-line-list';
 import { TextLoader } from '../loaders/text-loader';
 
 interface StateProps {
@@ -21,6 +22,9 @@ export const LoadingComponent = ({ loaderType, isLoading, children, listElementA
             case LoaderType.LIST:
                 if (!listElementAmount) return null;
                 return <ListLoader listElementAmount={listElementAmount} />;
+                case LoaderType.ONE_LINE:
+                    if (!listElementAmount) return null;
+                    return <OneLineList listElementAmount={listElementAmount}/>
             default:
                 break;
         }

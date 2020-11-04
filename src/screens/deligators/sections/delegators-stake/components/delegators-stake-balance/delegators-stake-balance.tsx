@@ -33,6 +33,7 @@ const DelegatorsStakeBalanceSection = ({ isLoading, text, data }: StateProps) =>
 
 export const DelegatorsStakeBalance = () => {
     const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
+    console.log(selectedDelegator)
     const { guardians } = useSelector((state: AppState) => state.guardians);
     const { t } = useTranslation();
     const delegatedTo = getGuardianByAddress(guardians, selectedDelegator?.delegated_to)?.name;
@@ -45,7 +46,7 @@ export const DelegatorsStakeBalance = () => {
                 text={t('main.stake')}
             />
             <DelegatorsStakeBalanceSection
-                data={convertToString(selectedDelegator?.cool_down_stake)}
+                data={convertToString(selectedDelegator?.cooldown_stake)}
                 isLoading={delegatorIsLoading}
                 text={t('delegators.cooldown')}
             />
@@ -59,9 +60,9 @@ export const DelegatorsStakeBalance = () => {
                 <LoadingComponent loaderType={LoaderType.TEXT} isLoading={delegatorIsLoading}>
                   {delegatedTo ?   <Link to={routeToGuardian(selectedDelegator?.delegated_to)}>
                         <h5 className="text-overflow">{delegatedTo}</h5>
-                        <small className="text-overflow delegators-stake-balance-small">
+                        <p className="text-overflow delegators-stake-balance-small">
                             {selectedDelegator?.delegated_to}
-                        </small>
+                        </p>
                     </Link> :  <p className="delegators-stake-balance-bold">-</p>}
                 </LoadingComponent>
             </div>

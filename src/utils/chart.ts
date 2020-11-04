@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import { ChartUnit, ChartYaxis } from '../global/enums';
 import { ChartData, ChartDataset } from '../global/types';
 import { convertToString, formatNumber } from './number';
-
+import moment from 'moment';
 export const getGuardiansLineChartSettings = (unit: ChartUnit, t: TFunction) => {
     const settings = getLineChartBaseSettings(unit);
     settings.layout.padding.left = 20;
@@ -73,8 +73,6 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
             cornerRadius: 2,
             callbacks: {
                 label: function (tooltipItem: any, data: any) {
-                    var label = data.datasets[tooltipItem.datasetIndex].label;
-                    label += Math.round(tooltipItem.yLabel * 100) / 100;
                     return convertToString(Math.round(tooltipItem.yLabel * 100) / 100);
                 },
                 labelColor: function () {
@@ -91,8 +89,8 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
                     distribution: 'linear',
                     type: 'time',
                     time: {
-                        format: 'DD/MM/',
-                        unit
+                        unit,
+                        tooltipFormat: 'DD/MM/YYYY HH:mm'
                     },
                     scaleLabel: {
                         display: false
@@ -104,6 +102,10 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
                         zeroLineColor: 'rgba(255,99,132,0.2)'
                     },
                     ticks: {
+                        callback: function (value: any, index: any, values: any) {
+                            const date = values[index].value;
+                            return moment(date).format('DD MMM');
+                        },
                         autoskip: true,
                         padding: 5,
                         fontSize: 12,
@@ -138,6 +140,7 @@ export const getLineChartBaseSettings = (unit: ChartUnit) => {
                         fontSize: 12,
                         fontFamily: 'Montserrat',
                         fontColor: '#666666',
+                        suggestedMin: 0,
                         callback: function (value: number) {
                             return formatNumber(value, '0.0a').toUpperCase();
                         },

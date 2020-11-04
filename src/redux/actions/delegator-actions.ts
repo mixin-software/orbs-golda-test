@@ -7,7 +7,7 @@ import { types } from '../types/types';
 export const findDelegatorAction = (address: string) => async (dispatch: any) => {
     dispatch(resetDelegator());
     const delegator = await api.getDelegatorApi(address);
-    dispatch(delegatorLoading(false));
+    dispatch(setDelegatorLoading(false));
     if (!delegator) {
         return dispatch(delegatorNotFound(true));
     }
@@ -21,7 +21,7 @@ const setDelegator = (delegator: Delegator) => async (dispatch: any) => {
     });
 };
 
-export const delegatorLoading = (value: boolean) => async (dispatch: any) => {
+export const setDelegatorLoading = (value: boolean) => async (dispatch: any) => {
     return dispatch({
         type: types.DELEGATOR.DELEGATOR_LOADING,
         payload: value

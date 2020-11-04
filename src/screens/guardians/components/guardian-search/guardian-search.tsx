@@ -5,13 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useClickOutside } from 'react-click-outside-hook';
 import { RouteParams } from '../../../../global/types';
-import { getGuardianAction } from '../../../../redux/actions/actions';
+import { getGuardianAction, setGuardianLoading } from '../../../../redux/actions/actions';
 import { AppState } from '../../../../redux/types/types';
 import { routes } from '../../../../routes/routes';
 import { checkIfLoadDelegator, filterGuardians, getGuardianByAddress } from '../../../../utils/guardians';
-import LoupeImg from '../../../../assets/images/loupe.svg';
-
-
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 export const GuardianSearch = () => {
     const { guardians, selectedGuardian } = useSelector((state: AppState) => state.guardians);
     const dispatch = useDispatch();
@@ -19,16 +18,22 @@ export const GuardianSearch = () => {
     const { t } = useTranslation();
     const [ref, hasClickedOutside] = useClickOutside();
     const [inputValue, setInputValue] = useState<string>('');
+    const [selectedGuardianName, setSelectedGuardianName] = useState<string>('');
     const [showResults, setShowResults] = useState<boolean>(false);
     const params: RouteParams = useParams();
     useEffect(() => {
         findGuardianOnLoad();
     }, []);
 
+   
+
     const findGuardianOnLoad = () => {
         const { address } = params;
-        if (!address) return;
+        if (!address) {
+            return  dispatch(setGuardianLoading(false))
+        }
         findGuardian(address);
+        setSelectedGuardianName(address)
     };
 
     const findGuardian = (address: string) => {
@@ -41,29 +46,28 @@ export const GuardianSearch = () => {
         const { section } = params;
         history.push(routes.guardians.main.replace(':section?', section).replace(':address', address));
         findGuardian(address);
+        setSelectedGuardianName(address)
     };
     useEffect(() => {
         const { address } = params;
         if (hasClickedOutside) {
             setShowResults(false);
-            setGuardianNameAsValue(address)
+            setGuardianNameAsValue(address);
         }
     }, [hasClickedOutside]);
 
-
-
     const setGuardianNameAsValue = (address?: string) => {
-        if(!address) return 
-        const guardian = getGuardianByAddress(guardians, address)
-        if(!guardian) return
-        const string = `${guardian.name} (${guardian.address})`
+        if (!address) return;
+        const guardian = getGuardianByAddress(guardians, address);
+        if (!guardian) return;
+        const string = `${guardian.name} (${guardian.address})`;
         setInputValue(string);
-    }
+    };
 
     useEffect(() => {
         const { address } = params;
-        setGuardianNameAsValue(address)
-    }, [ guardians && guardians.length]);
+        setGuardianNameAsValue(address);
+    }, [guardians && guardians.length]);
 
     const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
         const value = e.clipboardData.getData('Text');
@@ -78,21 +82,41 @@ export const GuardianSearch = () => {
     };
     const select = (guardian: Guardian) => {
         const { address } = guardian;
-        setGuardianNameAsValue(address)
+        setGuardianNameAsValue(address);
         setShowResults(false);
         searchByAddress(address);
+        
     };
-  
+
+    const clear = () => {
+        setInputValue('')
+        setSelectedGuardianName('')
+        setShowResults(true);
+    }
+
+    const generateBtn = () => {
+        if (selectedGuardianName) {
+            return <button type="button" className="search-input-box-btn flex-center"
+                onClick = {() => clear() }
+            >
+                 <CloseRoundedIcon />
+            </button>;
+        }
+        return (
+            <button
+                type="button"
+                className="search-input-box-btn flex-center"
+                onClick={() => searchByAddress(inputValue)}>
+                <SearchRoundedIcon />
+            </button>
+        );
+    };
+
     return (
         <div className="guardian search-input flex-column">
             <p className="search-input-title">{t('guardians.selectGuardian')}</p>
             <section className="search-input-box" ref={ref}>
-                <button
-                    type="button"
-                    className="search-input-box-btn flex-center"
-                    onClick={() => searchByAddress(inputValue)}>
-                    <img src={LoupeImg} alt="" />
-                </button>
+                {generateBtn()}
                 <input
                     onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => submit(e)}
                     type="text"
@@ -100,7 +124,7 @@ export const GuardianSearch = () => {
                     value={inputValue}
                     onFocus={() => setShowResults(true)}
                     onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => handlePaste(e)}
-                    placeholder = {t('guardians.inputPlaceholder')}
+                    placeholder={t('guardians.inputPlaceholder')}
                 />
                 {showResults && (
                     <ul className="search-input-box-results">

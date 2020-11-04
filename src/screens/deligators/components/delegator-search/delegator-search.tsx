@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { RouteParams } from '../../../../global/types';
-import { findDelegatorAction } from '../../../../redux/actions/actions';
+import { findDelegatorAction, setDelegatorLoading } from '../../../../redux/actions/actions';
 import { AppState } from '../../../../redux/types/types';
 import { routes } from '../../../../routes/routes';
 import { checkIfLoadDeligator } from '../../../../utils/delegators';
@@ -46,10 +46,16 @@ export const DelegatorSearch = () => {
     };
 
     useEffect(() => {
-        const { address } = params;
-        if (!address) return;
-        findDelegator(address);
+        handleOnLoad()
     }, []);
+
+    const handleOnLoad = () => {
+        const { address } = params;
+        if (!address) {
+            return dispatch(setDelegatorLoading(false));
+        }
+        return findDelegator(address);
+    }
 
     const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
         const value = e.clipboardData.getData('Text');

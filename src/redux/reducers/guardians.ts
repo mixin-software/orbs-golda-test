@@ -5,7 +5,7 @@ const initialState: GuardiansState = {
     selectedGuardian: undefined,
     guardians: undefined,
     guardianNotFound: false,
-    guardianIsLoading: false,
+    guardianIsLoading: true,
     guardianChartData: undefined
 };
 

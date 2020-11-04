@@ -8,7 +8,8 @@ export const routes = {
         main: '/guardians/:section?/:address?',
         stake: '/guardians/stake/:address?',
         rewards: '/guardians/rewards/:address?',
-        delegators: '/guardians/delegators/:address?'
+        delegators: '/guardians/delegators/:address?',
+        actions: '/guardians/actions/:address?'
     },
     delegators: {
         main: '/delegators/:section?/:address?',

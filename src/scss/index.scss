@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600&display=swap');
+
 @import '../scss/colors/colors.scss';
 
 body {
@@ -68,43 +70,6 @@ body {
 	align-items: flex-start;
 }
 
-.list {
-	display: flex;
-	flex-direction: column;
-
-	&-header {
-		background: #F7F7F7;
-		padding-left: 20px;
-		height: 50px;
-
-		h3 {
-			font-size: 15px;
-			font-weight: 500;
-		}
-	}
-
-	ul {
-		height: calc(100% - 50px);
-		overflow-y: auto;
-
-		li {
-			min-height: 40px;
-			border-bottom: 1px dashed $list-border-color;
-			padding: 10px 0px 10px 20px;
-
-			p {
-				font-weight: 500;
-				font-size: 15px;
-				color: $light-gray;
-			}
-
-			a {
-				color: $light-gray;
-			}
-		}
-	}
-
-}
 
 .text-overflow {
 	white-space: nowrap;

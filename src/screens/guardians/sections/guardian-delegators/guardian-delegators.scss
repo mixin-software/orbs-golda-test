@@ -2,12 +2,12 @@
 .guardian-delegators {
 
     &-list {
-    height: calc(100vh - 330px);
+        height: 100%;
         .list-item {
-            width: 200px;
-           
+         width: 200px;
             &:nth-child(1) {
-                width: 530px;
+                width: 480px;
+                
                 padding-right: 40px;
             }
 
@@ -26,7 +26,7 @@
                     padding-right: 40px;
 
                     &:nth-child(1) {
-                        width: 450px;
+                        width: 530px;
 
                         .loader {
                             width: 70%;

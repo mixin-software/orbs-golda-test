@@ -1,10 +1,16 @@
-import { Delegator, DelegatorStake } from '@orbs-network/pos-analytics-lib';
+import { Delegator, DelegatorAction, DelegatorReward, DelegatorStake } from '@orbs-network/pos-analytics-lib';
 import { TFunction } from 'i18next';
 import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, DeligatorActionsTypes } from '../global/enums';
 import { ChartData, ChartDatasetObject, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import moment from 'moment';
-import { generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
+import {
+    converFromNumberToDateMilliseconds,
+    generateDays,
+    generateMonths,
+    generateWeeks,
+    returnDateNumber
+} from './dates';
 import { sortByDate } from './array';
 import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 export const generateDelegatorsRoutes = (t: TFunction, delegator?: Delegator): MenuOption[] => {
@@ -18,8 +24,7 @@ export const generateDelegatorsRoutes = (t: TFunction, delegator?: Delegator): M
         {
             name: t('main.rewards'),
             route: routes.delegators.rewards.replace(':address', address),
-            key: DelegatorsSections.REWARDS,
-            disabled: true
+            key: DelegatorsSections.REWARDS
         },
         {
             name: t('main.actions'),
@@ -35,16 +40,27 @@ export const checkIfLoadDeligator = (address?: string, delegator?: Delegator): b
     if (delegator.address.toLowerCase() === address.toLowerCase()) return false;
     return true;
 };
-
+const fillDelegatorsChartData = (dates: any, unit: ChartUnit) => {
+    let arr: ChartDatasetObject[] = [];
+    Object.keys(dates).forEach((key: string) => {
+        const date = converFromNumberToDateMilliseconds(Number(key), unit);
+        const datasetObject = {
+            x: date,
+            y: null
+        };
+        arr.push(datasetObject);
+    });
+    return arr;
+};
 export const getDelegatorChartData = (dates: any, unit: ChartUnit, delegator: Delegator): ChartData => {
     const { stake_slices } = delegator;
-    let arr: ChartDatasetObject[] = [];
+    let arr = fillDelegatorsChartData(dates, unit);
     stake_slices.map((slice: DelegatorStake) => {
         const { block_time, stake } = slice;
         const date = returnDateNumber(block_time, unit);
         if (!dates.hasOwnProperty(date)) return;
         const datasetObject = {
-            x: moment.unix(block_time).format('DD/MM/YYYY'),
+            x: moment.unix(block_time).valueOf(),
             y: stake
         };
         arr.push(datasetObject);
@@ -88,7 +104,7 @@ export const generateDelegatorChartData = (type: ChartUnit, selectedDelegator?: 
             data = getDelegatorChartData(weeks, ChartUnit.WEEK, selectedDelegator);
             break;
         case ChartUnit.DAY:
-            const days = generateDays(20);
+            const days = generateDays(STACK_GRAPH_MONTHS_LIMIT);
             data = getDelegatorChartData(days, ChartUnit.DAY, selectedDelegator);
             break;
         default:
@@ -97,10 +113,7 @@ export const generateDelegatorChartData = (type: ChartUnit, selectedDelegator?: 
     return data;
 };
 
-export const generateDelegatorSearcElement = (delegator: Delegator) => {
-    const { address } = delegator;
-    return {
-        name: address,
-        address: address
-    };
+export const getDelegatorRewardActions = (actions?: DelegatorReward[]) => {
+    if (!actions) return [];
+    console.log(actions);
 };

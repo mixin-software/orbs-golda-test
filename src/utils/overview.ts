@@ -1,15 +1,12 @@
-import { Guardian, PosOverview, PosOverviewData, PosOverviewSlice } from '@orbs-network/pos-analytics-lib';
+import { PosOverview, PosOverviewData, PosOverviewSlice } from '@orbs-network/pos-analytics-lib';
 import { TFunction } from 'i18next';
 import { ChartUnit, OverviewSections } from '../global/enums';
-import { MenuOption, OverviewChartData, OverviewChartObject } from '../global/types';
+import { BarChartDataset, MenuOption, OverviewChartData, OverviewChartObject } from '../global/types';
 import { routes } from '../routes/routes';
 import { converFromNumberToDate, generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
 import { sortByDate, sortByNumber } from './array';
 import { overviewguardiansColors } from '../ui/colors';
 import { DATE_FORMAT, OVERVIEW_CHART_LIMIT } from '../global/variables';
-export const getGuardiantsAndCandidates = (guardians: Guardian[]) => {
-    console.log(guardians);
-};
 
 export const generateOverviewRoutes = (t: TFunction): MenuOption[] => {
     return [
@@ -42,30 +39,37 @@ export const getGuardianColor = (amount: number) => {
     return arr;
 };
 
-const getSortedGuardiansOrder = (slices: PosOverviewSlice[]) => {
+const getGuardiansOrder = (slices: PosOverviewSlice[]) => {
     const sorted = sortByDate(slices);
-    const latest: PosOverviewSlice = sorted[0];
-    const { data } = latest;
-    const sortedGuardians = sortByNumber(data, 'effectiveStake');
+    const NewestSlice: PosOverviewSlice = sorted[0];
+    const { data } = NewestSlice;
+    const sortedGuardiansByStake = sortByNumber(data, 'effective_stake');
     const guardiansObject: any = {};
-    sortedGuardians.forEach((guardian: Guardian, index: number) => {
-        const obj: any = {
-            order: index
+    const colors = getGuardianColor(sortedGuardiansByStake.length);
+    sortedGuardiansByStake.forEach((guardian: BarChartDataset, index: number) => {
+        const obj = {
+            order: index,
+            backgroundColor: colors[index],
+            label: guardian.name,
+            data: [],
+            maxBarThickness: 30,
+            hoverBackgroundColor: undefined
         };
         guardiansObject[guardian.address] = obj;
     });
     return guardiansObject;
 };
 
-const reorderGuardians = (data: PosOverviewData[], orderObject: any): PosOverviewData[] => {
-    return data.sort((a: PosOverviewData, b: PosOverviewData) => {
-        return orderObject[a.address] - orderObject[b.address];
-    });
-};
+// export const reorderGuardians = (data: PosOverviewData[], orderObject: any): PosOverviewData[] => {
+//     return data.sort((a: PosOverviewData, b: PosOverviewData) => {
+//         return orderObject[a.address] - orderObject[b.address];
+//     });
+// };
 
-export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: PosOverview): OverviewChartData => {
+export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: PosOverview) => {
     const { slices } = overviewData;
-    const order = getSortedGuardiansOrder(slices);
+    const order = getGuardiansOrder(slices);
+
     const datesInUse: any = [];
     slices.forEach((slice: PosOverviewSlice) => {
         const { block_time, data } = slice;
@@ -74,33 +78,55 @@ export const getOverviewChartData = (dates: any, unit: ChartUnit, overviewData: 
         if (!dates.hasOwnProperty(date)) return;
         if (datesInUse.includes(date)) return;
         datesInUse.push(date);
-        dates[date] = reorderGuardians(data, order);
+        data.forEach((stakeGuardian: PosOverviewData) => {
+            const obj = {
+                x: converFromNumberToDate(date, unit, DATE_FORMAT),
+                y: stakeGuardian.effective_stake,
+                ...stakeGuardian
+            };
+            if (!order[stakeGuardian.address]) return;
+            order[stakeGuardian.address].data.push(obj);
+        });
     });
-    return {
-        data: fillEmptyData(dates, unit),
+    const filled = fillEmptyDates(order, dates, unit);
+    const obj = {
+        data: generateDataset(order),
         unit
     };
+    return obj;
 };
 
-export const fillEmptyData = (dates: any, unit: ChartUnit): OverviewChartObject[] => {
-    let previousData: any = [];
-    const data = Object.keys(dates).map(function (key, index) {
-        const data = dates[key];
+export const generateDataset = (arr: any) => {
+    const result = Object.keys(arr).map((key) => {
+        return arr[key];
+    });
+    return result;
+};
+
+export const fillEmptyDates = (order: any, dates: any, unit: ChartUnit) => {
+    let previousData: any = [{}];
+    const result = Object.keys(order).map((key) => {
+        console.log(order[key].data);
+    });
+};
+
+export const fillEmptyData = (orderObject: any, unit: ChartUnit): OverviewChartObject[] => {
+    const filledChartData = Object.keys(orderObject).map(function (key, index) {
+        const data = orderObject[key];
         const date = converFromNumberToDate(Number(key), unit, DATE_FORMAT);
         if (data.length === 0) {
             return {
-                data: previousData,
+                data: [],
                 date
             };
         } else {
-            previousData = data;
             return {
                 date,
-                data: dates[key]
+                data
             };
         }
     });
-    return data;
+    return filledChartData;
 };
 
 export const generateOverviewChartData = (type: ChartUnit, overviewData?: PosOverview) => {

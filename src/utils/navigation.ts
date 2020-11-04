@@ -1,8 +1,5 @@
 import { TFunction } from 'i18next';
 import { routes } from '../routes/routes';
-import deligatorsIcon from '../assets/images/overview-icon.svg';
-import overviewIcon from '../assets/images/guardians-icon.svg';
-import guardiansIcon from '../assets/images/deligators-icon.svg';
 import { NavigationLink } from '../global/types';
 import { Delegator, GuardianInfo } from '@orbs-network/pos-analytics-lib';
 

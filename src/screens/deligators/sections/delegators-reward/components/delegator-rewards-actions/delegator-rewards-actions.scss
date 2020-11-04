@@ -1,0 +1,28 @@
+
+
+.delegators-rewards-actions{
+height: calc(100% - 107px);    
+    .list{
+        margin-top: 30px;
+        height: 100%;
+        &-item{
+            width: 200px;
+        }   
+        ul{
+            height: calc(100% - 80px);
+        }
+    }
+
+    .loader-list {
+        &-element {
+            div {
+                width: 200px;
+                padding-right: 40px;
+                .loader {
+                    height: 20px;
+                    width: 100px;
+                }
+            }
+        }
+    }
+}

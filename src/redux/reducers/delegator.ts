@@ -5,7 +5,7 @@ import { types } from '../types/types';
 const initialState: DelegatorState = {
     selectedDelegator: undefined,
     delegatorNotFound: false,
-    delegatorIsLoading: false,
+    delegatorIsLoading: true,
     delegatorChartData: undefined
 };
 

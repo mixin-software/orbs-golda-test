@@ -31,6 +31,12 @@
            margin-bottom: 10px;
        }
     }
+    &-small {
+        font-size: 14px;
+        color: black;
+        margin-top: 10px;
+        width: 100%;
+    }
     &-section {
         height: 100%;
         position: relative;
@@ -63,12 +69,8 @@
             color: $dark-font-color;
             margin-bottom: 10px;
         }
+     
 
-        small {
-            font-size: 14px;
-            color: $light-gray;
-            margin-top: 10px;
-            width: 100%;
-        }
+      
     }
 }

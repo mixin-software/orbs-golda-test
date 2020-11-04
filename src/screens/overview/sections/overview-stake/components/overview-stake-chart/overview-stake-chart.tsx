@@ -13,6 +13,7 @@ import './overview-stake-chart.scss';
 export const OverviewStakeChart = () => {
     const dispatch = useDispatch();
     const { overviewData, overviewChartData, overviewDataLoding } = useSelector((state: AppState) => state.overview);
+    const { guardians } = useSelector((state: AppState) => state.guardians);
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export const OverviewStakeChart = () => {
                 )}
                 {overviewChartData && (
                     <div className="bar-chart">
-                        <BarChartComponent chartData={overviewChartData} />
+                        <BarChartComponent chartData={overviewChartData} guardians = {guardians} total = {overviewData?.total_stake}/>
                     </div>
                 )}
             </LoadingComponent>

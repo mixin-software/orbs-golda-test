@@ -9,7 +9,19 @@
         "months":"months",
         "weeks":"weeks",
         "days":"days",
-        "weights":"weights"
+        "weights":"weights",
+        "action":"action",
+        "amount":"amount",
+        "currentStake":"current stake",
+        "block":"block",
+        "time":"time",
+        "sum":"sum",
+        "untilNow":"Until now",
+  
+        "claimed":"claimed",
+        "currentBalance":"Current balance",
+        "alreadyClaimed":"Already claimed",
+        "totalClaimed":"Total"
     },
     "navigation": {
         "orbsUniverse": "orbs universe",
@@ -22,11 +34,16 @@
     "guardians": {
        "selectGuardian":"select a guardian",
        "legend":"legend",
-       "totalDelegation":"Total delegation",
-       "ownDelegation":"Own delegation",
+       "totalDelegation":"Total Guardian stake",
+       "ownDelegation":"Guardian self stake",
        "delegators":"Delegators",
-       "inputPlaceholder":"Name or address"
-     
+       "inputPlaceholder":"Name or address",
+       "delegatorsCount":"Delegators count",
+       "nonStakedBalance": "Non-staked balance",
+       "stake": "stake",
+       "cooldown":"cooldown",
+       "certifiedCommittee":"certified committee",
+       "applicationFees":"application fees"
     },
     "delegators": {
         "nonStakedBalance": "Non-staked balance",
@@ -36,6 +53,8 @@
         "cooldown":"cooldown",
         "notFound":"Delegator not found",
         "inputPlaceholder":"Address"
+        
+       
     },
     "overview": {
         "total":"total",
@@ -48,7 +67,6 @@
         "guardianList":"Guardians list",
         "buttonCta":"Button cta",
         "graphText":"Overall stats | Total Stake"
-
     }
 
 }

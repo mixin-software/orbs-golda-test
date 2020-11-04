@@ -20,7 +20,7 @@ export const GuardianStakeChart = () => {
     const { t } = useTranslation();
     useEffect(() => {
         if (guardianChartData) return;
-        selectChartData(ChartUnit.MONTH);
+        selectChartData(ChartUnit.WEEK);
     }, [selectedGuardian && selectedGuardian.address]);
 
     const selectChartData = (unit: ChartUnit) => {
@@ -32,7 +32,7 @@ export const GuardianStakeChart = () => {
             <LoadingComponent loaderType={LoaderType.BIG} isLoading={guardianIsLoading}>
                 {guardianChartData ? (
                     <>
-                        <header className="flex-between">
+                        <header>
                             <h4>{t('delegators.stakeChangeOverTime')}</h4>
                             <TimeRangeSelector selected={guardianChartData.unit} selectCallBack={selectChartData} />
                         </header>

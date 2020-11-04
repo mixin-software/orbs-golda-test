@@ -21,7 +21,7 @@ export const DelegatorStakeChart = () => {
     const { t } = useTranslation();
     useEffect(() => {
         if (delegatorChartData) return;
-        selectChartData(ChartUnit.MONTH);
+        selectChartData(ChartUnit.WEEK);
     }, [selectedDelegator && selectedDelegator.address]);
 
     const selectChartData = (unit: ChartUnit) => {

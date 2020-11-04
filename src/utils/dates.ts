@@ -66,3 +66,16 @@ export const converFromNumberToDate = (number: number, unit: ChartUnit, format: 
             return moment().format(format);
     }
 };
+
+export const converFromNumberToDateMilliseconds = (number: number, unit: ChartUnit): number => {
+    switch (unit) {
+        case ChartUnit.MONTH:
+            return moment().month(number).valueOf();
+        case ChartUnit.WEEK:
+            return moment().week(number).valueOf();
+        case ChartUnit.DAY:
+            return moment().dayOfYear(number).valueOf();
+        default:
+            return moment().valueOf();
+    }
+};

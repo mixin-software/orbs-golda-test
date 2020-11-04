@@ -3,7 +3,13 @@ import { ChartData, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import { ChartColors, ChartUnit, ChartYaxis, GuardiansSections } from '../global/enums';
 import { Guardian, GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
-import { generateDays, generateMonths, generateWeeks, returnDateNumber } from './dates';
+import {
+    converFromNumberToDateMilliseconds,
+    generateDays,
+    generateMonths,
+    generateWeeks,
+    returnDateNumber
+} from './dates';
 import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 import moment from 'moment';
 export const generateGuardiansRoutes = (t: TFunction, guardian?: GuardianInfo): MenuOption[] => {
@@ -17,13 +23,17 @@ export const generateGuardiansRoutes = (t: TFunction, guardian?: GuardianInfo): 
         {
             name: t('main.rewards'),
             route: routes.guardians.rewards.replace(':address', address),
-            key: GuardiansSections.REWARDS,
-            disabled: true
+            key: GuardiansSections.REWARDS
         },
         {
             name: t('main.delegetors'),
             route: routes.guardians.delegators.replace(':address', address),
             key: GuardiansSections.DELEGATORS
+        },
+        {
+            name: t('main.actions'),
+            route: routes.guardians.actions.replace(':address', address),
+            key: GuardiansSections.ACTIONS
         }
     ];
 };
@@ -53,16 +63,29 @@ const generateObject = () => {
         }
     };
 };
-export const getGuardianChartData = (months: any, unit: ChartUnit, guardian: GuardianInfo): ChartData => {
-    let dataObject: any = generateObject();
-    const { stake_slices } = guardian;
-    stake_slices.map((slice: GuardianStake) => {
-        const { block_time } = slice;
-        const date = returnDateNumber(block_time, unit);
-        if (!months.hasOwnProperty(date)) return;
-        dataObject = insertChartDataByType(dataObject, slice);
+
+const fillGuardiansChartData = (chartData: any, dates: any, unit: ChartUnit) => {
+    Object.keys(dates).forEach((key: string) => {
+        const date = converFromNumberToDateMilliseconds(Number(key), unit);
+        chartData = insertChartDataByType(chartData, date);
     });
-    return formatGuardianChartData(dataObject, unit);
+    return chartData;
+};
+export const getGuardianChartData = (dates: any, unit: ChartUnit, guardian: GuardianInfo): ChartData => {
+    let chartData: any = generateObject();
+    const { stake_slices } = guardian;
+
+    stake_slices.map((slice: GuardianStake) => {
+        const { block_time, self_stake, delegated_stake, n_delegates } = slice;
+        const blockDateNumber = returnDateNumber(block_time, unit);
+        if (!dates.hasOwnProperty(blockDateNumber)) return;
+        const date = moment.unix(block_time).valueOf();
+        chartData = insertChartDataByType(chartData, date, self_stake, n_delegates, delegated_stake);
+    });
+    chartData = fillGuardiansChartData(chartData, dates, unit);
+    const formatted = formatGuardianChartData(chartData, unit);
+
+    return formatted;
 };
 
 export const formatGuardianChartData = (data: any, unit: ChartUnit) => {
@@ -71,6 +94,7 @@ export const formatGuardianChartData = (data: any, unit: ChartUnit) => {
         const dataset = data[key];
         datasetsArr.push(dataset);
     });
+
     const obj = {
         datasets: datasetsArr,
         unit
@@ -78,9 +102,14 @@ export const formatGuardianChartData = (data: any, unit: ChartUnit) => {
     return obj;
 };
 
-const insertChartDataByType = (data: any, slice: GuardianStake): any => {
-    const { self_stake, n_delegates, block_time, delegated_stake } = slice;
-    const x = moment.unix(block_time).format('DD/MM/YYYY');
+const insertChartDataByType = (
+    chartData: any,
+    date: number,
+    self_stake?: number,
+    n_delegates?: number,
+    delegated_stake?: number
+): any => {
+    const x = date;
     const selftStake = {
         x,
         y: self_stake
@@ -93,10 +122,10 @@ const insertChartDataByType = (data: any, slice: GuardianStake): any => {
         x,
         y: delegated_stake
     };
-    data.selfStake.data.push(selftStake);
-    data.delegators.data.push(delegators);
-    data.delegatedStake.data.push(delegatedStake);
-    return data;
+    chartData.selfStake.data.push(selftStake);
+    chartData.delegators.data.push(delegators);
+    chartData.delegatedStake.data.push(delegatedStake);
+    return chartData;
 };
 
 export const generateGuardiansChartData = (type: ChartUnit, selectedGuardian?: GuardianInfo) => {
@@ -124,9 +153,18 @@ export const generateGuardiansChartData = (type: ChartUnit, selectedGuardian?: G
 export const getGuardianByAddress = (guardians?: Guardian[], address?: string): Guardian | undefined => {
     if (!guardians || !address) return;
     const guardian = guardians.filter((g: Guardian) => {
-        return g.address === address;
+        return g.address.toLowerCase() === address.toLowerCase();
     })[0];
+
     return guardian;
+};
+
+export const getGuardianByName = (guardians?: Guardian[], name?: string): string | undefined => {
+    if (!guardians || !name) return;
+    const guardian = guardians.filter((g: Guardian) => {
+        return g.name === name;
+    })[0];
+    return guardian.address;
 };
 
 export const filterGuardians = (list: Guardian[], value: string) => {

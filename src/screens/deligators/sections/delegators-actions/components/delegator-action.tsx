@@ -15,7 +15,7 @@ interface StateProps {
 }
 
 export const DelegatorActionElement = ({ action }: StateProps) => {
-    const { amount, block_time, block_number, event, to, currentStake } = action;
+    const { amount, block_time, block_number, event, to, current_stake, additional_info_link } = action;
     const { t } = useTranslation();
 
     const generateAction = () => {
@@ -36,7 +36,11 @@ export const DelegatorActionElement = ({ action }: StateProps) => {
                 </div>
             );
         }
-        return <p className="list-item">{event}</p>;
+        return (
+            <a href={additional_info_link} target="_blank" rel="noopener noreferrer" className="list-item">
+                <p>{event}</p>
+            </a>
+        );
     };
     const color = generateGuardiansActionColors(event as DeligatorActionsTypes);
     return (
@@ -45,7 +49,7 @@ export const DelegatorActionElement = ({ action }: StateProps) => {
             <p className="list-item" style={{ color }}>
                 {convertToString(amount, '-')}
             </p>
-            <p className="list-item">{convertToString(currentStake)}</p>
+            <p className="list-item">{convertToString(current_stake, '-')}</p>
             <a
                 href={`${ETHERSCAN_BLOCK_ADDRESS}/${block_number}`}
                 target="_blank"

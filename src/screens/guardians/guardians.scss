@@ -2,6 +2,9 @@
     padding-top: 70px;
     .screen-section{
         margin-top: 60px;
+        &-container{
+            height: calc(100vh - 270px);
+        }
     }
     .search-input-box{
         width: 620px;

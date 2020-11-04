@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { ChartColors } from '../../../../../../global/enums';
 
-
+import './guardian-stake-legend.scss';
 
 interface Legend {
     name: string;
@@ -21,7 +21,7 @@ export const GuardianStakeLegend = () => {
             background: ChartColors.GRAY
         },
         {
-            name: `# ${t('guardians.delegators')}`,
+            name: `${t('guardians.delegatorsCount')}`,
             background: ChartColors.GREEN
         }
     ];
