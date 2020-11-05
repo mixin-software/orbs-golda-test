@@ -11,26 +11,24 @@ import './guardian-actions.scss';
 
 export const GuardianActions = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
-    console.log(selectedGuardian)
     const {t} = useTranslation()
     const titles = [
         t('main.action'),
-        t('main.sum'),
+        t('main.amount'),
+        t('main.currentStake'),
         `${t('main.block')} #`,
         `${t('main.time')} (GMT+${moment(moment().utcOffset()).format('H')})`
     ];
+
+    const noData = !selectedGuardian && !guardianIsLoading
     return (
-        <div className="guardian-actions">
-            <List loadersAmount={4} isLoading={guardianIsLoading} titles={titles}>
-                {selectedGuardian && selectedGuardian.actions.length > 0 ? (
-                    <>
-                        {selectedGuardian.actions.map((action: GuardianAction, key: number) => {
+        noData ? <NoData /> : <div className="guardian-actions">
+            <List loadersAmount={5} isLoading={guardianIsLoading} titles={titles}>
+            <>
+                        {selectedGuardian && selectedGuardian.actions.map((action: GuardianAction, key: number) => {
                             return <GuardianActionComponent action={action} key={key} />;
                         })}
                     </>
-                ) : (
-                    <NoData />
-                )}
             </List>
         </div>
     );

@@ -2,6 +2,7 @@ import { PosOverview } from '@orbs-network/pos-analytics-lib';
 
 export interface OverviewState {
     overviewData?: PosOverview;
-    overviewChartData?: any;
+    overviewStakeChartData?: any;
+    overviewWeightsChartData?: any;
     overviewDataLoding: boolean;
 }

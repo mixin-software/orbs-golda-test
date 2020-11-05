@@ -28,9 +28,9 @@ export const DelegatorStakeChart = () => {
         const data = generateDelegatorChartData(unit, selectedDelegator);
         dispatch(setDelegatorChartData(data));
     };
-
+    const noData = !delegatorIsLoading && !selectedDelegator
     return (
-        <div className="delegator-stake-chart">
+        noData ? null : <div className="delegator-stake-chart">
             <LoadingComponent loaderType={LoaderType.BIG} isLoading={delegatorIsLoading && !delegatorChartData}>
                 {delegatorChartData ? (
                     <>
@@ -44,7 +44,6 @@ export const DelegatorStakeChart = () => {
                     </>
                 ) : null}
             </LoadingComponent>
-            {!delegatorIsLoading && !selectedDelegator && <NoData />}
         </div>
     );
 };

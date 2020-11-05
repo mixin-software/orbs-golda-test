@@ -3,6 +3,7 @@
 
 .guardian-stake-legend {
     margin-left: auto;
+    width: 200px;
     h4 {
         color: $light-gray;
         margin-bottom: 30px;
@@ -21,5 +22,9 @@
             color: $light-gray;
             font-size: 15px;
         }
+    }
+    .loader{
+        width: 90%;
+        height: 20px;
     }
 }

@@ -10,17 +10,17 @@ interface StateProps {
 }
 
 export const GuardianRewardAction = ({ action }: StateProps) => {
-    const { amount, block_time, block_number, additional_info_link } = action;
+    const { amount, block_time, block_number, additional_info_link, event } = action;
     const { t } = useTranslation();
-
+    const eventName = t(`guardians.${event}`)
     return (
         <li className="flex-start-center">
             {additional_info_link ? (
                 <a href={additional_info_link} target="_blank" rel="noopener noreferrer" className="list-item">
-                    <p className="capitalize">{t('delegators.claimed')}</p>
+                    <p className="capitalize">{eventName}</p>
                 </a>
             ) : (
-                <p className="list-item capitalize">{t('delegators.claimed')}</p>
+                <p className="list-item capitalize">{eventName}</p>
             )}
             <p className="list-item">{convertToString(amount)}</p>
             <a

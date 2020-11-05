@@ -1,60 +1,43 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { LoadingComponent } from '../../../../../../components/loading-component/loading-component';
-import { LoaderType } from '../../../../../../global/enums';
 import { AppState } from '../../../../../../redux/types/types';
-import { getGuardianByAddress } from '../../../../../../utils/guardians';
 import { convertToString } from '../../../../../../utils/number';
-import { routeToGuardian } from '../../../../../../utils/routing';
-import TokenImg from '../../../../../../assets/images/token.png';
 import { useTranslation } from 'react-i18next';
 import './guardian-stake-balance.scss';
+import { BalanceSection } from '../../../../../../components/balance-section/balance-section';
+import { NoData } from '../../../../../../components/no-data/no-data';
 
-interface StateProps {
-    isLoading: boolean;
-    text: string;
-    data: string | number;
-}
 
-const GuardianStakeBalanceSection = ({ isLoading, text, data }: StateProps) => {
-    return (
-        <div className="guardian-stake-balance-section flex-column">
-            <h4 className="one-line capitalize">{text}</h4>
-            <LoadingComponent loaderType={LoaderType.TEXT} isLoading={isLoading}>
-                <div className="flex-start-center">
-                    <p className="guardian-stake-balance-bold">{data}</p>
-                    <img src={TokenImg} alt="orbs img" className="guardian-stake-balance-img" />
-                </div>
-            </LoadingComponent>
-        </div>
-    );
-};
 
 export const GuardianStakeBalance = () => {
-    const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
-    const { guardians } = useSelector((state: AppState) => state.guardians);
+    const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
     const { t } = useTranslation();
-    const delegatedTo = getGuardianByAddress(guardians, selectedDelegator?.delegated_to)?.name;
-
+    const stake =( selectedGuardian?.stake_status.delegated_stake || 0) + (selectedGuardian?.stake_status.self_stake ||0 )
+    const noData = !guardianIsLoading && !selectedGuardian
     return (
-        <section className="guardian-stake-balance flex-start">
-            <GuardianStakeBalanceSection
-                data={convertToString(selectedDelegator?.total_stake)}
-                isLoading={delegatorIsLoading}
+        noData ? 
+        <NoData />
+        :<section className="guardian-stake-balance flex-start">
+            <BalanceSection
+                data={convertToString(stake)}
+                isLoading={guardianIsLoading}
                 text={t('main.stake')}
             />
-            <GuardianStakeBalanceSection
-                data={convertToString(selectedDelegator?.cooldown_stake)}
-                isLoading={delegatorIsLoading}
+               <BalanceSection
+                data={convertToString(selectedGuardian?.stake_status.self_stake)}
+                isLoading={guardianIsLoading}
+                text={t('guardians.selfStake')}
+            />
+            <BalanceSection
+                data={convertToString(selectedGuardian?.stake_status.cooldown_stake)}
+                isLoading={guardianIsLoading}
                 text={t('guardians.cooldown')}
             />
-            <GuardianStakeBalanceSection
-                data={convertToString(selectedDelegator?.non_stake)}
-                isLoading={delegatorIsLoading}
+            <BalanceSection
+                data={convertToString(selectedGuardian?.stake_status.non_stake)}
+                isLoading={guardianIsLoading}
                 text={t('guardians.nonStakedBalance')}
             />
-           
         </section>
     );
 };

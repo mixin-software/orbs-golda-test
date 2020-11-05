@@ -10,6 +10,8 @@ import { routeToGuardian } from '../../../../../../utils/routing';
 import TokenImg from '../../../../../../assets/images/token.png';
 import { useTranslation } from 'react-i18next';
 import './delegators-stake-balance.scss';
+import { BalanceSection } from '../../../../../../components/balance-section/balance-section';
+import { NoData } from '../../../../../../components/no-data/no-data';
 
 interface StateProps {
     isLoading: boolean;
@@ -17,40 +19,27 @@ interface StateProps {
     data: string | number;
 }
 
-const DelegatorsStakeBalanceSection = ({ isLoading, text, data }: StateProps) => {
-    return (
-        <div className="delegators-stake-balance-section flex-column">
-            <h4 className="one-line capitalize">{text}</h4>
-            <LoadingComponent loaderType={LoaderType.TEXT} isLoading={isLoading}>
-                <div className="flex-start-center">
-                    <p className="delegators-stake-balance-bold">{data}</p>
-                    <img src={TokenImg} alt="orbs img" className="delegators-stake-balance-img" />
-                </div>
-            </LoadingComponent>
-        </div>
-    );
-};
+
 
 export const DelegatorsStakeBalance = () => {
     const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
-    console.log(selectedDelegator)
     const { guardians } = useSelector((state: AppState) => state.guardians);
     const { t } = useTranslation();
     const delegatedTo = getGuardianByAddress(guardians, selectedDelegator?.delegated_to)?.name;
-
+    const noData  = !selectedDelegator && !delegatorIsLoading
     return (
-        <section className="delegators-stake-balance flex-start">
-            <DelegatorsStakeBalanceSection
+        noData ? <NoData /> : <section className="delegators-stake-balance flex-start">
+            <BalanceSection
                 data={convertToString(selectedDelegator?.total_stake)}
                 isLoading={delegatorIsLoading}
                 text={t('main.stake')}
             />
-            <DelegatorsStakeBalanceSection
+            <BalanceSection
                 data={convertToString(selectedDelegator?.cooldown_stake)}
                 isLoading={delegatorIsLoading}
                 text={t('delegators.cooldown')}
             />
-            <DelegatorsStakeBalanceSection
+            <BalanceSection
                 data={convertToString(selectedDelegator?.non_stake)}
                 isLoading={delegatorIsLoading}
                 text={t('delegators.nonStakedBalance')}
@@ -59,8 +48,8 @@ export const DelegatorsStakeBalance = () => {
                 <h4>{t('delegators.delegatedTo')}</h4>
                 <LoadingComponent loaderType={LoaderType.TEXT} isLoading={delegatorIsLoading}>
                   {delegatedTo ?   <Link to={routeToGuardian(selectedDelegator?.delegated_to)}>
-                        <h5 className="text-overflow">{delegatedTo}</h5>
-                        <p className="text-overflow delegators-stake-balance-small">
+                        <p className="text-overflow delegators-stake-balance-to">{delegatedTo}</p>
+                        <p className="text-overflow delegators-stake-balance-address">
                             {selectedDelegator?.delegated_to}
                         </p>
                     </Link> :  <p className="delegators-stake-balance-bold">-</p>}

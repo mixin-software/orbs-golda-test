@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../../../../redux/types/types';
 import { Reward } from '../../../../../../components/reward/reward';
-import { LoadingComponent } from '../../../../../../components/loading-component/loading-component';
-import { LoaderType } from '../../../../../../global/enums';
 import { NoData } from '../../../../../../components/no-data/no-data';
 import TrophyImg from '../../../../../../assets/images/trophy.svg';
 import CommitteeImg from '../../../../../../assets/images/voting-booth.svg';
@@ -17,7 +15,6 @@ import { RewardTitles } from '../../../../../../components/reward-titles/reward-
 
 export const GuardianRewardsTop = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
-    console.log(selectedGuardian);
     const { t } = useTranslation();
     const titles = [
         '',
@@ -25,8 +22,9 @@ export const GuardianRewardsTop = () => {
         t('main.alreadyClaimed'),
         `${t('main.totalClaimed')} (${t('main.untilNow')})`
     ];
+    const noData = !guardianIsLoading && !selectedGuardian
 
-    return !selectedGuardian && !guardianIsLoading ? (
+    return noData ? (
         <NoData />
     ) : (
         <div className="guardian-rewards-top">

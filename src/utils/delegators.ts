@@ -1,6 +1,6 @@
-import { Delegator, DelegatorAction, DelegatorReward, DelegatorStake } from '@orbs-network/pos-analytics-lib';
+import { Delegator, DelegatorAction, DelegatorStake } from '@orbs-network/pos-analytics-lib';
 import { TFunction } from 'i18next';
-import { ChartColors, ChartUnit, ChartYaxis, DelegatorsSections, DeligatorActionsTypes } from '../global/enums';
+import { ChartColors, ChartUnit, ChartYaxis, DelegatorActionsTypes, DelegatorsSections } from '../global/enums';
 import { ChartData, ChartDatasetObject, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import moment from 'moment';
@@ -76,16 +76,18 @@ export const getDelegatorChartData = (dates: any, unit: ChartUnit, delegator: De
     };
 };
 
-export const generateGuardiansActionColors = (event: DeligatorActionsTypes) => {
+export const generateDelegatorsActionColors = (event: DelegatorActionsTypes) => {
     switch (event) {
-        case DeligatorActionsTypes.STAKED:
+        case DelegatorActionsTypes.STAKED:
             return 'green';
-        case DeligatorActionsTypes.RESTAKED:
+        case DelegatorActionsTypes.RESTAKED:
             return 'green';
-        case DeligatorActionsTypes.UNSTAKED:
+        case DelegatorActionsTypes.UNSTAKED:
             return 'red';
-        case DeligatorActionsTypes.WITHDREW:
+        case DelegatorActionsTypes.WITHDREW:
             return 'red';
+        case DelegatorActionsTypes.CLAIMED:
+            return 'black';
         default:
             break;
     }
@@ -113,7 +115,7 @@ export const generateDelegatorChartData = (type: ChartUnit, selectedDelegator?: 
     return data;
 };
 
-export const getDelegatorRewardActions = (actions?: DelegatorReward[]) => {
+export const getDelegatorRewardActions = (actions?: DelegatorAction[]) => {
     if (!actions) return [];
-    console.log(actions);
+    return actions.filter((action: DelegatorAction) => action.event === DelegatorActionsTypes.CLAIMED);
 };

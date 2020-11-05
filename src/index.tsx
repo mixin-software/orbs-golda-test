@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import {  ConnectedRouter } from "connected-react-router"
@@ -13,11 +13,13 @@ const history = createBrowserHistory()
 
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-    <App />
-    </ConnectedRouter>
-  </Provider>,
+  <Suspense fallback={<div>Loading</div>}>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+      <App />
+      </ConnectedRouter>
+    </Provider>
+  </Suspense>,
   document.getElementById("root")
 )
 serviceWorker.unregister()

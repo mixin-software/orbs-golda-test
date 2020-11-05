@@ -1,14 +1,14 @@
 import { DelegatorAction } from '@orbs-network/pos-analytics-lib';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { DeligatorActionsTypes } from '../../../../../global/enums';
 import { routes } from '../../../../../routes/routes';
-import { generateGuardiansActionColors } from '../../../../../utils/delegators';
+import { generateDelegatorsActionColors } from '../../../../../utils/delegators';
 import LinkIcon from '../../../../../assets/images/copy.svg';
 import { convertToString } from '../../../../../utils/number';
 import { ETHERSCAN_BLOCK_ADDRESS } from '../../../../../keys/keys';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { DelegatorActionsTypes } from '../../../../../global/enums';
 
 interface StateProps {
     action: DelegatorAction;
@@ -19,12 +19,15 @@ export const DelegatorActionElement = ({ action }: StateProps) => {
     const { t } = useTranslation();
 
     const generateAction = () => {
-        const isDeligated = event === DeligatorActionsTypes.DELEGATED;
-
+        const isDeligated = event === DelegatorActionsTypes.DELEGATED;
+        const eventName = `delegators.${event}`
         if (isDeligated && to) {
             return (
                 <div className="list-item">
-                    {isDeligated ? <p>{t('delegators.delegatedTo')}</p> : <p>{event}</p>}
+
+                    <a href={additional_info_link} target="_blank" rel="noopener noreferrer" className="list-item">
+                    {isDeligated ? <p>{t(eventName)}</p> : <p>{event}</p>}
+                        </a>
                     <section className="list-item-tooltip">
                         <Link to={routes.guardians.stake.replace(':address', to)} className="flex-start-center">
                             <p className="text-overflow">{to}</p>
@@ -38,11 +41,11 @@ export const DelegatorActionElement = ({ action }: StateProps) => {
         }
         return (
             <a href={additional_info_link} target="_blank" rel="noopener noreferrer" className="list-item">
-                <p>{event}</p>
+                <p>{t(eventName)}</p>
             </a>
         );
     };
-    const color = generateGuardiansActionColors(event as DeligatorActionsTypes);
+    const color = generateDelegatorsActionColors(event as DelegatorActionsTypes);
     return (
         <li className="flex-start-center">
             {generateAction()}

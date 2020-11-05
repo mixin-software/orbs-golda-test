@@ -3,7 +3,8 @@ import { types } from '../types/types';
 
 const initialState: OverviewState = {
     overviewData: undefined,
-    overviewChartData: undefined,
+    overviewStakeChartData: undefined,
+    overviewWeightsChartData: undefined,
     overviewDataLoding: true
 };
 
@@ -15,10 +16,20 @@ export const overviewReducer = (state = initialState, { payload, type }: any): O
                 overviewData: payload,
                 overviewDataLoding: false
             };
-        case types.OVERVIEW.SET_CHART_DATA:
+        case types.OVERVIEW.SET_OVERVIEW_IS_LOADING:
             return {
                 ...state,
-                overviewChartData: payload
+                overviewDataLoding: payload
+            };
+        case types.OVERVIEW.SET_STAKE_CHART_DATA:
+            return {
+                ...state,
+                overviewStakeChartData: payload
+            };
+        case types.OVERVIEW.SET_WEIGHTS_CHART_DATA:
+            return {
+                ...state,
+                overviewWeightsChartData: payload
             };
 
         default:

@@ -23,13 +23,27 @@ export enum LoaderType {
     ONE_LINE = 'ONE_LINE'
 }
 
-export enum DeligatorActionsTypes {
+export enum DelegatorActionsTypes {
     STAKED = 'Staked',
     RESTAKED = 'Restaked',
     WITHDREW = 'Withdrew',
     DELEGATED = 'Delegated',
     UNSTAKED = 'Unstaked',
-    CLAIMED = 'Claimed'
+    CLAIMED = 'DelegatorStakingRewardsClaimed'
+}
+
+export enum GuardianActionsTypes {
+    STAKED = 'Staked',
+    RESTAKED = 'Restaked',
+    UNSTAKED = 'Unstaked',
+    WITHDREW = 'Withdrew',
+    CLAIM_GUARDIAN_REWARDS = 'GuardianStakingRewardsClaimed',
+    DELEGATOR_STAKING_REWARDS_CLAIMED = 'DelegatorStakingRewardsClaimed',
+    BOOTSTRAP_REWARDS_WITHDREW = 'BootstrapRewardsWithdrawn',
+    FEES_WITHDRAWN = 'FeesWithdrawn',
+    DELEGATED_TO = 'Delegated',
+    GUARDIAN_REGISTERED = 'GuardianRegistered',
+    SELF_DELEGATED = 'SelfDelegated'
 }
 
 export enum TimeRangeSelectorOptions {

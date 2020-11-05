@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppState } from '../../../../redux/types/types';
 import { convertToString } from '../../../../utils/number';
 import TotalStakeImg from '../../../../assets/images/cpu.svg';
@@ -8,17 +8,20 @@ import { useTranslation } from 'react-i18next';
 import { LoadingComponent } from '../../../../components/loading-component/loading-component';
 import {  LoaderType } from '../../../../global/enums';
 import './overview-top.scss';
+import { OVERVIEW_STATUS_LINK } from '../../../../global/variables';
+import StellarImg from '../../../../assets/images/stellar.svg';
 
 interface StateProps {
-    data: number;
+    data?: number;
     textTop: string;
     textBottom: string;
     imgSrc: string;
     btnText: string;
     link?: string;
+    noData?: boolean;
 }
 
-const OverviewTopSection = ({ data, textTop, textBottom, imgSrc, btnText, link }: StateProps) => {
+const OverviewTopSection = ({ data, textTop, textBottom, imgSrc, btnText, link, noData }: StateProps) => {
     return (
         <section className="overview-top-section flex-column">
             <div className="flex-between">
@@ -29,9 +32,9 @@ const OverviewTopSection = ({ data, textTop, textBottom, imgSrc, btnText, link }
                         <p>{textBottom}</p>
                     </span>
                 </span>
-                <LoadingComponent loaderType = {LoaderType.TEXT} isLoading ={!data}>
+              {!noData &&   <LoadingComponent loaderType = {LoaderType.TEXT} isLoading ={!data}>
                 <h4>{convertToString(data)}</h4>
-                </LoadingComponent>
+                </LoadingComponent>}
             </div>
         <button type='button' className='flex-center'>
     {link ?  <a className='flex-center' href={link} target='_blank'>{btnText}</a> : btnText}
@@ -44,9 +47,8 @@ const OverviewTopSection = ({ data, textTop, textBottom, imgSrc, btnText, link }
 
 
 const OverviewTopComponent = () => {
-    const { overviewData } = useSelector((state: AppState) => state.overview);
+    const { overviewData, overviewDataLoding } = useSelector((state: AppState) => state.overview);
     const { t } = useTranslation();
-    const dispatch = useDispatch()
     return (
         <div className="overview-top flex-start-center">
             <OverviewTopSection
@@ -56,6 +58,7 @@ const OverviewTopComponent = () => {
                 imgSrc={TotalStakeImg}
                 btnText = {t('overview.stakeYourTokens')}
                 link = 'https://staking.orbs.network'
+                noData = {!overviewDataLoding && !overviewData}
             />
             <OverviewTopSection
                 textTop={t('overview.guardians')}
@@ -64,6 +67,15 @@ const OverviewTopComponent = () => {
                 imgSrc={GuardiansImg}
                 btnText = {t('overview.guardianList')}
                 link = 'https://staking.orbs.network'
+                noData = {!overviewDataLoding && !overviewData}
+            />
+              <OverviewTopSection
+                textTop={t('overview.network')}
+                textBottom={t('overview.status')}
+                imgSrc={StellarImg}
+                btnText = {t('overview.status')}
+                link = {OVERVIEW_STATUS_LINK}
+                noData = {true}
             />
         </div>
     );

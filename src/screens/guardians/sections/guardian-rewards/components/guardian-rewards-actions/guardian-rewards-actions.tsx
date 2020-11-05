@@ -8,6 +8,7 @@ import { List } from '../../../../../../components/list/list';
 import { useTranslation } from 'react-i18next';
 import { GuardianRewardAction } from './guardian-reward-action';
 import './guardian-rewards-actions.scss';
+import { getGuardiansRewardActions } from '../../../../../../utils/guardians';
 
 export const GuardianRewardsActions = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
@@ -18,13 +19,12 @@ export const GuardianRewardsActions = () => {
         `${t('main.block')} #`,
         `Time (GMT+${moment(moment().utcOffset()).format('H')})`
     ];
-    console.log(selectedGuardian)
     return !selectedGuardian && !guardianIsLoading ? null : (
         <div className="guardian-rewards-actions">
             <List loadersAmount={4} isLoading={guardianIsLoading} titles={titles}>
                 {selectedGuardian ? (
                     <>
-                        {selectedGuardian.actions.map((action: GuardianAction, key: number) => {
+                        {getGuardiansRewardActions(selectedGuardian.actions).map((action: GuardianAction, key: number) => {
                             return <GuardianRewardAction action={action} key={key} />;
                         })}
                     </>

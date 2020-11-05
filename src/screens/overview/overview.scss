@@ -6,4 +6,28 @@
     .screen-section-container{
         height: 500px;
     }
+    &-flex{
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    .no-data{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+    }
+}
+
+
+.overview-chart {
+    height: 100%;
+        width: calc(100% - 350px);
+        height: 100%;
+        header{
+            margin-bottom: 50px;
+        }
+        .bar-chart{
+            height: 300px;
+        }
+    
 }

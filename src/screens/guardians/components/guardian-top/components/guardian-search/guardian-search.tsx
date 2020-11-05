@@ -4,13 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useClickOutside } from 'react-click-outside-hook';
-import { RouteParams } from '../../../../global/types';
-import { getGuardianAction, setGuardianLoading } from '../../../../redux/actions/actions';
-import { AppState } from '../../../../redux/types/types';
-import { routes } from '../../../../routes/routes';
-import { checkIfLoadDelegator, filterGuardians, getGuardianByAddress } from '../../../../utils/guardians';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
+import { GuardiansResults } from './guardians-results';
+
+import { RouteParams } from '../../../../../../global/types';
+import { setGuardianLoading, getGuardianAction } from '../../../../../../redux/actions/actions';
+import { AppState } from '../../../../../../redux/types/types';
+import { routes } from '../../../../../../routes/routes';
+import { getGuardianName, checkIfLoadDelegator, getGuardianByAddress } from '../../../../../../utils/guardians';
+import './guardian-search.scss'
+
+
 export const GuardianSearch = () => {
     const { guardians, selectedGuardian } = useSelector((state: AppState) => state.guardians);
     const dispatch = useDispatch();
@@ -25,15 +30,17 @@ export const GuardianSearch = () => {
         findGuardianOnLoad();
     }, []);
 
-   
+
 
     const findGuardianOnLoad = () => {
         const { address } = params;
         if (!address) {
-            return  dispatch(setGuardianLoading(false))
+            return dispatch(setGuardianLoading(false));
         }
         findGuardian(address);
-        setSelectedGuardianName(address)
+        const guardianName = getGuardianName(guardians, address)
+        if(!guardianName) return
+        setSelectedGuardianName(guardianName)
     };
 
     const findGuardian = (address: string) => {
@@ -43,16 +50,22 @@ export const GuardianSearch = () => {
         }
     };
     const searchByAddress = (address: string) => {
+        if(!address) return 
         const { section } = params;
         history.push(routes.guardians.main.replace(':section?', section).replace(':address', address));
         findGuardian(address);
-        setSelectedGuardianName(address)
+        const guardianName = getGuardianName(guardians, address)
+        if(!guardianName) return
+        setSelectedGuardianName(guardianName)
     };
     useEffect(() => {
         const { address } = params;
         if (hasClickedOutside) {
             setShowResults(false);
             setGuardianNameAsValue(address);
+            const guardianName = getGuardianName(guardians, address)
+            if(!guardianName) return
+            setSelectedGuardianName(guardianName)
         }
     }, [hasClickedOutside]);
 
@@ -80,27 +93,28 @@ export const GuardianSearch = () => {
             searchByAddress(inputValue);
         }
     };
-    const select = (guardian: Guardian) => {
+    const selectGuardian = (guardian: Guardian) => {
         const { address } = guardian;
+      
         setGuardianNameAsValue(address);
         setShowResults(false);
+     
         searchByAddress(address);
-        
     };
 
     const clear = () => {
-        setInputValue('')
-        setSelectedGuardianName('')
+        setInputValue('');
+        setSelectedGuardianName('');
         setShowResults(true);
-    }
+    };
 
     const generateBtn = () => {
         if (selectedGuardianName) {
-            return <button type="button" className="search-input-box-btn flex-center"
-                onClick = {() => clear() }
-            >
-                 <CloseRoundedIcon />
-            </button>;
+            return (
+                <button type="button" className="search-input-box-btn flex-center" onClick={() => clear()}>
+                    <CloseRoundedIcon />
+                </button>
+            );
         }
         return (
             <button
@@ -113,7 +127,7 @@ export const GuardianSearch = () => {
     };
 
     return (
-        <div className="guardian search-input flex-column">
+        <div className="guardian-search search-input flex-column">
             <p className="search-input-title">{t('guardians.selectGuardian')}</p>
             <section className="search-input-box" ref={ref}>
                 {generateBtn()}
@@ -127,16 +141,7 @@ export const GuardianSearch = () => {
                     placeholder={t('guardians.inputPlaceholder')}
                 />
                 {showResults && (
-                    <ul className="search-input-box-results">
-                        {filterGuardians(guardians || [], inputValue).map((result: Guardian, index: number) => {
-                            const { address, name } = result;
-                            return (
-                                <li key={index} className="flex-start-center" onClick={() => select(result)}>
-                                    <p className="text-overflow">{`${name} (${address})`}</p>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                    <GuardiansResults guardians={guardians} inputValue={inputValue} select={selectGuardian} />
                 )}
             </section>
         </div>

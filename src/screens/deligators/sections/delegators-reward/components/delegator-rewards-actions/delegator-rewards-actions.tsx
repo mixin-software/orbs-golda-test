@@ -8,6 +8,7 @@ import './delegator-rewards-actions.scss';
 import { List } from '../../../../../../components/list/list';
 import { useTranslation } from 'react-i18next';
 import { DelegatorRewardAction } from './components/delegator-reward-actions/delegator-reward-action';
+import { getDelegatorRewardActions } from '../../../../../../utils/delegators';
 
 export const DelegatorRewardsActions = () => {
     const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
@@ -18,13 +19,12 @@ export const DelegatorRewardsActions = () => {
         `${t('main.block')} #`,
         `Time (GMT+${moment(moment().utcOffset()).format('H')})`
     ];
-    console.log(selectedDelegator)
     return !selectedDelegator && !delegatorIsLoading ? null : (
         <div className="delegators-rewards-actions">
             <List loadersAmount={4} isLoading={delegatorIsLoading} titles={titles}>
                 {selectedDelegator ? (
                     <div>
-                        {selectedDelegator.actions.map((action: DelegatorAction, key: number) => {
+                        {getDelegatorRewardActions(selectedDelegator.actions).map((action: DelegatorAction, key: number) => {
                             return <DelegatorRewardAction action={action} key={key} />;
                         })}
                     </div>

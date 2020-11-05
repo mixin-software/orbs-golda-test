@@ -1,6 +1,9 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { ChartColors } from '../../../../../../global/enums';
+import { useSelector } from 'react-redux';
+import { LoadingComponent } from '../../../../../../components/loading-component/loading-component';
+import { ChartColors, LoaderType } from '../../../../../../global/enums';
+import { AppState } from '../../../../../../redux/types/types';
 
 import './guardian-stake-legend.scss';
 
@@ -10,6 +13,9 @@ interface Legend {
 }
 
 export const GuardianStakeLegend = () => {
+    const { selectedGuardian, guardianIsLoading, guardianChartData } = useSelector(
+        (state: AppState) => state.guardians
+    );
     const {t} = useTranslation()
     const legends = [
         {
@@ -25,20 +31,21 @@ export const GuardianStakeLegend = () => {
             background: ChartColors.GREEN
         }
     ];
-
+    const noData = !guardianIsLoading && !selectedGuardian
     return (
-        <section className="guardian-stake-legend">
-                <h4 className='capitalize'>{t('guardians.legend')}</h4>
+        noData ? null  : <section className="guardian-stake-legend">
                 {legends.map((legend: Legend) => {
                     const { name, background } = legend;
                     return (
-                        <div key = {name} className='flex-start-center'>
+                       <LoadingComponent key = {name} isLoading = {true} loaderType ={LoaderType.TEXT} >
+                            <div  className='flex-start-center'>
                             <figure
                                 style={{
                                     background
                                 }}></figure>
                             <p className='capitalize'>{name}</p>
                         </div>
+                       </LoadingComponent>
                     );
                 })}
             </section>

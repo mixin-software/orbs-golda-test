@@ -6,23 +6,23 @@ import { NoData } from '../../../../components/no-data/no-data';
 import './guardian-delegators.scss';
 import { GuardianDelegatorElement } from './components/guardian-delegator/guardian-delegator';
 import { List } from '../../../../components/list/list';
+import { useTranslation } from 'react-i18next';
 
 export const GuardianDelegators = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
+    const {t} = useTranslation()
+    const titles = [t('guardians.delegatorsAddress'), t('guardians.stake'), t('guardians.nonStakedBalance')];
+    const noData = !guardianIsLoading && !selectedGuardian;
 
-    const titles = ['Delegator\'s address', 'Stake', 'Non-staked balance'];
-    return (
+    return noData ? (
+        <NoData />
+    ) : (
         <div className="list guardian-delegators-list">
             <List loadersAmount={3} isLoading={guardianIsLoading} titles={titles}>
-                {selectedGuardian ? (
-                    <div>
-                        {selectedGuardian.delegators.map((delegator: GuardianDelegator) => {
-                            return <GuardianDelegatorElement delegator={delegator} key = {delegator.address} />;
-                        })}
-                    </div>
-                ) : (
-                    <NoData />
-                )}
+                {selectedGuardian &&
+                    selectedGuardian.delegators.map((delegator: GuardianDelegator) => {
+                        return <GuardianDelegatorElement delegator={delegator} key={delegator.address} />;
+                    })}
             </List>
         </div>
     );

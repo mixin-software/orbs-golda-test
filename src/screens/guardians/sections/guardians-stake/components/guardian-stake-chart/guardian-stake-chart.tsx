@@ -27,9 +27,11 @@ export const GuardianStakeChart = () => {
         const data = generateGuardiansChartData(unit, selectedGuardian);
         dispatch(setGuardianChartData(data));
     };
+    const noData = !guardianIsLoading && !selectedGuardian
+
     return (
-        <div className="guardian-stake-chart">
-            <LoadingComponent loaderType={LoaderType.BIG} isLoading={guardianIsLoading}>
+        noData ? null : <div className="guardian-stake-chart">
+            <LoadingComponent loaderType={LoaderType.BIG} isLoading={true}>
                 {guardianChartData ? (
                     <>
                         <header>
@@ -42,7 +44,6 @@ export const GuardianStakeChart = () => {
                     null
                 )}
             </LoadingComponent>
-            {!selectedGuardian && !guardianIsLoading && <NoData />}
         </div>
     );
 };

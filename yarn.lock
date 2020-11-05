@@ -1608,7 +1608,7 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@orbs-network/pos-analytics-lib@^0.5.0":
+"@orbs-network/pos-analytics-lib@0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@orbs-network/pos-analytics-lib/-/pos-analytics-lib-0.5.0.tgz#6ab1305ac0c1b8237f6a47a2987503d9cd5af75c"
   integrity sha512-cmuHvuXaVyXdIV2nwdfB/HPwS9L3lFuUB+/AefNaDtAwUzbJ7muY6acNJAoF9QjGYd8o/UhnM5PuTJDBcFThaw==
@@ -6575,6 +6575,13 @@ i18next-browser-languagedetector@^5.0.0:
   integrity sha512-ekeKbRvTOsSOABSEPHFqyb6Q37JagZXjkISgQKHP84t/VZRW/B3FMVz+tBNQDVdZLsEaOe8fuJpeZsw2TvWeVQ==
   dependencies:
     "@babel/runtime" "^7.5.5"
+
+i18next-locize-backend@^4.1.8:
+  version "4.1.8"
+  resolved "https://registry.yarnpkg.com/i18next-locize-backend/-/i18next-locize-backend-4.1.8.tgz#ae7585d0c868c245765ddd909c72f5c1200d0717"
+  integrity sha512-Yn2gU/6MUCz69uZmwTyLb4di9Hw2klqPvpVsx9VoFH1ZEy7UggnUdWWjgK3FfIbstL8gL+mTjZH1xdKBoVemkw==
+  dependencies:
+    node-fetch "2.6.1"
 
 i18next@^19.6.0:
   version "19.6.0"

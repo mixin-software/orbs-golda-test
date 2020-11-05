@@ -1,12 +1,13 @@
-@import '../../../../../../scss/colors/colors.scss';
+@import '../../../../scss/colors/colors.scss';
 
-.overview-stake {
+.overview {
     height: 100%;
  
 
     &-guardians {
         position: relative;
         width: 300px;
+        margin-left: auto;
         header{
             color:$light-gray; 
             font-size:17px;

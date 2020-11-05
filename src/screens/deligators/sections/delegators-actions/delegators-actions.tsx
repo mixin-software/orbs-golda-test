@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 export const DeligatorsActions = () => {
     const { selectedDelegator, delegatorIsLoading } = useSelector((state: AppState) => state.delegator);
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     const titles = [
         t('main.action'),
         t('main.amount'),
@@ -19,18 +19,19 @@ export const DeligatorsActions = () => {
         `${t('main.block')} #`,
         `${t('main.time')} (GMT+${moment(moment().utcOffset()).format('H')})`
     ];
-    return (
+
+    const noData = !delegatorIsLoading && !selectedDelegator;
+    return noData ? (
+        <NoData />
+    ) : (
         <div className="delegators-actions">
             <List loadersAmount={5} isLoading={delegatorIsLoading} titles={titles}>
-                {selectedDelegator ? (
-                    <div>
-                        {selectedDelegator.actions.map((action: DelegatorAction, key: number) => {
+                <>
+                    {selectedDelegator &&
+                        selectedDelegator.actions.map((action: DelegatorAction, key: number) => {
                             return <DelegatorActionElement action={action} key={key} />;
                         })}
-                    </div>
-                ) : (
-                    <NoData />
-                )}
+                </>
             </List>
         </div>
     );

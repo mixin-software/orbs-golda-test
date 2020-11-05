@@ -1,12 +1,10 @@
 .guardians{
-    padding-top: 70px;
+    padding-top: 0px;
     .screen-section{
         margin-top: 60px;
         &-container{
-            height: calc(100vh - 270px);
+            height: calc(100vh - 288px);
         }
     }
-    .search-input-box{
-        width: 620px;
-    }
+ 
 }
