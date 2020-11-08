@@ -7,14 +7,16 @@ import { routes } from '../../routes/routes';
 import { useTranslation } from 'react-i18next';
 import {  getBarChartConfigOptions } from '../../utils/bar-chart';
 import './bar-chart.scss';
+import { OverviewChartType } from '../../global/enums';
 
 interface StateProps {
     chartData: any;
     guardians?: Guardian[];
     total?: number;
+    chartType: OverviewChartType;
 }
 
-export const BarChartComponent = ({ chartData, guardians, total }: StateProps) => {
+export const BarChartComponent = ({ chartData, guardians, total, chartType }: StateProps) => {
     const history = useHistory();
     const ref = useRef<any>(null);
     const { t } = useTranslation();
@@ -33,6 +35,6 @@ export const BarChartComponent = ({ chartData, guardians, total }: StateProps) =
         history.push(routes.guardians.stake.replace(':address', address));
     };
     
-    const options = getBarChartConfigOptions(goToGuardianPage, ref, t, chartData.unit, total);
+    const options = getBarChartConfigOptions(chartType, goToGuardianPage, ref, t, chartData.unit, total);
     return <Bar data={barChartData} options={options} ref={ref} />;
 };

@@ -23,7 +23,7 @@ export const GuardianRewardsTop = () => {
         `${t('main.totalClaimed')} (${t('main.untilNow')})`
     ];
     const noData = !guardianIsLoading && !selectedGuardian
-
+    console.log(selectedGuardian)
     return noData ? (
         <NoData />
     ) : (
@@ -31,13 +31,22 @@ export const GuardianRewardsTop = () => {
             <RewardTitles titles={titles} isLoading={guardianIsLoading} listElementAmount={4} />
 
             <div className="guardian-rewards-top-details">
-                <Reward
+            <Reward
                     current={selectedGuardian?.reward_status.guardian_rewards_balance}
                     claimed={selectedGuardian?.reward_status.guardian_rewards_claimed}
                     total={selectedGuardian?.reward_status.total_guardian_rewards}
                     img={TrophyImg}
                     token={OrbsToken}
-                    title={t('main.rewards')}
+                    title={t('guardians.guardianRewards')}
+                    isLoading={guardianIsLoading}
+                />
+                <Reward
+                    current={selectedGuardian?.reward_status.delegator_rewards_balance}
+                    claimed={selectedGuardian?.reward_status.delegator_rewards_claimed}
+                    total={selectedGuardian?.reward_status.total_delegator_rewards}
+                    img={TrophyImg}
+                    token={OrbsToken}
+                    title={t('guardians.selfStakeReward')}
                     isLoading={guardianIsLoading}
                 />
                 <Reward

@@ -16,6 +16,7 @@ class Api {
     async getGuardianApi(address: string) {
         try {
             const res = await getGuardian(address, this.ethereumEndpoint);
+            console.log(res);
             return res;
         } catch (error) {
             return undefined;
@@ -24,8 +25,8 @@ class Api {
 
     async getGuardiansApi() {
         try {
-            // const res = await getGuardians(this.nodeEndpoints);
-            const res = require('../../data/guardians.json');
+            const res = await getGuardians(this.nodeEndpoints);
+            // const res = require('../../data/guardians.json');
             return res;
         } catch (error) {
             return null;
@@ -33,8 +34,8 @@ class Api {
     }
     async getOverviewApi() {
         try {
-            // const res = await getOverview(this.nodeEndpoints, this.ethereumEndpoint);
-            const res = require('../../data/overview.json');
+            const res = await getOverview(this.nodeEndpoints, this.ethereumEndpoint);
+            // const res = require('../../data/overview.json');
             return res;
         } catch (error) {
             return null;
@@ -43,7 +44,6 @@ class Api {
 
     async getSupportedlanguages() {
         const res = await axios.get(`https://api.locize.app/languages/${LOCAIZE_PROJECT_ID}`);
-        console.log(res);
     }
 }
 

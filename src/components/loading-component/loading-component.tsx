@@ -10,9 +10,10 @@ interface StateProps {
     isLoading: boolean;
     children: any;
     listElementAmount?: number;
+    listLength?: number;
 }
 
-export const LoadingComponent = ({ loaderType, isLoading, children, listElementAmount }: StateProps) => {
+export const LoadingComponent = ({ loaderType, isLoading, children, listElementAmount, listLength }: StateProps) => {
     const renderContent = () => {
         switch (loaderType) {
             case LoaderType.TEXT:
@@ -21,10 +22,10 @@ export const LoadingComponent = ({ loaderType, isLoading, children, listElementA
                 return <BigLoader />;
             case LoaderType.LIST:
                 if (!listElementAmount) return null;
-                return <ListLoader listElementAmount={listElementAmount} />;
+                return <ListLoader listElementAmount={listElementAmount} listLength = {listLength} />;
                 case LoaderType.ONE_LINE:
                     if (!listElementAmount) return null;
-                    return <OneLineList listElementAmount={listElementAmount}/>
+                    return <OneLineList listElementAmount={listElementAmount} />
             default:
                 break;
         }

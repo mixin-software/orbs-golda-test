@@ -67,7 +67,7 @@ export const getDelegatorChartData = (dates: any, unit: ChartUnit, delegator: De
     });
     const dataset = {
         data: sortByDate(arr),
-        color: ChartColors.GRAY,
+        color: ChartColors.TOTAL_STAKE,
         yAxis: ChartYaxis.Y1
     };
     return {

@@ -1,7 +1,7 @@
 import { PosOverview, PosOverviewSlice, PosOverviewData, Guardian } from '@orbs-network/pos-analytics-lib';
 import { ChartUnit } from '../../global/enums';
 import { DATE_FORMAT, OVERVIEW_CHART_LIMIT } from '../../global/variables';
-import { sortByDate, sortByNumber } from '../array';
+import { sortByNumber } from '../array';
 import { returnDateNumber, converFromNumberToDate, generateMonths, generateWeeks, generateDays } from '../dates';
 import { getGuardiansOrder } from './overview';
 
@@ -34,19 +34,28 @@ const filledEmptyData = (data: any) => {
         }
     });
 };
+
+const countTotalWeight = (data: PosOverviewData[]): number => {
+    let count = 0;
+    data.forEach((g: PosOverviewData) => {
+        const { weight } = g;
+        count += weight;
+    });
+    return count;
+};
+
 const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, dates: any, order: any) => {
     const datesInUse: any = [];
-    slices.forEach(({ block_time, data, total_weight }: PosOverviewSlice) => {
+    slices.forEach(({ block_time, data }: PosOverviewSlice) => {
         const sliceDate = returnDateNumber(block_time, unit);
         if (!sliceDate) return;
         if (!dates.hasOwnProperty(sliceDate)) return;
         if (datesInUse.includes(sliceDate)) return;
         datesInUse.push(sliceDate);
         const dateInString = converFromNumberToDate(sliceDate, unit, DATE_FORMAT);
-        let count = 0;
-
+        const totalWeight = countTotalWeight(data);
         data.forEach(({ address, weight }: PosOverviewData, i: number) => {
-            const percent = (weight / total_weight) * 100;
+            const percent = (weight / totalWeight) * 100;
 
             const guardianObject = {
                 x: dateInString,
@@ -58,7 +67,6 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
             order[address].data = filledEmptyData(order[address].data);
         });
     });
-    console.log(order);
     return order;
 };
 

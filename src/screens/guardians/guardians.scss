@@ -8,3 +8,23 @@
     }
  
 }
+
+.line-chart-tootlip{
+    transform: translate(0, -50%);
+    .chart-tootlip{
+        &-total{
+            text-transform: capitalize;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+        &-data{
+            p{
+                &:nth-child(1){
+                    margin-bottom: 3px;
+                    font-weight: 500;
+                }
+            }
+            margin-top: 3px;
+        }
+    }
+}

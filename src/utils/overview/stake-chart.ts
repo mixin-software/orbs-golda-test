@@ -12,12 +12,6 @@ export const generateDataset = (arr: any) => {
     return result;
 };
 
-const getNewestSlice = (slices: PosOverviewSlice[]) => {
-    const sorted = sortByNumber(slices, 'block_time');
-    const NewestSlice: PosOverviewSlice = sorted[0];
-    return NewestSlice;
-};
-
 const filledEmptyData = (data: any) => {
     let previousEffectiveStake = 0;
     return data.map((elem: any) => {
@@ -59,6 +53,10 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
     return order;
 };
 
+const getNewestSlice = (slices: PosOverviewSlice[]) => {
+    const sorted = sortByNumber(slices, 'block_time');
+    return sorted[0];
+};
 export const getOverviewChartData = (guardians: Guardian[], dates: any, unit: ChartUnit, overviewData: PosOverview) => {
     const { slices } = overviewData;
     const NewestSlice = getNewestSlice(slices);
@@ -76,11 +74,9 @@ export const getStakeChartData = (guardians: Guardian[], unit: ChartUnit, overvi
     let data;
     let dates;
     switch (unit) {
-        case ChartUnit.MONTH:
-            dates = generateMonths(OVERVIEW_CHART_LIMIT);
-            break;
         case ChartUnit.WEEK:
             dates = generateWeeks(OVERVIEW_CHART_LIMIT);
+
             break;
         case ChartUnit.DAY:
             dates = generateDays(OVERVIEW_CHART_LIMIT);

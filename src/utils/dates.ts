@@ -4,7 +4,7 @@ import { ChartUnit } from '../global/enums';
 
 export const generateMonths = (limit: number) => {
     let dates: any = {};
-    for (let i = 0; i <= limit; i++) {
+    for (let i = 0; i < limit; i++) {
         const month = moment().subtract(i, 'month').month();
         dates[month] = [];
     }
@@ -12,12 +12,12 @@ export const generateMonths = (limit: number) => {
 };
 
 export const generateWeeks = (limit: number) => {
-    let dates: any = {};
+    let weeks: any = {};
     for (let i = 0; i < limit; i++) {
         const week = moment().subtract(i, 'week').week();
-        dates[week] = [];
+        weeks[week] = [];
     }
-    return dates;
+    return weeks;
 };
 
 export const generateDays = (limit: number) => {

@@ -1,8 +1,14 @@
 import { TFunction } from 'i18next';
-import { ChartUnit } from '../global/enums';
+import { ChartUnit, OverviewChartType } from '../global/enums';
 import { formatNumber } from './number';
 
-export const barChartCustomTooltip = function (tooltip: any, ref: any, t: TFunction, total?: number) {
+export const barChartCustomTooltip = function (
+    chartType: OverviewChartType,
+    tooltip: any,
+    ref: any,
+    t: TFunction,
+    total?: number
+) {
     // Tooltip Element
     if (!ref || !ref.current) return;
     let tooltipEl = document.getElementById('chartjs-tooltip');
@@ -37,19 +43,25 @@ export const barChartCustomTooltip = function (tooltip: any, ref: any, t: TFunct
         const bodyLines = tooltip.body.map(getBody);
         let innerHtml = '<thead>';
         titleLines.forEach(function (title: any) {
-            const titleP = `<p class='bar-chart-tootlip-title'>${title}</p>`;
+            const titleP = `<p class='chart-tootlip-title'>${title}</p>`;
             innerHtml += '<tr><th>' + titleP + '</th></tr>';
         });
         innerHtml += '</thead><tbody>';
         bodyLines.forEach(function (body: any, i: any) {
             let guardian = `<p>${body[0].split(':')[0]}</p>`;
             let number = body[0].split(':')[1];
-            number = Number(number).toLocaleString();
+            const prefix = barCustomization[chartType].yAxisPrefix;
+            if (prefix) {
+                number = `${Number(number).toFixed(2).toLocaleString()}%`;
+            } else {
+                number = Number(number).toLocaleString();
+            }
+
             let stake = `<p>${number}</p>`;
-            const totalP = `<p class ='bar-chart-tootlip-total'>${t('overview.total')}: ${
+            const totalP = `<p class ='chart-tootlip-total'>${t('overview.total')}: ${
                 total ? total.toLocaleString() : 0
             }</p>`;
-            const div = `<div class='bar-chart-tootlip-data'>${guardian}${stake}</div>`;
+            const div = `<div class='chart-tootlip-data'>${guardian}${stake}</div>`;
             const span = '<span class="chartjs-tooltip-key"></span>';
             innerHtml += '<tr><td>' + span + totalP + div + '</td></tr>';
         });
@@ -61,6 +73,7 @@ export const barChartCustomTooltip = function (tooltip: any, ref: any, t: TFunct
     const positionX = chart?.tooltip._chart.canvas.offsetLeft;
     // Display, position, and set styles for font
 
+    tooltipEl.classList.add('chart-tootlip');
     tooltipEl.classList.add('bar-chart-tootlip');
     tooltipEl.style.opacity = 1 as any;
     tooltipEl.style.left = positionX + tooltip.caretX + 20 + 'px';
@@ -72,6 +85,7 @@ export const barChartCustomTooltip = function (tooltip: any, ref: any, t: TFunct
 };
 
 export const getBarChartConfigOptions = (
+    chartType: OverviewChartType,
     goToGuardianPage: (e: any) => void,
     ref: any,
     t: TFunction,
@@ -105,7 +119,7 @@ export const getBarChartConfigOptions = (
         tooltips: {
             enabled: false,
             animation: 0,
-            custom: (event: any) => barChartCustomTooltip(event, ref, t, total)
+            custom: (event: any) => barChartCustomTooltip(chartType, event, ref, t, total)
         },
 
         scales: {
@@ -144,12 +158,17 @@ export const getBarChartConfigOptions = (
 
                     stacked: true,
                     ticks: {
-                        // max: 110,
+                        max: barCustomization[chartType].max,
                         maxTicksLimit: 7,
                         fontSize: 12,
                         fontFamily: 'Montserrat',
                         fontColor: '#666666',
                         callback: function (value: number) {
+                            const prefix = barCustomization[chartType].yAxisPrefix;
+                            if (prefix) {
+                                const number = formatNumber(value, '0').toUpperCase();
+                                return `${number}${prefix}`;
+                            }
                             return formatNumber(value, '0.0a').toUpperCase();
                         },
                         padding: 15
@@ -158,4 +177,14 @@ export const getBarChartConfigOptions = (
             ]
         }
     };
+};
+const barCustomization = {
+    [OverviewChartType.WEIGHTS]: {
+        max: 100,
+        yAxisPrefix: '%'
+    },
+    [OverviewChartType.STAKE]: {
+        max: undefined,
+        yAxisPrefix: undefined
+    }
 };

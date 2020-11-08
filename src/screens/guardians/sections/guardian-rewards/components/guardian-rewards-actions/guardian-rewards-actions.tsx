@@ -21,7 +21,7 @@ export const GuardianRewardsActions = () => {
     ];
     return !selectedGuardian && !guardianIsLoading ? null : (
         <div className="guardian-rewards-actions">
-            <List loadersAmount={4} isLoading={guardianIsLoading} titles={titles}>
+            <List loadersAmount={4} isLoading={guardianIsLoading} titles={titles} listLength = {3}>
                 {selectedGuardian ? (
                     <>
                         {getGuardiansRewardActions(selectedGuardian.actions).map((action: GuardianAction, key: number) => {

@@ -64,9 +64,9 @@ export enum ChartUnit {
 }
 
 export enum ChartColors {
-    YELLOW = '#FFEC29',
-    GRAY = '#CF4E81',
-    GREEN = '#74DABF'
+    TOTAL_STAKE = 'orange',
+    SELF_STAKE = '#CF4E81',
+    DELEGATORS = '#74DABF'
 }
 
 export enum ChartYaxis {
@@ -78,4 +78,9 @@ export enum ListItemType {
     AMOUNT = 'amount',
     DATE = 'date',
     LINK = 'link'
+}
+
+export enum OverviewChartType {
+    STAKE = 'STAKE',
+    WEIGHTS = 'WEIGHTS'
 }

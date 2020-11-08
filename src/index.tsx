@@ -7,13 +7,14 @@ import { createBrowserHistory } from "history";
 import App from "./app"
 import store from "./redux/store/store"
 import './i18n';
+import { AppLoader } from "./components/app-loader/app-loader"
 
 const history = createBrowserHistory()
 
 
 
 ReactDOM.render(
-  <Suspense fallback={<div>Loading</div>}>
+  <Suspense fallback={<AppLoader />} >
     <Provider store={store}>
       <ConnectedRouter history={history}>
       <App />

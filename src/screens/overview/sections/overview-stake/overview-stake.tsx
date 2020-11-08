@@ -5,7 +5,7 @@ import { BarChartComponent } from '../../../../components/bar-chart/bar-chart';
 import { TimeRangeSelector } from '../../../../components/date-format-picker/time-range-selector';
 import { LoadingComponent } from '../../../../components/loading-component/loading-component';
 import { NoData } from '../../../../components/no-data/no-data';
-import { ChartUnit, LoaderType } from '../../../../global/enums';
+import { ChartUnit, LoaderType, OverviewChartType } from '../../../../global/enums';
 import { setOverviewStakeChartData } from '../../../../redux/actions/actions';
 import { AppState } from '../../../../redux/types/types';
 import { getStakeChartData } from '../../../../utils/overview/stake-chart';
@@ -51,6 +51,7 @@ export const OverviewStake = () => {
                                 chartData={overviewStakeChartData}
                                 guardians={guardians}
                                 total={overviewData?.total_stake}
+                                chartType = {OverviewChartType.STAKE}
                             />
                         </div>
                     )}

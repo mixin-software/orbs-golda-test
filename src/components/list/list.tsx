@@ -7,10 +7,11 @@ interface StateProps {
     isLoading: boolean;
     titles: string[];
     loadersAmount: number;
+    listLength?: number;
 }
 
 export const List = (props: any) => {
-    const { isLoading,titles, loadersAmount }: StateProps  = props
+    const { isLoading,titles, loadersAmount, listLength}: StateProps  = props
     return (
         <div className="list">
             <header className="list-header flex-start-center">
@@ -22,7 +23,7 @@ export const List = (props: any) => {
                  );
              })}
          </header>
-            <LoadingComponent isLoading={isLoading} loaderType={LoaderType.LIST} listElementAmount={loadersAmount}>
+            <LoadingComponent isLoading={isLoading} loaderType={LoaderType.LIST} listElementAmount={loadersAmount} listLength = {listLength}>
                 <ul>
                    {props.children}
                 </ul>

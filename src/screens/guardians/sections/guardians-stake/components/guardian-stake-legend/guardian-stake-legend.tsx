@@ -20,15 +20,15 @@ export const GuardianStakeLegend = () => {
     const legends = [
         {
             name: t('guardians.totalDelegation'),
-            background: ChartColors.YELLOW
+            background: ChartColors.TOTAL_STAKE
         },
         {
             name: t('guardians.ownDelegation'),
-            background: ChartColors.GRAY
+            background: ChartColors.SELF_STAKE
         },
         {
             name: `${t('guardians.delegatorsCount')}`,
-            background: ChartColors.GREEN
+            background: ChartColors.DELEGATORS
         }
     ];
     const noData = !guardianIsLoading && !selectedGuardian
@@ -37,7 +37,7 @@ export const GuardianStakeLegend = () => {
                 {legends.map((legend: Legend) => {
                     const { name, background } = legend;
                     return (
-                       <LoadingComponent key = {name} isLoading = {true} loaderType ={LoaderType.TEXT} >
+                       <LoadingComponent key = {name} isLoading = {!selectedGuardian} loaderType ={LoaderType.TEXT} >
                             <div  className='flex-start-center'>
                             <figure
                                 style={{

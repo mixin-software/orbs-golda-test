@@ -74,7 +74,6 @@ export const getGuardiansOrder = (
         };
         guardiansObject[guardian.address] = obj;
     });
-    console.log(guardiansObject);
     return guardiansObject;
 };
 

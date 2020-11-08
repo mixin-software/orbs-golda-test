@@ -19,10 +19,10 @@ const App: Component = () => {
     }, []);
 
 
-    const changeLang = (lang: string) => {
+    // const changeLang = (lang: string) => {
 
-        i18n.changeLanguage(lang)
-    }
+    //     i18n.changeLanguage(lang)
+    // }
 
     return (
         <div className="app flex-between">

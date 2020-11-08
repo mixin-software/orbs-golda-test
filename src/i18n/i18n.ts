@@ -13,7 +13,7 @@ const locizeOptions = {
 
 i18n.use(initReactI18next)
     .use(Backend)
-    .use(LanguageDetector)
+    // .use(LanguageDetector)
     .init({
         // resources,
         // supportedLngs: ['en-US', 'fr'],

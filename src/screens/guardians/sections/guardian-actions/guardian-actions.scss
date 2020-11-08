@@ -5,7 +5,9 @@
         &-item {
             max-width: 280px;
             width: calc(100% / 4);
-
+            &:nth-child(1){
+                min-width: 240px;
+            }
         }
     }
     .loader-list {

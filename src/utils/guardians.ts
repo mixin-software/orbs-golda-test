@@ -50,17 +50,17 @@ const generateObject = () => {
     return {
         selfStake: {
             data: [],
-            color: ChartColors.GRAY,
+            color: ChartColors.SELF_STAKE,
             yAxis: ChartYaxis.Y2
         },
         delegatedStake: {
             data: [],
-            color: ChartColors.YELLOW,
+            color: ChartColors.TOTAL_STAKE,
             yAxis: ChartYaxis.Y2
         },
         delegators: {
             data: [],
-            color: ChartColors.GREEN,
+            color: ChartColors.DELEGATORS,
             yAxis: ChartYaxis.Y1
         }
     };
@@ -86,7 +86,7 @@ export const getGuardianChartData = (dates: any, unit: ChartUnit, guardian: Guar
     });
     chartData = fillGuardiansChartData(chartData, dates, unit);
     const formatted = formatGuardianChartData(chartData, unit);
-
+    console.log(formatted);
     return formatted;
 };
 
@@ -149,6 +149,7 @@ export const generateGuardiansChartData = (type: ChartUnit, selectedGuardian?: G
         default:
             break;
     }
+
     return data;
 };
 

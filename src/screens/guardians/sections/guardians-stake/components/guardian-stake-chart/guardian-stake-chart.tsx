@@ -31,7 +31,7 @@ export const GuardianStakeChart = () => {
 
     return (
         noData ? null : <div className="guardian-stake-chart">
-            <LoadingComponent loaderType={LoaderType.BIG} isLoading={true}>
+            <LoadingComponent loaderType={LoaderType.BIG} isLoading={!selectedGuardian}>
                 {guardianChartData ? (
                     <>
                         <header>
