@@ -34,8 +34,8 @@ class Api {
     }
     async getOverviewApi() {
         try {
-            const res = await getOverview(this.nodeEndpoints, this.ethereumEndpoint);
-            // const res = require('../../data/overview.json');
+            // const res = await getOverview(this.nodeEndpoints, this.ethereumEndpoint);
+            const res = require('../../data/overview.json');
             return res;
         } catch (error) {
             return null;

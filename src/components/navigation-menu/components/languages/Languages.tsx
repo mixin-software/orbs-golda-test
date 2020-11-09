@@ -14,7 +14,7 @@ export const Languages = () => {
 
     const getLanguages = async () => {
         const res = await api.getSupportedlanguages();
-     
+        console.log(res)
         if (!res) return;
         setSupportedLanguages(res);
     };

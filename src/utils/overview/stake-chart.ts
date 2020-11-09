@@ -14,7 +14,6 @@ export const generateDataset = (arr: any) => {
 
 const filledEmptyData = (data: any) => {
     let previousEffectiveStake = 0;
-    console.log(data);
     return data.map((elem: any) => {
         const { y } = elem;
         if (y === 0) {
@@ -35,7 +34,6 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
     const datesInUse: any = [];
     slices.forEach(({ block_time, data }: PosOverviewSlice) => {
         const sliceDate = returnDateNumber(block_time, unit);
-        console.log(dates, sliceDate);
         if (!sliceDate) return;
         if (!dates.hasOwnProperty(sliceDate)) return;
         if (datesInUse.includes(sliceDate)) return;

@@ -17,7 +17,7 @@ export const DeligatorsActions = () => {
         t('main.amount'),
         t('main.currentStake'),
         `${t('main.block')} #`,
-        `${t('main.time')} (GMT+${moment(moment().utcOffset()).format('H')})`
+        `${t('main.time')} (${t('main.gmt')}+${moment(moment().utcOffset()).format('H')})`
     ];
 
     const noData = !delegatorIsLoading && !selectedDelegator;

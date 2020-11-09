@@ -224,7 +224,8 @@ export const lineChartCustomTooltip = function (tooltip: any, ref: any, t: TFunc
         let innerHtml = '<thead>';
         titleLines.forEach(function (title: any) {
             const date = moment(title).format('DD/MM/YYYY HH:mm');
-            const titleP = `<p class='chart-tootlip-title'>${date} (GMT+${moment(moment().utcOffset()).format(
+            const gmt = t('main.gmt');
+            const titleP = `<p class='chart-tootlip-title'>${date} ${gmt}+(${moment(moment().utcOffset()).format(
                 'H'
             )})</p>`;
             innerHtml += '<tr><th>' + titleP + '</th></tr>';

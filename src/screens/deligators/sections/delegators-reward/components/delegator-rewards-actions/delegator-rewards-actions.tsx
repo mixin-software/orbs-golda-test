@@ -17,7 +17,7 @@ export const DelegatorRewardsActions = () => {
         t('main.action'),
         t('main.sum'),
         `${t('main.block')} #`,
-        `Time (GMT+${moment(moment().utcOffset()).format('H')})`
+        `Time (${t('main.gmt')}+${moment(moment().utcOffset()).format('H')})`
     ];
     return !selectedDelegator && !delegatorIsLoading ? null : (
         <div className="delegators-rewards-actions">
