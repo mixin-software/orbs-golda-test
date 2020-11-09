@@ -60,3 +60,27 @@ export interface OverviewChartData {
 export interface BarChartDataset extends Guardian {
     color: string;
 }
+
+export interface SupportedLanguage {
+    isReferenceLanguage: boolean;
+    name: string;
+    nativeName: string;
+    region: string;
+    translated: Translated;
+}
+
+interface Translated {
+    latest: string;
+}
+
+export interface GuardiansChartDataset {
+    data: ChartDatasetObject[];
+    color: ChartColors;
+    yAxis: ChartYaxis;
+}
+
+export interface GuardiansChartDatasets {
+    selfStake: GuardiansChartDataset;
+    delegatedStake: GuardiansChartDataset;
+    delegators: GuardiansChartDataset;
+}

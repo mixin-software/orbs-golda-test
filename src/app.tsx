@@ -13,7 +13,6 @@ const App: Component = () => {
     const {t, i18n} = useTranslation()
     const dispatch = useDispatch();
     useEffect(() => {
-     
         dispatch(getGuardiansAction());
         dispatch(getOverviewAction());
     }, []);

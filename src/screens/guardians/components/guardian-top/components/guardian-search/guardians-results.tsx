@@ -5,7 +5,7 @@ import { filterGuardians } from '../../../../../../utils/guardians';
 interface StateProps {
     guardians?: Guardian[],
     inputValue: string;
-    select: (result: Guardian) => void;
+    select: (result: string) => void;
 }
 
 export const GuardiansResults = ({guardians, inputValue, select}: StateProps) => {
@@ -14,7 +14,7 @@ export const GuardiansResults = ({guardians, inputValue, select}: StateProps) =>
             {filterGuardians(guardians || [], inputValue).map((result: Guardian, index: number) => {
                 const { address, name } = result;
                 return (
-                    <li key={index} className="flex-start-center" onClick={() => select(result)}>
+                    <li key={index} className="flex-start-center" onClick={() => select(result.address)}>
                         <p className="text-overflow">{`${name} (${address})`}</p>
                     </li>
                 );

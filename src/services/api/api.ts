@@ -1,6 +1,7 @@
 import { getDelegator, getGuardian, getGuardians, getOverview } from '@orbs-network/pos-analytics-lib';
 import axios from 'axios';
-import { LOCAIZE_PROJECT_ID } from '../../global/variables';
+import { SupportedLanguage } from '../../global/types';
+import { LOCAIZE_API, LOCAIZE_PROJECT_ID } from '../../global/variables';
 class Api {
     ethereumEndpoint = 'https://mainnet.infura.io/v3/9679dc4f2d724f7997547f05f769d74e';
     nodeEndpoints = ['https://guardian.v2beta.orbs.com/services/management-service/status'];
@@ -16,7 +17,6 @@ class Api {
     async getGuardianApi(address: string) {
         try {
             const res = await getGuardian(address, this.ethereumEndpoint);
-            console.log(res);
             return res;
         } catch (error) {
             return undefined;
@@ -25,8 +25,8 @@ class Api {
 
     async getGuardiansApi() {
         try {
-            const res = await getGuardians(this.nodeEndpoints);
-            // const res = require('../../data/guardians.json');
+            // const res = await getGuardians(this.nodeEndpoints);
+            const res = require('../../data/guardians.json');
             return res;
         } catch (error) {
             return null;
@@ -42,8 +42,13 @@ class Api {
         }
     }
 
-    async getSupportedlanguages() {
-        const res = await axios.get(`https://api.locize.app/languages/${LOCAIZE_PROJECT_ID}`);
+    async getSupportedlanguages(): Promise<SupportedLanguage | null> {
+        try {
+            const res = await axios.get(`${LOCAIZE_API}/languages/${LOCAIZE_PROJECT_ID}`);
+            return res.data;
+        } catch (error) {
+            return null;
+        }
     }
 }
 

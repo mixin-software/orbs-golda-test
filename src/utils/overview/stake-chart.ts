@@ -14,6 +14,7 @@ export const generateDataset = (arr: any) => {
 
 const filledEmptyData = (data: any) => {
     let previousEffectiveStake = 0;
+    console.log(data);
     return data.map((elem: any) => {
         const { y } = elem;
         if (y === 0) {
@@ -34,6 +35,7 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
     const datesInUse: any = [];
     slices.forEach(({ block_time, data }: PosOverviewSlice) => {
         const sliceDate = returnDateNumber(block_time, unit);
+        console.log(dates, sliceDate);
         if (!sliceDate) return;
         if (!dates.hasOwnProperty(sliceDate)) return;
         if (datesInUse.includes(sliceDate)) return;
@@ -45,6 +47,7 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
                 y: effective_stake
             };
             const index = order[address].data.findIndex((i: any) => i.x === dateInString);
+
             if (index < 0) return;
             order[address].data.splice(index, 1, guardianObject);
             order[address].data = filledEmptyData(order[address].data);
@@ -76,7 +79,6 @@ export const getStakeChartData = (guardians: Guardian[], unit: ChartUnit, overvi
     switch (unit) {
         case ChartUnit.WEEK:
             dates = generateWeeks(OVERVIEW_CHART_LIMIT);
-
             break;
         case ChartUnit.DAY:
             dates = generateDays(OVERVIEW_CHART_LIMIT);

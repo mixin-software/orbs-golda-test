@@ -2,7 +2,7 @@ import { DelegatorAction } from '@orbs-network/pos-analytics-lib';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../../../routes/routes';
-import { generateDelegatorsActionColors } from '../../../../../utils/delegators';
+import { generateDelegatorsActionColors, generateDelegatorsCurrentStake } from '../../../../../utils/delegators';
 import LinkIcon from '../../../../../assets/images/copy.svg';
 import { convertToString } from '../../../../../utils/number';
 import { ETHERSCAN_BLOCK_ADDRESS } from '../../../../../keys/keys';
@@ -20,14 +20,13 @@ export const DelegatorActionElement = ({ action }: StateProps) => {
 
     const generateAction = () => {
         const isDeligated = event === DelegatorActionsTypes.DELEGATED;
-        const eventName = `delegators.${event}`
+        const eventName = `delegators.${event}`;
         if (isDeligated && to) {
             return (
                 <div className="list-item">
-
                     <a href={additional_info_link} target="_blank" rel="noopener noreferrer" className="list-item">
-                    {isDeligated ? <p>{t(eventName)}</p> : <p>{event}</p>}
-                        </a>
+                        {isDeligated ? <p>{t(eventName)}</p> : <p>{event}</p>}
+                    </a>
                     <section className="list-item-tooltip">
                         <Link to={routes.guardians.stake.replace(':address', to)} className="flex-start-center">
                             <p className="text-overflow">{to}</p>
@@ -46,13 +45,14 @@ export const DelegatorActionElement = ({ action }: StateProps) => {
         );
     };
     const color = generateDelegatorsActionColors(event as DelegatorActionsTypes);
+    const currentStake = generateDelegatorsCurrentStake(event as DelegatorActionsTypes, current_stake);
     return (
         <li className="flex-start-center">
             {generateAction()}
             <p className="list-item" style={{ color }}>
                 {convertToString(amount, '-')}
             </p>
-            <p className="list-item">{convertToString(current_stake, '-')}</p>
+            <p className="list-item">{currentStake}</p>
             <a
                 href={`${ETHERSCAN_BLOCK_ADDRESS}/${block_number}`}
                 target="_blank"

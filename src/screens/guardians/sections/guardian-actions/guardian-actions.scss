@@ -13,13 +13,17 @@
     .loader-list {
         &-element {
             div {
-                max-width: 230px;
+                max-width: 280px;
                 width: calc(100% / 4);
-                padding-right: 40px;
+               
                 .loader {
                     height: 20px;
                     width: 100px;
                 }
+                
+            }
+            & > div:nth-child(1){
+                min-width: 240px;
             }
         }
     }

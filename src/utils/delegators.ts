@@ -13,6 +13,7 @@ import {
 } from './dates';
 import { sortByDate } from './array';
 import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
+import { convertToString } from './number';
 export const generateDelegatorsRoutes = (t: TFunction, delegator?: Delegator): MenuOption[] => {
     const address = delegator ? delegator.address : '';
     return [
@@ -90,6 +91,21 @@ export const generateDelegatorsActionColors = (event: DelegatorActionsTypes) => 
             return 'black';
         default:
             break;
+    }
+};
+
+export const generateDelegatorsCurrentStake = (event: DelegatorActionsTypes, currentStake?: number) => {
+    switch (event) {
+        case DelegatorActionsTypes.STAKED:
+            return convertToString(currentStake, '0');
+        case DelegatorActionsTypes.RESTAKED:
+            return convertToString(currentStake, '0');
+        case DelegatorActionsTypes.UNSTAKED:
+            return convertToString(currentStake, '0');
+        case DelegatorActionsTypes.WITHDREW:
+            return convertToString(currentStake, '0');
+        default:
+            return convertToString(currentStake, '-');
     }
 };
 

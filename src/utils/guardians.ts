@@ -1,5 +1,5 @@
 import { TFunction } from 'i18next';
-import { ChartData, MenuOption } from '../global/types';
+import { ChartData, GuardiansChartDatasets, MenuOption } from '../global/types';
 import { routes } from '../routes/routes';
 import { ChartColors, ChartUnit, ChartYaxis, GuardianActionsTypes, GuardiansSections } from '../global/enums';
 import { Guardian, GuardianAction, GuardianInfo, GuardianStake } from '@orbs-network/pos-analytics-lib';
@@ -13,6 +13,7 @@ import {
 import { STACK_GRAPH_MONTHS_LIMIT } from '../global/variables';
 import moment from 'moment';
 import DAItoken from '../assets/images/bootstrap-token.png';
+import { convertToString } from './number';
 
 export const generateGuardiansRoutes = (t: TFunction, guardian?: GuardianInfo): MenuOption[] => {
     const address = guardian ? guardian.address : '';
@@ -40,13 +41,13 @@ export const generateGuardiansRoutes = (t: TFunction, guardian?: GuardianInfo): 
     ];
 };
 
-export const checkIfLoadDelegator = (address?: string, guardian?: GuardianInfo): boolean => {
+export const checkIfLoadDelegator = (address?: string, selectedGuardianAddress?: string): boolean => {
     if (!address) return false;
-    if (guardian && guardian.address === address) return false;
+    if (selectedGuardianAddress && address.indexOf(selectedGuardianAddress) > -1) return false;
     return true;
 };
 
-const generateObject = () => {
+const generateGuardianDatasets = (): GuardiansChartDatasets => {
     return {
         selfStake: {
             data: [],
@@ -74,7 +75,7 @@ const fillGuardiansChartData = (chartData: any, dates: any, unit: ChartUnit) => 
     return chartData;
 };
 export const getGuardianChartData = (dates: any, unit: ChartUnit, guardian: GuardianInfo): ChartData => {
-    let chartData: any = generateObject();
+    let chartData = generateGuardianDatasets();
     const { stake_slices } = guardian;
 
     stake_slices.map((slice: GuardianStake) => {
@@ -86,7 +87,6 @@ export const getGuardianChartData = (dates: any, unit: ChartUnit, guardian: Guar
     });
     chartData = fillGuardiansChartData(chartData, dates, unit);
     const formatted = formatGuardianChartData(chartData, unit);
-    console.log(formatted);
     return formatted;
 };
 
@@ -130,26 +130,23 @@ const insertChartDataByType = (
     return chartData;
 };
 
-export const generateGuardiansChartData = (type: ChartUnit, selectedGuardian?: GuardianInfo) => {
+export const generateGuardiansChartData = (unit: ChartUnit, selectedGuardian?: GuardianInfo) => {
     if (!selectedGuardian) return;
-    let data;
-    switch (type) {
+    let dates;
+    switch (unit) {
         case ChartUnit.MONTH:
-            const months = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
-            data = getGuardianChartData(months, ChartUnit.MONTH, selectedGuardian);
+            dates = generateMonths(STACK_GRAPH_MONTHS_LIMIT);
             break;
         case ChartUnit.WEEK:
-            const weeks = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
-            data = getGuardianChartData(weeks, ChartUnit.WEEK, selectedGuardian);
+            dates = generateWeeks(STACK_GRAPH_MONTHS_LIMIT);
             break;
         case ChartUnit.DAY:
-            const days = generateDays(STACK_GRAPH_MONTHS_LIMIT);
-            data = getGuardianChartData(days, ChartUnit.DAY, selectedGuardian);
+            dates = generateDays(STACK_GRAPH_MONTHS_LIMIT);
             break;
         default:
             break;
     }
-
+    const data = getGuardianChartData(dates, unit, selectedGuardian);
     return data;
 };
 
@@ -216,6 +213,21 @@ export const generateGuardiansActionColors = (type: GuardianActionsTypes) => {
             return 'black';
         default:
             break;
+    }
+};
+
+export const generateGuardiansCurrentStake = (event: GuardianActionsTypes, currentStake?: number) => {
+    switch (event) {
+        case GuardianActionsTypes.STAKED:
+            return convertToString(currentStake, '0');
+        case GuardianActionsTypes.RESTAKED:
+            return convertToString(currentStake, '0');
+        case GuardianActionsTypes.UNSTAKED:
+            return convertToString(currentStake, '0');
+        case GuardianActionsTypes.WITHDREW:
+            return convertToString(currentStake, '0');
+        default:
+            return '-';
     }
 };
 

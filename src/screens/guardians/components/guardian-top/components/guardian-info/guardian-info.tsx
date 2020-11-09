@@ -21,7 +21,7 @@ export const GuardianInfo = () => {
            <section>
                 <h5 className="guardian-info-title">{t('guardians.guardianWebsite')}</h5>
                 <LoadingComponent isLoading={guardianIsLoading} loaderType={LoaderType.TEXT}>
-                   {website ?  <a href={`https://${website}`} target="_blank" rel="noopener noreferrer">
+                   {website ?  <a href={`${website}`} target="_blank" rel="noopener noreferrer">
                         <p> {website}</p>
                     </a> : <p>-</p>}
                 </LoadingComponent>

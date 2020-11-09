@@ -1,16 +1,18 @@
 import React, { FunctionComponent as Component, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams, withRouter } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { generateNavigationLinks } from '../../utils/navigation';
 import Logo from '../../assets/images/navbar-logo.svg';
-import { NavigationLink, RouteParams } from '../../global/types';
+import { NavigationLink, RouteParams, SupportedLanguage } from '../../global/types';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/types/types';
+import { Languages } from './components/languages/Languages';
 
 import './navigation-menu.scss';
 
 export const NavigationMenu: Component<any> = () => {
     const { t } = useTranslation();
+
     const [selectedSection, setSelectedSection] = useState<string | null>(null)
     const {selectedDelegator} = useSelector((state: AppState) => state.delegator);
     const {selectedGuardian} = useSelector((state: AppState) => state.guardians);
@@ -22,6 +24,7 @@ export const NavigationMenu: Component<any> = () => {
         setSelectedSection(section)
     }, [params.section])
 
+ 
     return (
         <nav className="navigation flex-column">
             <img src={Logo} alt="" className="navigation-logo" />
@@ -43,6 +46,7 @@ export const NavigationMenu: Component<any> = () => {
                     );
                 })}
             </ul>
+            <Languages />
         </nav>
     );
 };

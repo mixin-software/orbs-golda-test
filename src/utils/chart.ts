@@ -4,7 +4,7 @@ import { ChartData, ChartDataset } from '../global/types';
 import { formatNumber } from './number';
 import moment from 'moment';
 import { TIME_UNIT_FORMAT } from '../global/variables';
-import { Console } from 'console';
+
 export const getGuardiansLineChartSettings = (unit: ChartUnit, ref: any, t: TFunction) => {
     const settings = getLineChartBaseSettings(unit, ref, t);
     settings.layout.padding.left = 20;
@@ -152,35 +152,28 @@ export const getLineChartBaseSettings = (unit: ChartUnit, ref: any, t: TFunction
     };
 };
 
-export const getLineChartBaseStyles = () => {
-    return {
-        label: '0',
-        fill: false,
-        lineTension: 0,
-        backgroundColor: '',
-        borderColor: '',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: '',
-        pointBackgroundColor: '',
-        pointBorderWidth: 7,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: '',
-        pointHoverBorderColor: '',
-        pointHoverBorderWidth: 1,
-        pointRadius: 2,
-        pointHitRadius: 10,
-        yAxisID: ChartYaxis.Y1
-    };
+const lineChartBaseStyle = {
+    label: '0',
+    fill: false,
+    lineTension: 0,
+    backgroundColor: '',
+    borderColor: '',
+    borderDash: [],
+    borderDashOffset: 0.0,
+    pointBorderColor: '',
+    pointBackgroundColor: '',
+    pointHoverBackgroundColor: '',
+    pointHoverBorderColor: '',
+    yAxisID: ChartYaxis.Y1,
+    pointStyle: 'circle',
+    pointRadius: 4,
+    pointHitRadius: 5
 };
 
 export const generateDatasets = (chartData: ChartData) => {
-    const styles = getLineChartBaseStyles();
     return chartData.datasets.map((dataset: ChartDataset, index: number) => {
         const { color, yAxis, data } = dataset;
-        const style = styles;
+        const style = lineChartBaseStyle;
         style.label = `${index}`;
         style.borderColor = color;
         style.pointBorderColor = color;

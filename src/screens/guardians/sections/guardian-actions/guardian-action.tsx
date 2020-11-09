@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { ETHERSCAN_BLOCK_ADDRESS } from '../../../../keys/keys';
 import { convertToString } from '../../../../utils/number';
-import { generateGuardiansActionColors, generateGuardiansActionIcon } from '../../../../utils/guardians';
+import { generateGuardiansActionColors, generateGuardiansActionIcon, generateGuardiansCurrentStake } from '../../../../utils/guardians';
 import { GuardianActionsTypes } from '../../../../global/enums';
 
 interface StateProps {
@@ -14,11 +14,11 @@ interface StateProps {
  
 
 export const GuardianActionComponent = ({ action }: StateProps) => {
-    const { amount, block_time, block_number, event, additional_info_link,  } = action;
+    const { amount, block_time, block_number, event, additional_info_link  } = action;
     const { t } = useTranslation();
     const color = generateGuardiansActionColors(event as GuardianActionsTypes)
     const tokenImg = generateGuardiansActionIcon(event as GuardianActionsTypes)
-
+    const currentStake = generateGuardiansCurrentStake(event as GuardianActionsTypes, amount)
     const eventName = t(`guardians.${event}`)
     return (
         <li className="flex-start-center">
@@ -37,7 +37,7 @@ export const GuardianActionComponent = ({ action }: StateProps) => {
                 {convertToString(amount, '-')}
             </p>
             <p className="list-item" >
-                {convertToString(amount, '-')}
+                {currentStake}
                 {tokenImg ? <img src ={tokenImg} /> : null}
             </p>
             <a

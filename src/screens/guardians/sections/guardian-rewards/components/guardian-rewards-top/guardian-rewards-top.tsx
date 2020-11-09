@@ -23,7 +23,6 @@ export const GuardianRewardsTop = () => {
         `${t('main.totalClaimed')} (${t('main.untilNow')})`
     ];
     const noData = !guardianIsLoading && !selectedGuardian
-    console.log(selectedGuardian)
     return noData ? (
         <NoData />
     ) : (

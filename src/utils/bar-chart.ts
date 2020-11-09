@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next';
 import { ChartUnit, OverviewChartType } from '../global/enums';
 import { formatNumber } from './number';
-
+import moment from 'moment';
 export const barChartCustomTooltip = function (
     chartType: OverviewChartType,
     tooltip: any,
@@ -110,7 +110,15 @@ export const getBarChartConfigOptions = (
         animation: {
             duration: 0
         },
-        hover: { mode: null },
+        hover: {
+            mode: 'nearest',
+            animationDuration: 0,
+            onHover: (event: any, chartElement: any) => {
+                event.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+                event.target.style.background = undefined;
+            }
+        },
+
         interaction: {
             mode: 'index'
         },
@@ -138,6 +146,10 @@ export const getBarChartConfigOptions = (
                         drawBorder: false
                     },
                     ticks: {
+                        callback: function (value: any, index: any, values: any) {
+                            const date = values[index].value;
+                            return [moment(date).format('DD MMM'), moment(date).format('YYYY')];
+                        },
                         padding: 10,
                         fontSize: 12,
                         fontFamily: 'Montserrat',

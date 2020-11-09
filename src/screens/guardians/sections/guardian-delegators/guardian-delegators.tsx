@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 export const GuardianDelegators = () => {
     const { selectedGuardian, guardianIsLoading } = useSelector((state: AppState) => state.guardians);
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     const titles = [t('guardians.delegatorsAddress'), t('guardians.stake'), t('guardians.nonStakedBalance')];
     const noData = !guardianIsLoading && !selectedGuardian;
 
@@ -18,12 +18,15 @@ export const GuardianDelegators = () => {
         <NoData />
     ) : (
         <div className="list guardian-delegators-list">
-            <List loadersAmount={3} isLoading={guardianIsLoading} titles={titles}>
-                {selectedGuardian &&
-                    selectedGuardian.delegators.map((delegator: GuardianDelegator) => {
+            {selectedGuardian && selectedGuardian.delegators.length > 0 ? (
+                <List loadersAmount={3} isLoading={guardianIsLoading} titles={titles}>
+                    {selectedGuardian.delegators.map((delegator: GuardianDelegator) => {
                         return <GuardianDelegatorElement delegator={delegator} key={delegator.address} />;
                     })}
-            </List>
+                </List>
+            ) : (
+                <NoData customMessage = {t('delegators.noDelegatorsFound')}/>
+            )}
         </div>
     );
 };
