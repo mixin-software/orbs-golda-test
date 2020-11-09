@@ -2,9 +2,16 @@ import { PosOverview, PosOverviewSlice, PosOverviewData, Guardian } from '@orbs-
 import { ChartUnit } from '../../global/enums';
 import { DATE_FORMAT, OVERVIEW_CHART_LIMIT } from '../../global/variables';
 import { sortByDate, sortByNumber } from '../array';
-import { returnDateNumber, converFromNumberToDate, generateMonths, generateDays, generateWeeks } from '../dates';
+import {
+    returnDateNumber,
+    converFromNumberToDate,
+    generateMonths,
+    generateDays,
+    generateWeeks,
+    getDifferenceBetweenDates
+} from '../dates';
 import { getGuardiansOrder } from './overview';
-
+import moment from 'moment';
 export const generateDataset = (arr: any) => {
     const result = Object.keys(arr).map((key) => {
         return arr[key];
@@ -32,13 +39,19 @@ const filledEmptyData = (data: any) => {
 
 const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, dates: any, order: any) => {
     const datesInUse: any = [];
-    slices.forEach(({ block_time, data }: PosOverviewSlice) => {
-        const sliceDate = returnDateNumber(block_time, unit);
+    const latestDate = moment.unix(slices[0].block_time).valueOf();
+    const now = moment().valueOf();
+    const diff = getDifferenceBetweenDates(now, latestDate);
+    slices.forEach(({ block_time, data }: PosOverviewSlice, index: number) => {
+        const blockDate = moment.unix(block_time).add(diff, 'days').unix();
+        const sliceDate = returnDateNumber(blockDate, unit);
+        console.log(sliceDate);
         if (!sliceDate) return;
         if (!dates.hasOwnProperty(sliceDate)) return;
         if (datesInUse.includes(sliceDate)) return;
         datesInUse.push(sliceDate);
         const dateInString = converFromNumberToDate(sliceDate, unit, DATE_FORMAT);
+
         data.forEach(({ effective_stake, address }: PosOverviewData, i: number) => {
             const guardianObject = {
                 x: dateInString,

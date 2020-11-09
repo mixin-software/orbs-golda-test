@@ -79,3 +79,8 @@ export const converFromNumberToDateMilliseconds = (number: number, unit: ChartUn
             return moment().valueOf();
     }
 };
+
+export const getDifferenceBetweenDates = (date: number, today: number) => {
+    const diff = moment(date).diff(moment(today), 'days');
+    return diff;
+};

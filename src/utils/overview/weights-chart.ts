@@ -2,9 +2,16 @@ import { PosOverview, PosOverviewSlice, PosOverviewData, Guardian } from '@orbs-
 import { ChartUnit } from '../../global/enums';
 import { DATE_FORMAT, OVERVIEW_CHART_LIMIT } from '../../global/variables';
 import { sortByNumber } from '../array';
-import { returnDateNumber, converFromNumberToDate, generateMonths, generateWeeks, generateDays } from '../dates';
+import {
+    returnDateNumber,
+    converFromNumberToDate,
+    generateMonths,
+    generateWeeks,
+    generateDays,
+    getDifferenceBetweenDates
+} from '../dates';
 import { getGuardiansOrder } from './overview';
-
+import moment from 'moment';
 export const generateDataset = (arr: any) => {
     const result = Object.keys(arr).map((key) => {
         return arr[key];
@@ -46,8 +53,13 @@ const countTotalWeight = (data: PosOverviewData[]): number => {
 
 const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, dates: any, order: any) => {
     const datesInUse: any = [];
+    const latestDate = moment.unix(slices[0].block_time).valueOf();
+    const now = moment().valueOf();
+    const diff = getDifferenceBetweenDates(now, latestDate);
     slices.forEach(({ block_time, data }: PosOverviewSlice) => {
-        const sliceDate = returnDateNumber(block_time, unit);
+        const blockDate = moment.unix(block_time).add(diff, 'days').unix();
+
+        const sliceDate = returnDateNumber(blockDate, unit);
         if (!sliceDate) return;
         if (!dates.hasOwnProperty(sliceDate)) return;
         if (datesInUse.includes(sliceDate)) return;
