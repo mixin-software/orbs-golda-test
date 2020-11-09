@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/orbs-golda-test/static/css/main.847888cb.chunk.css",
+    "main.js": "/orbs-golda-test/static/js/main.03d25ca6.chunk.js",
+    "main.js.map": "/orbs-golda-test/static/js/main.03d25ca6.chunk.js.map",
+    "runtime-main.js": "/orbs-golda-test/static/js/runtime-main.6a1d829a.js",
+    "runtime-main.js.map": "/orbs-golda-test/static/js/runtime-main.6a1d829a.js.map",
+    "static/js/2.bf59c497.chunk.js": "/orbs-golda-test/static/js/2.bf59c497.chunk.js",
+    "static/js/2.bf59c497.chunk.js.map": "/orbs-golda-test/static/js/2.bf59c497.chunk.js.map",
+    "index.html": "/orbs-golda-test/index.html",
+    "precache-manifest.a94e9c32f6148a9afd9e55c0ea3775c5.js": "/orbs-golda-test/precache-manifest.a94e9c32f6148a9afd9e55c0ea3775c5.js",
+    "service-worker.js": "/orbs-golda-test/service-worker.js",
+    "static/css/main.847888cb.chunk.css.map": "/orbs-golda-test/static/css/main.847888cb.chunk.css.map",
+    "static/js/2.bf59c497.chunk.js.LICENSE.txt": "/orbs-golda-test/static/js/2.bf59c497.chunk.js.LICENSE.txt",
+    "static/media/coins.svg": "/orbs-golda-test/static/media/coins.c698f8c2.svg",
+    "static/media/copy.svg": "/orbs-golda-test/static/media/copy.5ae6ccfe.svg",
+    "static/media/cpu.svg": "/orbs-golda-test/static/media/cpu.3ee6411f.svg",
+    "static/media/delegators-selected.svg": "/orbs-golda-test/static/media/delegators-selected.fe49925e.svg",
+    "static/media/delegators.svg": "/orbs-golda-test/static/media/delegators.091557cd.svg",
+    "static/media/encrypted.svg": "/orbs-golda-test/static/media/encrypted.fc6fbf16.svg",
+    "static/media/getFetch.cjs": "/orbs-golda-test/static/media/getFetch.013f0b90.cjs",
+    "static/media/guardians-selected.svg": "/orbs-golda-test/static/media/guardians-selected.e200a932.svg",
+    "static/media/guardians.svg": "/orbs-golda-test/static/media/guardians.95190aa2.svg",
+    "static/media/japan.svg": "/orbs-golda-test/static/media/japan.180bed75.svg",
+    "static/media/loupe.svg": "/orbs-golda-test/static/media/loupe.ecef733a.svg",
+    "static/media/navbar-logo.svg": "/orbs-golda-test/static/media/navbar-logo.863932b6.svg",
+    "static/media/overview-selected.svg": "/orbs-golda-test/static/media/overview-selected.57aad41c.svg",
+    "static/media/overview.svg": "/orbs-golda-test/static/media/overview.416db91d.svg",
+    "static/media/south-korea.svg": "/orbs-golda-test/static/media/south-korea.ad512fa5.svg",
+    "static/media/stellar.svg": "/orbs-golda-test/static/media/stellar.7cf558ab.svg",
+    "static/media/token.png": "/orbs-golda-test/static/media/token.51d4bc2c.png",
+    "static/media/trophy.svg": "/orbs-golda-test/static/media/trophy.4cda8b81.svg",
+    "static/media/usa.svg": "/orbs-golda-test/static/media/usa.a035edad.svg",
+    "static/media/voting-booth.svg": "/orbs-golda-test/static/media/voting-booth.bac02ede.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6a1d829a.js",
+    "static/js/2.bf59c497.chunk.js",
+    "static/css/main.847888cb.chunk.css",
+    "static/js/main.03d25ca6.chunk.js"
+  ]
+}
