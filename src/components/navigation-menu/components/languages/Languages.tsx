@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { SupportedLanguage } from '../../../../global/types';
 import { api } from '../../../../services/api';
 import { flags } from '../../../../ui/country-flags';
-const { FlagIcon } = require('react-flag-kit');
+import Logo from '../../../../assets/images/logo-navbar.png';
+
 export const Languages = () => {
     const { t, i18n } = useTranslation();
     const [supportedlanguages, setSupportedLanguages] = useState<undefined | SupportedLanguage>(undefined);
@@ -35,5 +36,12 @@ export const Languages = () => {
         i18n.changeLanguage(lang);
     };
 
-    return <ul className="navigation-languages flex-start">{generateSupportedlanguages(supportedlanguages)}</ul>;
+    return (
+        <div className="navigation-languages flex-column">
+            <figure className="navigation-languages-img">
+                <img src={Logo} alt="orbs logo" />
+            </figure>
+            <ul className="flex-start">{generateSupportedlanguages(supportedlanguages)}</ul>
+        </div>
+    );
 };
