@@ -18,8 +18,9 @@ export const OverviewWeights = () => {
     const { t } = useTranslation();
 
     useEffect(() => {
-        if (overviewWeightsChartData) return;
-        selectChartData(ChartUnit.WEEK);
+        if (!overviewWeightsChartData) {
+            selectChartData(ChartUnit.WEEK);
+        }
     }, [overviewData]);
 
     const selectChartData = (unit: ChartUnit) => {

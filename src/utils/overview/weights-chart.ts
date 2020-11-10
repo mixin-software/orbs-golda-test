@@ -24,31 +24,34 @@ const getNewestSlice = (slices: PosOverviewSlice[]) => {
     return NewestSlice;
 };
 
-const filledEmptyData = (data: any) => {
-    let previousEffectiveStake = 0;
-    return data.map((elem: any) => {
-        const { y } = elem;
-        if (y === 0) {
-            return {
-                ...elem,
-                y: previousEffectiveStake
-            };
-        } else {
-            previousEffectiveStake = y;
-            return {
-                ...elem
-            };
-        }
+const checkIfDateIsEmpty = (order: any) => {
+    let obj: any = {};
+    Object.keys(order as any).map((key: any) => {
+        const data = order[key].data;
+        data.forEach((elem: any) => {
+            const prev = obj[key] || 0;
+            obj[elem.x] = prev + elem.y;
+        });
     });
+    return obj;
 };
 
-const countTotalWeight = (data: PosOverviewData[]): number => {
-    let count = 0;
-    data.forEach((g: PosOverviewData) => {
-        const { weight } = g;
-        count += weight;
+const filledEmptyData = (data: any, order: any) => {
+    const datesObject = checkIfDateIsEmpty(order);
+    return data.map((elem: any, i: number) => {
+        const { y, x } = elem;
+        const isEmpty = datesObject[x] === 0;
+        if (isEmpty && y === 0 && i > 0) {
+            const prevElem = data[i - 1];
+            return {
+                ...elem,
+                y: prevElem ? prevElem.y : 0
+            };
+        }
+        return {
+            ...elem
+        };
     });
-    return count;
 };
 
 const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, dates: any, order: any) => {
@@ -56,7 +59,7 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
     const latestDate = moment.unix(slices[0].block_time).valueOf();
     const now = moment().valueOf();
     const diff = getDifferenceBetweenDates(now, latestDate);
-    slices.forEach(({ block_time, data }: PosOverviewSlice) => {
+    slices.forEach(({ block_time, data, total_weight }: PosOverviewSlice) => {
         const blockDate = moment.unix(block_time).add(diff, 'days').unix();
 
         const sliceDate = returnDateNumber(blockDate, unit);
@@ -65,10 +68,8 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
         if (datesInUse.includes(sliceDate)) return;
         datesInUse.push(sliceDate);
         const dateInString = converFromNumberToDate(sliceDate, unit, DATE_FORMAT);
-        const totalWeight = countTotalWeight(data);
         data.forEach(({ address, weight }: PosOverviewData, i: number) => {
-            const percent = (weight / totalWeight) * 100;
-
+            const percent = (weight * 100) / total_weight;
             const guardianObject = {
                 x: dateInString,
                 y: percent
@@ -76,7 +77,7 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
             const index = order[address].data.findIndex((i: any) => i.x === dateInString);
             if (index < 0) return;
             order[address].data.splice(index, 1, guardianObject);
-            order[address].data = filledEmptyData(order[address].data);
+            order[address].data = filledEmptyData(order[address].data, order);
         });
     });
     return order;

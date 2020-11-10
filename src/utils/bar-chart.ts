@@ -110,6 +110,7 @@ export const getBarChartConfigOptions = (
         animation: {
             duration: 0
         },
+
         hover: {
             mode: 'nearest',
             animationDuration: 0,
@@ -129,7 +130,6 @@ export const getBarChartConfigOptions = (
             animation: 0,
             custom: (event: any) => barChartCustomTooltip(chartType, event, ref, t, total)
         },
-
         scales: {
             xAxes: [
                 {

@@ -27,6 +27,7 @@ class Api {
         try {
             // const res = await getGuardians(this.nodeEndpoints);
             const res = require('../../data/guardians.json');
+            console.log('guardians', res);
             return res;
         } catch (error) {
             return null;
@@ -36,6 +37,7 @@ class Api {
         try {
             // const res = await getOverview(this.nodeEndpoints, this.ethereumEndpoint);
             const res = require('../../data/overview.json');
+            console.log('overview', res);
             return res;
         } catch (error) {
             return null;

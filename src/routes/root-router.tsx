@@ -6,6 +6,7 @@ import { Delegators } from '../screens/deligators/delegators';
 import { NavigationMenu } from '../components/navigation-menu/navigation-menu';
 import { Guardians } from '../screens/guardians/guardians';
 import { Overview } from '../screens/overview/overview';
+import { I18nextProvider } from 'react-i18next';
 
 export const RootRouter: Component = () => {
     return (

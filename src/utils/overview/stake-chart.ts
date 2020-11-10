@@ -45,7 +45,6 @@ const insertGuardiansByDate = (slices: PosOverviewSlice[], unit: ChartUnit, date
     slices.forEach(({ block_time, data }: PosOverviewSlice, index: number) => {
         const blockDate = moment.unix(block_time).add(diff, 'days').unix();
         const sliceDate = returnDateNumber(blockDate, unit);
-        console.log(sliceDate);
         if (!sliceDate) return;
         if (!dates.hasOwnProperty(sliceDate)) return;
         if (datesInUse.includes(sliceDate)) return;
