@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cf128d5050a3f07bc0368666db101d40",
+    "revision": "a65b0d9ed6664342fa0e0d28111741ee",
     "url": "/orbs-golda-test/index.html"
   },
   {
-    "revision": "f6874ba8774c590ee485",
-    "url": "/orbs-golda-test/static/css/main.847888cb.chunk.css"
+    "revision": "2c5b2160b6cd89cfcec1",
+    "url": "/orbs-golda-test/static/css/main.e95fc12e.chunk.css"
   },
   {
     "revision": "6b875fac25c8e5b0e2c2",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/orbs-golda-test/static/js/2.b9500da6.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f6874ba8774c590ee485",
+    "revision": "2c5b2160b6cd89cfcec1",
     "url": "/orbs-golda-test/static/js/main.0c5ae91d.chunk.js"
   },
   {
