@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/orbs-golda-test/static/css/main.e95fc12e.chunk.css",
-    "main.js": "/orbs-golda-test/static/js/main.0c5ae91d.chunk.js",
-    "main.js.map": "/orbs-golda-test/static/js/main.0c5ae91d.chunk.js.map",
+    "main.css": "/orbs-golda-test/static/css/main.3c798f53.chunk.css",
+    "main.js": "/orbs-golda-test/static/js/main.678c7293.chunk.js",
+    "main.js.map": "/orbs-golda-test/static/js/main.678c7293.chunk.js.map",
     "runtime-main.js": "/orbs-golda-test/static/js/runtime-main.6a1d829a.js",
     "runtime-main.js.map": "/orbs-golda-test/static/js/runtime-main.6a1d829a.js.map",
-    "static/js/2.b9500da6.chunk.js": "/orbs-golda-test/static/js/2.b9500da6.chunk.js",
-    "static/js/2.b9500da6.chunk.js.map": "/orbs-golda-test/static/js/2.b9500da6.chunk.js.map",
+    "static/js/2.3f666291.chunk.js": "/orbs-golda-test/static/js/2.3f666291.chunk.js",
+    "static/js/2.3f666291.chunk.js.map": "/orbs-golda-test/static/js/2.3f666291.chunk.js.map",
     "index.html": "/orbs-golda-test/index.html",
-    "precache-manifest.9e17d99e8230ac395d1a64fc2683ced2.js": "/orbs-golda-test/precache-manifest.9e17d99e8230ac395d1a64fc2683ced2.js",
+    "precache-manifest.1947ac426aa757d8673b613fa1ca67d5.js": "/orbs-golda-test/precache-manifest.1947ac426aa757d8673b613fa1ca67d5.js",
     "service-worker.js": "/orbs-golda-test/service-worker.js",
-    "static/css/main.e95fc12e.chunk.css.map": "/orbs-golda-test/static/css/main.e95fc12e.chunk.css.map",
-    "static/js/2.b9500da6.chunk.js.LICENSE.txt": "/orbs-golda-test/static/js/2.b9500da6.chunk.js.LICENSE.txt",
+    "static/css/main.3c798f53.chunk.css.map": "/orbs-golda-test/static/css/main.3c798f53.chunk.css.map",
+    "static/js/2.3f666291.chunk.js.LICENSE.txt": "/orbs-golda-test/static/js/2.3f666291.chunk.js.LICENSE.txt",
     "static/media/coins.svg": "/orbs-golda-test/static/media/coins.c698f8c2.svg",
     "static/media/copy.svg": "/orbs-golda-test/static/media/copy.5ae6ccfe.svg",
     "static/media/cpu.svg": "/orbs-golda-test/static/media/cpu.3ee6411f.svg",
@@ -22,6 +22,7 @@
     "static/media/guardians-selected.svg": "/orbs-golda-test/static/media/guardians-selected.e200a932.svg",
     "static/media/guardians.svg": "/orbs-golda-test/static/media/guardians.95190aa2.svg",
     "static/media/japan.svg": "/orbs-golda-test/static/media/japan.180bed75.svg",
+    "static/media/logo-navbar.png": "/orbs-golda-test/static/media/logo-navbar.9531cdf2.png",
     "static/media/loupe.svg": "/orbs-golda-test/static/media/loupe.ecef733a.svg",
     "static/media/navbar-logo.svg": "/orbs-golda-test/static/media/navbar-logo.863932b6.svg",
     "static/media/overview-selected.svg": "/orbs-golda-test/static/media/overview-selected.57aad41c.svg",
@@ -35,8 +36,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.6a1d829a.js",
-    "static/js/2.b9500da6.chunk.js",
-    "static/css/main.e95fc12e.chunk.css",
-    "static/js/main.0c5ae91d.chunk.js"
+    "static/js/2.3f666291.chunk.js",
+    "static/css/main.3c798f53.chunk.css",
+    "static/js/main.678c7293.chunk.js"
   ]
 }
